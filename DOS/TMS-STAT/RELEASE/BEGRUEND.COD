@@ -1,0 +1,33 @@
+-001M: "Geschaeftliche Abwesenheit".
+-001F: "Geschaeftliche Abwesenheit".
+-002M: "Dienstgang Folgetag".
+-002F: "Dienstgang Folgetag".
+-009N: "Ferien".
+-011N: "Jubilaeum".
+-020M: "Krankheit".
+-020F: "Krankheit".
+-021M: "Arzt/Zahnarztbesuch".
+-021F: "Arzt/Zahnarztbesuch".
+-022M: "Kuraufenthalt".
+-022F: "Kuraufenthalt".
+-025F: "Schwangerschaftsurlaub".
+-031M: "Nichtberufsurlaub".
+-032M: "Berufsurlaub".
+-040M: "Militaerdienst".
+-041M: "Zivilschutz".
+-042M: "Feuerwehrdienst".
+-050M: "Private Gruende".
+-051M: "Hochzeit".
+-052M: "Geburt".
+-053M: "Todesfall".
+-054M: "Wohnungswechsel".
+-055M: "Behoerdenbesuch".
+-060M: "Oeffentliches Amt".
+-070M: "Unbezahlter Urlaub".
+-080N: "Weiterbildung".
+-090N: "Kompensation Schichtbonus".
+-096N: "Kompensation Gleitsaldo".
+-097N: "Kompensation Gleitsaldo".
+-098N: "Kompensation Ueberzeit".
+-100N: "Abwesend ohne Begruendung".
+

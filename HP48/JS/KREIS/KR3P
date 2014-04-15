@@ -1,0 +1,18 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Kreis aus 3 Punkten
+-------------------
+
+
+
+Eingabe: X1 Y1...X3 Y3
+Ausgabe: MX MY R"
+DISPHELP
+
+   \-> X1 Y1 X2 Y2 X3 Y3
+   \<<
+      X1 Y1 X2 Y2 MS2P
+      X2 Y2 X3 Y3
+      KRM2P
+   \>>
+\>>

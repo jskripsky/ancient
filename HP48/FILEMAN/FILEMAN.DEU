@@ -1,0 +1,331 @@
+
+                                FILEMAN.DEU
+
+                          Der HP 48 Dateimanager
+                              James Donnelly
+
+              Copyright (c) Armstrong Publishing Company 1991
+
+
+Hinweis
+-------
+
+Alle Rechte vorbehalten. Die Programme, welches dieses Produkt steuern,
+sind urheberrechtlich geschtzt. Vervielf„ltigung, Bearbeitung oder 
+šbersetzung dieser Software ist nur nach vorheriger schriftlicher
+Genehmigung des Autors, James Donnelly, gestattet.
+
+Die Software und die zugeh”rige Dokumentation werden "wie sie sind" zur 
+Verfgung gestellt und k”nnen ohne vorherige Ankndigung ge„ndert werden.
+Weder James Donnelly noch Hewlett-Packard haften fr irgendwelche Fehler
+und mittelbare oder unmittelbare Sch„den im Zusammenhang mit der Lieferung,
+Funktionsf„higkeit oder Verwendung dieser Software, Dokumentation oder
+der darin enthaltenen Beispiele.
+
+Dem Eigentmer dieser Software ist ein Einzelnutzungsrecht fr nicht-
+kommerzielle Anwendung der beiliegenden Software einger„umt. Er darf
+die Software nicht kopieren, weiterverbreiten oder bertragen, ohne
+vorherige schriftliche Zustimmung des Autors James Donnelly. Kommerzielle
+Software-Entwickler k”nnen eine Lizenz beantragen.
+
+Copyright (c) Trustees of Columbia University in the City of New
+York 1990.  Es wird jeder Institution die Erlaubnis erteilt, Kermit-Software
+zu verwenden, weiterzuverbreiten oder zu kopieren, solange dies nicht der
+Erzielung eines Gewinnes dient und sofern dieser urheberrechtliche Hinweis
+bewahrt bleibt.
+
+MS-DOS ist ein eingetragenes Warenzeichen von Microsoft Corporation.
+
+===============================================================================
+Hinweis:
+
+Der nachfolgende Text ist eine verkrzte Version des englischen Originaltextes
+und enth„lt alle Benutzeranweisungen. Die vollst„ndige Textfassung finden Sie
+in der englischen Datei .ENG.
+===============================================================================
+
+Einfhrung
+----------
+
+Der Dateimanager des HP 48 ist ein Programm, welches die Anzeige von Daten
+im HP 48 erleichtern und den Datentransfer an oder von einem Kermit-Server
+auf einem MS-DOS kompatiblen Computer vereinfachen soll.
+
+Andere Dateien, welche in Verbindung zu dieser Anwendung stehen, sind 
+detailliert in der Datei FILELIST.DEU beschrieben.
+
+
+Installation des Dateimanagers
+------------------------------
+
+1.  Schlieáen Sie den HP 48 an den PC an (es wird angenommen, daá der COM1-
+    Port benutzt wird; alternativ kann auch COM2 benutzt werden).
+
+2.  Starten Sie auf dem PC das Kermit-Programm durch Eingabe von:
+          KERMIT  [ENTER]
+    
+    Nachdem die Eingabeaufforderung
+
+    KERMIT>
+
+    angezeigt wird, tippen Sie nachstehende Anweisung ein:
+
+          SET PORT COM1          Zur Spezifikation des seriellen Ports.
+    Danach:
+          SET BAUD 9600          (9600 ist Standard fr den HP 48)
+
+    ------------------------------------------------------------------------
+    Hinweis: Sie k”nnen diesen Schritt automatisieren, indem Sie im FILEMAN
+             Verzeichnis eine Datei mit dem Namen MSKERMIT.INI einrichten;
+             die Datei sollte einfach diese 2 Zeilen enthalten:
+               SET PORT COM1
+               SET BAUD 9600
+    ------------------------------------------------------------------------
+
+3.  Drcken Sie auf dem HP 48:
+
+          [UL]-[I/O] |SETUP|     Zur šberprfung der Datacomm-Einstellungen
+                                 und ggf. zu deren nderung.
+    Die Voreinstellung ist Wire (serieller Port), 9600 Baud, keine Parit„t
+    und Prfsummentyp 3.
+
+    ------------------------------------------------------------------------
+    Achtung: Falls Sie auf den PC Daten oberhalb des ASCII Codes 128 (z.B.
+    Umlaute) bertragen m”chten, mssen Sie auf dem HP 48 TRANSLATE CODE = 3
+    spezifizieren.
+    ------------------------------------------------------------------------
+
+4.  Drcken Sie auf dem HP 48:
+
+      [UL]-[I/O] |RECV|
+
+5.  Geben Sie auf Ihrem Computer ein:
+
+      SEND FM.LIB [ENTER]
+
+    Kermit bertr„gt nun die Dateimanager-Bibliothek auf den HP 48. Falls
+    dies nicht problemlos geschieht, berprfen Sie nochmals die Einstellungen
+    auf dem Computer fr den benutzten Port (COM1 oder COM2) und die 
+    anderen Kommunikationsparameter.
+
+6.  Weitere Schritte auf Ihrem HP 48 sind:
+
+    [VAR] ['] |FMLIB| [UR]-[RCL]  Ruft die Bibliothek in Stackebene 1 zurck.
+
+    ['] |FMLIB| [PURGE]           L”scht die Variable.
+
+    0 [STO]                       Speichert die Bibliothek in Port 0 
+                                  (oder 1, oder 2 fr eine HP 48SX RAM-Karte)
+
+    [UR]-[OFF]  danach  [ON]      Die Dateimanager-Bibliothek wird automatisch
+                                  an das HOME-Verzeichnis angebunden.
+
+Bevor Sie den Dateimanager aufrufen, sollten Sie auf dem HP 48 nochmals die 
+Einstellung des Systemflags -36 berprfen; dieses Flag, wenn gesetzt,
+aktiviert das šberschreiben beim Empfang. Flag -39, wenn gesetzt, unterdrckt
+Kermit-Meldungen im Display des HP 48.
+
+Entfernen des Dateimanagers
+---------------------------
+
+Wenn Sie die Bibliothek entfernen m”chten, wechseln Sie in das
+HOME Verzeichnis und drcken:
+     :0:874 [ENTER] [ENTER]     (falls 0 die Port-Nummer von FMGR ist)
+     [UR]-[MEMORY] |DETACH|
+     [UR]-[PURGE]
+
+
+Verwenden des Dateimanagers
+---------------------------
+
+Der Dateimanager geht davon aus, daá er in Verbindung mit einem Kermit-Server
+auf einem MS-DOS kompatiblen Computer ist. Das auf der Diskette enthaltene
+Programm KERMIT.EXE funktioniert auf fast allen IBM PC kompatiblen Systemen.
+
+Verbinden Sie den HP 48 und den Computer (siehe oben).
+
+Starten Sie KERMIT auf dem Computer; nachdem "KERMIT>" erscheint,
+tippen Sie, falls erforderlich:
+     SET PORT COM1   und     SET BAUD 9600      wie oben unter 2).
+
+Wenn Sie auf Dateien in einem anderen Laufwerk zugreifen m”chten, wechseln
+Sie jetzt das Laufwerk; zum Beispiel:
+     CD A:     Erm”glicht vom HP 48 den Zugriff auf Laufwerk A:.
+
+Geben Sie ein:
+     SERVER                  Um den Server-Betrieb zu starten.
+               Der Server kann durch Drcken von [Ctrl]-C unterbrochen werden.
+
+Drcken Sie auf dem HP 48:
+     [UL]-[LIBRARY] |FMGR|  Aktiviert die Bibliothek
+ (   |VER|                  Zeigt einfach die Software-Version an  )
+     |FMGR|                 Startet den Dateimanager.
+
+Zuerst wird das aktuelle Verzeichnis auf dem HP 48 angezeigt.
+
+Die Mentasten am unteren Anzeigerand steuern, in Verbindung mit zahlreichen
+anderen Tasten, die Funktionsweise des Dateimanagers.
+
+Anzeigen von Verzeichnissen
+---------------------------
+
+Der Pfad fr das aktuelle Verzeichnis wird am oberen Anzeigerand angezeigt.
+Die im Verzeichnis gespeicherten Objekte erscheinen im mittleren Bereich des 
+Displays. Falls nicht alle gespeicherten Objekte gleichzeitig dargestellt
+werden k”nnen, erscheinen kleine Pfeile links vom Pfadnamen, um das Vorhanden-
+sein weiterer Objekte zu kennzeichnen. 
+
+Verzeichniswechsel
+------------------
+
+               Der Pr„fix ( {v} ) kennzeichnet, daá es sich bei dem Objekt um
+               ein Verzeichnis handelt.
+[ENTER]        Wechselt in das Verzeichnis.
+
+[UL]-[UP]      Wechselt zur h”heren Verzeichnisebene.
+
+[UR]-[HOME]    Wechselt in das HOME-Verzeichnis.
+
+
+W„hlen eines Objekts
+--------------------
+
+[ab] [auf] [links] [rechts]  Bewegt die Hervorhebung von Objekt zu Objekt.
+[UL]-[auf] und [UL]-[ab]     Bl„ttert seitenweise.
+[UR]-[auf] und [UR]-[ab]     Springt zum Anfang oder Ende des Verzeichnisses.
+
+|MARK|     W„hlt Datei(en) zum šbertragen oder L”schen.
+           { |> }  Kennzeichnet markierte Datei. Falls keine Dateien markiert
+                   sind, wird die momentan hervorgehobene Datei angenommen.
+
+[UL]-[PURGE]  L”scht markierte Objekte (oder das hervorgehobene Objekt).
+
+        ----------------------------------------------------------------------
+        ACHTUNG:  Falls es sich bei dem Objekt um ein Verzeichnis handelt,
+        gibt der Dateimanager einen Warnton aus. Nach dem Drcken von |YES|
+        werden das Verzeichnis, alle darin enthaltenen Objekte (einschlieálich
+        Unterverzeichnisse) gel”scht(*).
+        ----------------------------------------------------------------------
+
+
+Mentasten-Befehle
+------------------
+
+Das Display des HP 48 enth„lt entweder Daten und Mentasten, die sich auf den
+(entfernten) MS-DOS Computer oder den (lokalen) HP 48 beziehen.
+
+Jeder der nachstehenden mit (*) gekennzeichneten Befehle kann durch Drcken 
+von [ATTN] abgebrochen werden.
+
+
+Lokales Men
+------------
+
+|SEND|    šbertr„gt die hervorgehobenen (oder markierten) Objekte vom HP 48
+          auf das entfernte System. (*)
+
+          Der Dateimanager bietet die Wahl zwischen ASCII und bin„rer 
+          šbertragung fr die gesamte Gruppe der zu bertragenden Objekte.
+          Falls ein Objekt im ASCII-Modus bertragen werden soll, ist die
+          gewnschte Einstellung fr den Umsetzungscode (auf dem HP 48) zu
+          berprfen. Einige Objekttypen (z.B. Bibliotheken) werden immer
+          bin„r bertragen, unabh„ngig von der im Men gew„hlten Option. 
+
+|CRDIR|   Erzeugt ein neues Verzeichnis im aktuellen Verzeichnis des HP 48. (*)
+
+|INFO|    Zeigt den Namen, Typ und Gr”áe des momentan hervorgehobenen Objekts.
+
+|MARK|    Markiert hervorgehobenes Objekt fr einen sp„teren SEND/PURGE Befehl.
+[UL]-|MARK|    Markiert alle Objekte.
+[UR]-|MARK|    Hebt Markierung aller Objekte auf.
+
+|DISK|    Liest und zeigt den Inhalt des entfernten Verzeichnisses. Zeigt 
+          auáerdem das entfernte Men an. Siehe unten.
+
+|QUIT|    Beendet den Dateimanager und fragt, ob entfernter Computer den
+          Server-Modus beenden soll.
+
+----  [NXT] ----
+
+|MEM|     Zeigt den freien Speicherbereich im HP 48 an.
+
+|NAME|    Benennt das hervorgehobene Objekt um. (*)
+
+|ARCHI|   Fhrt eine Sicherung der HP 48 Daten auf dem entfernten Rechner aus.
+          (Siehe auch Benutzerhandbuch des HP 48)
+          -------------------------------------------------------------------
+          Hinweis:  Der ARCHIVE-Befehl des HP 48 sichert weder den Inhalt 
+                    des unabh„ngigen Speicherbereichs noch den Status der
+                    Benutzer- und Systemflags.
+          -------------------------------------------------------------------
+
+
+Entferntes Men
+---------------
+
+|GET|     Kopiert die hervorgehobene (oder markierten) Datei(en) vom
+          entfernten System auf den HP 48.
+
+          Der Transfertyp (ASCII oder bin„r) wird automatisch aufgrund der
+          ersten paar Bytes der zu bertragenden Datei festgelegt.
+
+|CRDIR|   Erzeugt ein Verzeichnis auf dem entfernten System.
+
+|INFO|    Zeigt den Namen und die Gr”áe der hervorgehobenen Datei an.
+
+|MARK|      Markiert hervorgehobene Datei fr einen sp„teren SEND/PURGE Befehl.
+[UL]-|MARK|    Markiert alle Objekte.
+[UR]-|MARK|    Hebt Markierung aller Objekte auf.
+
+|HP48|    Liest und zeigt den Inhalt des aktuellen Verzeichnisses im HP 48 an.
+          Zeigt auáerdem das lokale Men (HP 48) an.
+
+|QUIT|    Beendet den Dateimanager.
+
+          [NXT]
+
+|FREE|    Zeigt den freien Speicherplatz auf der entfernten Diskette/Platte an.
+
+|NAME|    Benennt eine Datei um.
+
+|DIR|     Liest erneut das Verzeichnis auf dem entfernten System.
+
+
+Dateinamen-Vereinbarung
+-----------------------
+
+MS-DOS Dateien und HP 48 Variablen erlauben die Verwendung verschiedener
+Zeichens„tze fr ihren Namen. Dies kann zu Problemen fhren, wenn Dateien
+zwischen den beiden Systemen bertragen werden.
+
+HP 48 Variablenamen:
+
+Variablenamen k”nnen Buchstaben, Zahlen und sonstige Zeichen enthalten.
+Sie drfen nicht:
+
+ o Mit einer Ziffer beginnen
+
+ o Objektbegrenzungszeichen oder die Zeichen + - * / ^ {Integral} = < >
+   {kleiner oder gleich} {g”áer oder gleich} {ungleich}
+   {Ableitung} ! , @ oder ein Leerzeichen enthalten.
+
+ o Einen internen Befehlsnamen oder reserviertes Wort darstellen.
+
+
+MS-DOS Dateinamen
+
+Dateinamen drfen bis zu 8 Zeichen, optional gefolgt von einem Punkt mit
+3 Zeichen als Dateierweiterung, enthalten. Namen drfen nicht:
+
+ o Einen Punkt (auáer zum Trennen der Erweiterung) enthalten.
+
+ o 8 Zeichen fr den Namen oder 3 Zeichen fr die Erweiterung berschreiten.
+
+ o Ein Leerzeichen oder die Zeichen " / \  < > + , : = ;  enthalten.
+
+ o Die Erweiterung .EXE oder .COM, die fr ausfhrbare DOS Dateien reserviert
+   ist, enthalten.
+
+Dateioperationen unter Verwendung von * oder ? als Jokerzeichen sind nicht
+zul„ssig.
+

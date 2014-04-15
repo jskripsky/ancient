@@ -1,0 +1,22 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Kreis aus MS und 2 Pkt
+----------------------
+
+
+
+Eingabe: M Q X Y X Y
+Ausgabe: MX MY R"
+DISPHELP
+
+   \-> M Q X1 Y1 X2 Y2
+   \<<
+      M Q
+      X1 Y1 X2 Y2 MS2P
+      SPKT
+      DUP2 Y1 - SQ
+      SWAP X1 - SQ
+      + \v/ EVAL
+      "R" \->TAG
+   \>>
+\>>

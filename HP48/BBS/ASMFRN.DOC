@@ -1,0 +1,292 @@
+
+***************************
+* Asm Flash Documentation *
+*    1/10/91 By HPNinja   *
+***************************
+
+Le Contenu
+----------
+
+  C'est la librairie 864 Asm Flash.
+Elle est compose de de 4 fonctions:
+* ->ASM   l'assembleur lui-meme
+* ASM->   le desassembleur
+* ED      l'editeur d'erreurs
+* OPT     le menu d'options
+* INFO864 un petit memo et un petit info
+
+1. La Syntaxe
+-------------
+  Il utilise le format des instructions de Voyage Au Centre de la 48SX,
+a quelques exceptions pres.
+En effet, pour simplifier la syntaxe, j'utilise pour les instructions
+D0= D1= LCHEX LAHEX la syntaxe suivante:
+ D0= 12345   au lieu de D0=(5) 12345
+ D0= 12      au lieu de D0=(2) 12
+ LCHEX 12345 au lieu de LCHEX(5) 12345
+ ou encore plus court, LC 12345, tout simplement
+J'ai cree cette syntaxe car etant TRES feignant, et pour une meilleure
+lisibilite, je prefere utiliser cette syntaxe.
+Les nouvelles instructions sont utilisees comme les anciennes, ainsi:
+A=R0 A s'ecrit A=R0 A (ahah...)
+A=R0 W s'ecrit A=R0 W
+A noter que l'ancienne instruction A=R0 doit s'ecrire A=R0 tout court,
+sans preciser W, sinon c'est la nouvelle instruction qui va etre codee.
+De meme, on ecrit ASRB A et A=A+5 A (pas d'espace entre le + et le 5)
+Bref, tout est comme dans Voyage.
+Toutefois, certaines instructions ne sont pas mentionnees,
+elles concernent le Hardware Status.
+En effet, on peut tester XM, SB..etc separement comme dans Voyage mais aussi
+simultanement par combinaison lineaire...on utilise pour cela la fonction
+HS=0 x, ou ?HS=0 x ou x represente un quartet, representant la valeur de
+la combinaison lineaire. C'est tres peu utilise, mais important a savoir.
+  Pour les labels, vous les declarez avec un asterisque.
+Exemple: *LABEL (sans espace apres l'asterisque)
+L'assembleur ne tient pas compte des des espaces avant ou apres les labels
+  On peut mettre autant de marges que l'on veut. Ainsi, j'ai le droit
+d'ecrire       A=DAT0       A
+  On peut aussi inclure des commentaires, declares par un %. Ainsi,
+A=DAT0    A    % l'Asm Flash, c'est super!
+ou sans instruction: % J'ai pete une Casio aujourd'hui
+Attention: Tout source doit finir par un Carriage Return et un Arobas!
+Je dis bien, un Carriage Return et un Arobas, (pas de caracteres apres)
+  Si vous n'etes pas convaincu de mon explication, utilisez le desassembleur
+integre qui utilise la meme syntaxe.
+
+2.La Compilation
+----------------
+
+  Vous entrez une chaine de caracteres qui represente votre source, chaque
+instruction etant separee par un espace, et vous lancez ->ASM.
+Exemple:
+Mon source est A=DAT0 A
+	       D0=D0+ 5
+	       PC=(A)
+	       @
+Utilisons a present le menu d'options...
+Quand vous le lancez, apparait une barre de menu:
+- Code ou Hexa
+  L'assembleur retournera au choix un opbjet Code, executable ou
+une chaine de caracteres ou le code est en Hexa
+- 0-15 ou 1-16
+  Si c'est 0-15, la numerotation de quartets se fera de 0 a 15, comme
+dans Voyage. Cela concerne les instructions P=, CPEX, C=P, P=C,
+ABIT=0, ABIT=1, CBIT=0, CBIT=1, ?ABIT=0, ?ABIT=1, ?CBIT=0, ?CBIT=1,
+?P=, ?P<>, HS=0, ?HS=0
+  Si c'est 1-16, la numerotation se fera de 1 a 16, comme le veut la
+syntaxe HP Normalisee. Ce n'est pas tres logique, car le champ P par ex
+tient sur 1 quartet, donc sa valeur va de 0 a 15, mais HP a toujours
+aime la singularite, et aime faire preuve d'une originalite forcenee,
+comme pour les instructions A=R0 A ou elle prefere ecrire A=R0.F A
+(l'avantage doit etre tres subtil, car je ne l'ai toujours pas compris)
+ou mieux encore, A=A+CON A 5 au lieu de A=A+5 A (la encore, l'interet
+est fort discutable)
+- HP ou PC
+  Si c'est HP, les caracteres de comparaison seront ceux de la HP48SX,
+ou >= et <= tiennent sur 1 caractere.
+  Si c'est PC, ce seuront cette fois ceux de l'ordinateur:
+  * >= pour superieur ou egal
+  * <= pour inferieur ou egal
+  * #  pour different, et non pas <>, c'est la syntaxe HP normalisee cette
+       fois
+  C'est utile dans la mesure ou quelquefois on ecrit ses sources sur la HP.
+- JMP ou UNJ
+  Si c'est JMP, tous les sauts seront compiles, c'est pour la compilation
+normale.
+  Si c'est UNJ, les sauts sur les labels ne seront pas verifies ni calcules,
+et l'assembleur retournera un System Binary indiquant la taille du programme
+en quartets, cela sert si vous voulez connaitre la taille d'une partie de
+programme a l'avance, utile aux protections par exemple.
+Exemple: j'ai un gros programme dont une partie est
+  SHUTDN
+  GOTO SmallLabel
+  A=DAT0 A
+  GOTO BigLabel
+Comme on le voit, dans cette partie, les labels SmallLabel et BigLabel
+n'ont pas ete declare, donc si je mets JMP, il y aura une erreur, alors
+qu'avec UNJ, le programme sera compile et on aura comme resultat la taille
+de cette partie de programme en quartets.
+- ON ou OFF
+  Si vous trouvez la compilation trop lente (il faut le faire!), vous pouvez
+activez OFF, ce qui eteindra l'ecran durant la compilation (et seulement
+durant la compilation), sinon mettez ON.
+- Exit
+  Vous sortez du menu d'options
+
+En revenant a mon exemple du debut, si je mets Hexa, JMP...
+j'aurais comme resultat 142164808C
+
+3.Les Directives de Compilation
+-------------------------------
+
+  Elles sont declares par un !, ce sont !HP, !PC, !0-15, !1-16, !ON, !OFF.
+Elles ont le meme role que celles employees dans le menu d'options, mis
+a part le fait qu'elles peuvent etre utilises a n'importe quel endroit du
+programme: on peut donc effectuer des melanges. Si vous les mettez dans
+votre source, elles ont l'avantage d'etre independantes du Menu d'Options,
+car prioritaires, on n'a donc pas besoin de declencher OPT a chaque fois.
+
+4.Le Linker
+-----------
+
+  C'est un des outils les plus puissants de l'Asm Flash. C'est l'equivalent
+du linker de Turbo C pour les connaisseurs, utilise pour faire des fichiers
+projet. Le but du linker est de pouvoir subdiviser son source a son gre.
+Exemple: 'INITIALISATION
+	 'GROSSE_BOUCLE
+	 'FIN_PROG
+	 @
+Si je compile ce source, l'Asm Flash va compiler le fichier INITIALISATION,
+puis GROSSE_BOUCLE et enfin FIN_PROG. les fichiers linkes peuvent appeler
+d'autre fichiers car le linkage est recurrent, avec une limite de 25 fichiers
+de profondeur, et c'est largement suffisant, croyez-moi. C'est un vrai
+linker, contrairement a celui du Light Speed par ex, car l'Asm Flash fait
+lui meme son RCL, et se ballade de fichier en fichier: il ne consomme pas
+de memoire, tandis que le Light va concatener tous les link possibles,
+consommant ainsi beaucoup de memoire, et perdant ainsi tout lien avec les
+eventuelles erreurs. (si il y a une erreur dans un fichier linke, vous ne
+saurez plus ou c'etait, contrairement au Flash)
+Je vous conseille d'utiliser le linker jusqu'a epuisement, car plus on
+subdivise les programmes, plus ils sont lisibles. De plus, si vous travaillez
+sur ordinateur, vous n'aurez pas besoin d'envoyer des fichiers d'une tonne,
+car generalement on ne repare qu'une erreur a la fois, donc generalement,
+seulement une partie de programme et si on subdivise, on n'aura qu'a envoyer
+qu'un petit fichier au lieu d'un gros.
+
+5.Les Macro
+-----------
+
+  Quand on utilise des donnees dans un programme, on aime bien les voir inde-
+pendantes du source. C'est ce que permet de faire les Macro.
+Elles servent tout d'abord pour les Celebres Load.Reg, Save.Reg.
+Ceux-ci ont un code connu, donc autant les mettre a part.
+Pour utiliser les macro, vous devez avoir un repertoire Macro, je repete
+Macro, comme indique dans le message d'erreur. Dans celui-ci vous mettrez
+des chaines de caracteres Ascii.
+Exemple: je mets 8FB9760 H->S dans SAVE.REG (en utilisant la Tools.Lib)
+	 chaque variable est une Macro, mais attention, tout doit etre en
+	 Ascii, pas d'hexa, d'ou H->S.
+Ensuite, dans mon prog, je mets /SAVE.REG pour appeler SAVE.REG.
+En fait, le contenu de la Macro est concatene dans le Code, donc les Macro
+sont des sources deja compiles, contrairement aux Link.
+De plus, le format ASCII permet d'economiser de la memoire.
+Les Macro sont te=s utiles quand vous utilisez des Grobs dans un programme
+assembleur.
+
+6.L'Editeur d'Erreur
+--------------------
+
+  Cet editeur est appelable par ED, il permet de reparer les petites erreurs,
+surtout celles de syntaxe. Il est tres utile, car il arrive souvent qu'en
+tapant sur ordinateur, on fasse quelques fautes de syntaxe stupides.
+Exemple: A=DAT0 A
+	 D0=D0+ 19
+	 PC=(A)
+	 @
+Ici, j'ai tape D0=D0+ 19 alors que 19 ne tient pas sur un quartet.
+J'aurais donc une erreur Nibble Expected.
+J'enclenche ED, il suffit alors de modifier D0=D0+ 19 par D0=D0+ 5, et le
+tour est joue.
+Apres une erreur, la pile est comme suit:
+5 : Source Initial (String)
+4 : [ Nom du Fichier Linke d'ou provient l'erreur si Link ]
+3 : [ Source Foireux, s'il provient d'un link, sinon c'est du source initial
+      que provient l'erreur qui est deja dans la pile ]
+2 : System Binary : nombre de caracteres qui ont pu etre compiles.
+1 : Instruction Foireuse (String)
+Apres avoir enclenche ED, elle sera:
+Si pas de Link, 1 : Source Initial Modifie
+	 Sinon, 3 : Source Initial (String)
+		2 : 'Nom du Link foireux
+		1 : Source du Link modifie (String)
+Ainsi, si vous voulez modifer le fichier linke, il ne vous reste qu'a
+faire SWAP STO, et relacez ->ASM car le source initial est dans la pile.
+
+7.Les Messages d'Erreur
+-----------------------
+
+Unknown Instruction    : Instruction inconnue.
+CR Or @ Missing        : Chaque fichier, link ou pas, doit etre termine
+			 par un Carriage Return et un Arobas.
+Field Expected         : Champ attendu, comme dans A=A+B A.
+Hexa Expected          : Hexa attendu, comme dans LC 123456.
+Nibble 0-15 Expected   : Quartet 0-15 attendu, comme dans P= 15.
+Nibble 1-16 Expected   : Quartet 1-16 attendu, comme dans P= 16.
+Bad Size               : Mauvaise taille pour une instruction.
+Label Already Declared : Label deja declare.
+Nonexistent Label      : Label non declare.
+Jump Too Big           : Saut trop important.
+Nonexistent Macro Dir  : Repertoire Macro inexistant.
+Invalid Macro          : Macro incorrecte.
+Nonexistent Macro      : Macro inexistante.
+Invalid Link           : Link incorrect.
+Too Much Recursion     : Plus de 25 Link de profondeur.
+
+8.Les Fonctions Speciales
+-------------------------
+
+ Quelquefois, quand on veut inclure de petites constantes hexadecimales
+dans un programme, et qu'on ne veut pas utiliser des Macro, on utilise
+$ , qui va concatener de l'hexadecimal.
+Exemple: $123
+	 va inclure 123.
+Attention: contrairement aux macro, c'est de l'hexa.
+	   (normal, sinon, vu que c'est un source, on ne pourrait mettre
+	    le caractere nul)
+
+  Si vous voulez faire du calcul de label, il existent les instructions*
+GOINA et GOINC, qui  sont des LAHEX et des LCHEX particuliers.
+En effet, ceux-ci doivent etre suivis d'un nom label, de telle sorte
+que A=PC
+    GOINC LABEL
+    A=A+C A mette dans A l'adresse absolue de LABEL
+
+ou  C=PC
+    GOINA LABEL
+    A=A+C A
+
+  Si vous trouvez certaines fonctions superfetatoires, vous vous trompez,
+car elles sont toutes utilisees dans le source de l'Asm Flash, surtout les
+Link et les Macro.
+
+9.Le Desassembleur
+-------------------
+
+  Il y a peu de choses a en dire. Il accepte 2 types d'argument:
+- 2 Entiers, et dans ce cas 2 : #Adresse de Debut
+			    1 : #Adresse de Fin
+- 1 Code, sans commentaire!
+Il retourne un String, qui contient le source desassemble, avec
+a gauche l'adresse, et apres l'instruction. Il se met automatiquement
+en mode !PC, et !1-16. Ainsi, #0 #20 ASM-> donne:
+
+00000 P=       4
+00002 GOTO     001BC
+00006 CLRST
+00008 A=C      A
+0000A CDEX     A
+0000C R0=A
+0000F ST=1     15
+00012 GOC      00029
+00015 ?ST=1    16
+00018 GOYES    0001C
+0001A RTNCC
+0001C RSTK=C
+0001E C=ID
+
+Le Listing est de plus formate, ce qui est bien pratique. On pourrait faire
+un programme qui transforme cette chaine en chaine compilable pour l'assembleur
+(Il suffirait de transformer toutes les adresses utiles genre 001BC en label
+en rajoutant un * et un Carriage Return) mais l'interet me semble douter.
+Ce programme est d'autant plus aise que si sauts il y a, le listing etant
+formate, il se trouve a un nombre de caracteres precis du debut de ligne.
+Personnellement, j'ai concu ce programme pour desassembler la ROM en
+particulier, et non pour modifier des programmes assembleurs existant, ce qui
+ne m'interesse aucunement.
+
+								  Phong NGUYEN.
+
+
+
+
+

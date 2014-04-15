@@ -1,0 +1,73 @@
+===============
+==   KONOS   ==
+===============
+
+Permanente Speicherung
+-----------------------
+
+Alle Klassen, die von der Klasse "PersistentObject" abgeleitet sind, besitzen die n”tigen Methoden, um alle relevanten Daten (meistens die Werte ihrer Variabeln) permanent zu speichern und sp„ter wieder auszulesen. Dabei werden die Daten sequentiell an ein Objekt der Klasse "StorageUnit" (bzw. deren Ableitung) bergeben. Die abgeleitete Klasse der "StorageUnit" bernimmt dann die eigentliche Arbeit und transferiert die Daten an die/von der Datei oder Datenbank.
+Die meisten Methoden der Klasse "StorageUnit" besch„ftigen sich mit dem Speichern/Lesen eines bestimmten Datentyps (z.B. Long, Short, Boolean). Beim Speicherungs- und Lesevorgang eines Objekts muss diesselbe Reihenfolge der Datenbergabe an die "StorageUnit" eingehalten werden. Das heisst, dass die Implementationen der "write"-Methode und der "read"-Methode bereinstimmen mssen.
+
+Bsp:
+class Obj : public PersistentObject
+{
+	...
+
+protected:
+	long variable1;
+	long variable2;
+	char *text;
+
+	virtual void read( StorageUnit& su );
+	virtual void write( StorageUnit& su );
+};
+
+Obj::write( StorageUnit& su )
+{
+	su.writeLong( variable1 );
+	su.writeLong( variable2 );
+	su.writeString( text );
+}
+
+Obj::read( StorageUnit& su )
+{
+	su.readLong( variable1 );
+	su.readLong( variable2 );
+	text = su.readString();
+}
+
+Die Methoden "write" und "read" mssen in Subklassen ersetzt/erg„nzt werden, drfen aber nie direkt aufgerufen werden. Zum Speichern eines Objekts muss dessen Client die Methoden "writeToStorage" und "readFromStorage" benutzen. Nur so kann gew„hrleistet werden, dass wichtige Informationen, wie z.B. der Klassenname des Objekts gespeichert werden. Beim Einlesen kann so ein neues Objekt der richtigen Klassen bereitgestellt werden, in welches dann die Daten eingelesen werden.
+
+Die Klassen "StorageUnit" stellt zus„tzlich zum rein sequentiellen Datenfluss Methoden zur Verfgung, mit deren Hilfe man im Datenfluss ID-Marken (ein Art Label/Tag) setzen und suchen kann. Hierzu ein Beispiel:
+Die Klasse "Patient" speichert/liest eine gr”ssere Menge an Daten, darunter auch den Namen des Patienten. Wenn nun der Name eines Patienten (der noch nicht eingelesen wurde) angefordert wird, msste der gesamte Datensatz ausgelesen werden. Wurde der Name nun aber mit einer ID-Marke versehen, kann direkt hierher gesprungen werden. Nur der Name muss gelesen werden.
+
+Bsp:
+Obj::write( StorageUnit& su )
+{
+	....
+	su.writeXxx( var1 );
+	su.writeXxx( var2 );
+
+	su.startIDBlock( "Name" );
+	su.writeString( name );
+	su.endIDBlock();
+
+	su.writeXxxx( varX );
+	...
+}
+
+Obj::ReadNameOnly( StorageUnit& su )
+{
+	su.openIDBlock( "Name" );
+	name = su.readString();
+}
+
+
+Run-Time-Schichten von KONOS
+--------------------------
+
+Die einzelnen Komponenten von KONOS lassen sich wie im unten dargestellten Schema einteilen. Die obere H„lfte des Diagramms zeigt, was auf dem Bildschirm erscheint. Der untere Teil besch„ftigt sich mit den Objekten, die hinter der Bildschirmdarstellung stehen und die eigentlichen Daten verwalten.
+Beim Start des Programms befindet sich der Benutzer im "List Panel". Neben der Liste der Patienten (bzw. deren Namen und anderer wichtiger Infos), werden dem Benutzer hier noch Buttons zur Verfgung gestellt, mit denen er alle wichtigen Aktionen (z.B. Patient aufnehmen, Daten modifizieren, Daten drucken) starten kann.
+Hinter der (Personen/)Patienten-Liste befindet sich eine ListBox, die mit dem internen PersonenListen-Objekt zusammenarbeitet. Dieses Objekt verwaltet alle aufgenommenen Personen/Patienten.
+Jedes Patienten-Objekt enth„lt eines Satz aller DatenFeld-Objekte des Formulars und somit die Daten aller Formular-Felder (wahrscheinlich in Form eines Arrays, "Field *fields[]").
+Wird nun das Bildschirmformular ge”ffnet (durch Button "Neuer Patient" oder "Daten „ndern"), so wird zun„chst das Objekt erstellt, welches sich direkt hinter dem grossen Fenster des Formular-Windows befindet. Als n„chstes arbeitet sich nun dieses Objekt durch die einzelnen Feld-Objekte des Patienten-Objekts. Dabei wird jedes Feld-Objekt aufgefordert (Field::openWindow), ein Feld-Presentations-Objekt bereitzustellen. Sobald ein Presentations-Objekt erstellt wurde, muss es ein zWindow (bzw. dessen Ableitung) in das Formular-Window eingebetten. Solange das Feld-Presentations-Objekt existiert, muss das dazugeh”rige zWindow existieren und am Bildschirm sichtbar sein.

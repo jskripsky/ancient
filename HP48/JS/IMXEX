@@ -1,0 +1,29 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Impl.\->Expl. Geradengl.
+----------------------
+Ax + By + C = 0
+y = Mx + Q
+
+Eingabe: A B C
+Ausgabe: M Q"
+DISPHELP
+
+   \-> A B C
+   \<<
+      IF 'B\=/0'
+      THEN
+         '-A/B' EVAL
+         "M" \->TAG
+
+         '-C/B' EVAL
+         "Q" \->TAG
+      ELSE
+         "\|^"
+         "M" \->TAG
+         
+         '-C/A' EVAL
+         "X" \->TAG
+      END
+   \>>
+\>>

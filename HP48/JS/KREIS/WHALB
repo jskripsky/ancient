@@ -1,0 +1,36 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Winkelhalb. von 2 Ger.  
+----------------------
+
+Eingabe: M1 Q1 M2 Q2    
+Ausgabe: M1 Q1 M2 Q2"
+DISPHELP
+
+   \-> M1 Q1 M2 Q2
+   \<<
+      -16 FC?C
+      -17 FS?C
+      \-> CARTESIAN RADIANTS
+      \<<
+***         X Y \->V2
+***         -16 SF
+         
+         V\-> W +
+         \->V2
+         -16 CF V\->
+***         SWAP "X" \->TAG
+***         SWAP "Y" \->TAG
+         
+         IF CARTESIAN
+         THEN
+            -16 CF
+         END
+
+         IF RADIANTS
+         THEN
+            -17 SF
+         END
+      \>>
+   \>>
+\>>

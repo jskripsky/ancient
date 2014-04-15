@@ -1,0 +1,96 @@
+
+
+Hi all,
+
+after PACMAN,
+after TETRIS,
+
+here is :   LEMMINGS !  
+
+     by DEQUB alias Christophe Dupont de Dinechin (D^3)
+
+This incredible game has been written for 90 % in Saturn assembly
+with   HPDS 3.0
+
+Keys :
+------
+
+ - A, B, C, D menukeys to change tools ;
+ - 2, 4, 6, 8 to move the cursor
+ - E to make a lemming fall
+ - F to quit
+ - blue-shift key : off (when the teacher comes)
+ - backspace : quit
+
+Near the tools labels, in order :
+
+- time remaining
+- number of Lemmings still living
+- number of Lemmings to save
+
+In each menu, a number denotes the number of times the tool can be used
+
+CREDIT_TITLES 
+-------------
+programming, graphics, screens, music : DEQUB
+
+original idea :    DMA
+original version : Dave JONES
+
+DEQUB is a registered mark by Ch. de Dinechin
+
+GUEST STARS 
+
+Hardware manager    : Maubert Electronique, Paris
+Software manager    : HPDS 3.0 Mac
+Agent Double        : Paul Courbis
+Pascal Compiler     : HPSquat
+Recel et Indic      : Stephane
+Emergency assembler : ASMFLASH by Hpninja
+Graphics Editor     : ETI
+Driver              : Hpmad
+------------------------------------------------------------
+
+Dequb has also made LEMEDIT, a construction set for LEMMINGS.
+
+To make a screen 16n pixels wide x 16m pixels high,
+put on the stack a GROB 8b m and call LEMEdit.
+
+Arrays to move the cursor.
++/- to change the graphic shown.
+SPC to repeat the last graphic shown.
+. put in memory the graphic under the cursor , for a later
+  use with SPC
+
+With the other commands, you are able to modify the Library Data
+created by EditLEM, on level 2.
+The new value of the parameter is put on level 1.
+
+Time  : total time
+Start : Lems created
+Delay : time between 2 Lems created (1/10s)
+Exit  : Lems to save
+Title : Name of the level
+
+Para  : Parachutist, Paratrooper
+Stop  : Stoppers
+Dig   : Diggers
+Climb : Climbers
+Cons  : Builders
+Explo : Bombs
+
+The LEMDAT variable contains your screens.
+These screens have precedence over Lemmings' ones.
+
+Each item of the list is a list containing the GROB and the Library data.
+--------------------------------------------------------------------------
+Note : you may have to purge all your memory and disable 
+LASTARG, LASTCMD & LASTSTACK to use the game.
+
+
+this doc has been written by me, (and not Dequb ! :-) ), 
+very rapidly so excuse my bad English.
+It's time to go to bed now, I'm tired.
+
+Enjoy the sx !
+

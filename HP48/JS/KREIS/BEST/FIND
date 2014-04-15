@@ -1,0 +1,55 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   0 1
+   \-> LST ELEM NUM NUMFOUND PTR
+   \<<
+      IF
+         'NUM==1'
+      THEN
+         LST
+         ELEM
+         POS
+         DUP
+         IF
+            0
+            \=/
+         THEN 1
+         END
+      ELSE
+
+         LST SIZE
+         \-> LSTSIZE
+         \<<
+            1 NUM START 0 NEXT
+            NUM \->LIST
+            DO
+               LST
+               PTR GET
+               IF
+                  ELEM
+                  ==
+               THEN
+                  'NUMFOUND' INCR DROP
+                  PTR NUMFOUND SWAP PUT
+               END
+   
+               'PTR' INCR DROP
+   
+            UNTIL
+               'NUMFOUND==NUM'
+               'PTR>LSTSIZE'
+               OR
+            END
+   
+            IF 'NUMFOUND==NUM'
+            THEN
+               OBJ\-> DROP
+               1
+            ELSE
+               DROP
+               0
+            END
+         \>>
+      END 
+   \>>
+\>>

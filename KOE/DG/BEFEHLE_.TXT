@@ -1,0 +1,42 @@
+      Beschreibung der Befehle fr Programmierung des CCS 40
+
+
+Feld definieren
+---------------
+fc,fa,81,01,07,
+|  |  |  |  |
+|  |  |  |  |---bis Stelle (L„nge gesamt)
+|  |  |  |---von Stelle
+|  |  |---Tag des Feldes
+|  |---Kennung zweiter Teil
+|---Kennung erster Teil
+
+
+
+Zwei Felder zusammenfgen
+-------------------------
+fc,fb,87,85,22
+|  |  |  |  |
+|  |  |  |  |---maximale Gesamtl„nge
+|  |  |  |---Tag Feld Nr. 2
+|  |  |---Tag Feld Nr. 1
+|  |---Kennung zweiter Teil
+|---Kennung erster Teil
+
+
+
+Feld rechsbndig anordnen, links mit Nullen fllen
+--------------------------------------------------
+fc,f0,87,01,0b
+|  |  |  |  |
+|  |  |  |  |---bis Stelle (L„nge gesamt)
+|  |  |  |---von Stelle
+|  |  |---Tag des Feldes
+|  |---Kennung zweiter Teil
+|---Kennung erster Teil
+
+
+
+Bemerkung:
+Tag-Nummer siehe beigelegte Tabelle
+

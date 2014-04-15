@@ -1,0 +1,113 @@
+%%HP: T(3)A(D)F(.);
+\<<
+
+"Winkel im n-Eck
+---------------
+   P1: (X/Y), \<), \<)...
+...Pn: (X/Y), \<), \<)
+
+Eingabe: [[X Y]...]
+Ausgabe: [[X Y \<) \<)]...]"
+  
+   DISPHELP
+
+   \-> PNTS
+   \<<
+      PNTS TYPE
+      \-> PT
+      \<<
+         IF 'PT\=/3'
+         THEN
+            PNTS
+            "Matrix eingeben!" DOERR
+         END
+      \>>
+      PNTS SIZE
+      OBJ\-> SWAP 2
+      IF ==
+      THEN
+         DROP
+      ELSE
+         PNTS
+         "Matrixbreite 2!" DOERR
+      END
+
+      -17 FC?
+      \-> PN DEGREE
+      \<<
+         1 PN
+         FOR N
+            IF
+               'N==1'
+            THEN
+               PNTS '2*PN-1' EVAL GETI
+               3 ROLLD GET
+            ELSE
+               PNTS 'N*2-3' EVAL GETI
+               3 ROLLD GET
+            END
+   
+            PNTS 'N*2-1' EVAL GETI
+            3 ROLLD GET
+
+            IF 'N==PN'
+            THEN
+               PNTS 1 GETI
+               3 ROLLD GET
+            ELSE
+               PNTS 'N*2+1' EVAL GETI
+               3 ROLLD GET
+            END
+
+            SW3P
+         NEXT
+
+         PN DUPN
+         1 'PN-1'
+         START
+            +
+         NEXT
+
+         \-> WSUM
+         \<<
+            IF DEGREE
+            THEN
+               IF 'WSUM==(PN-2)*180'
+               THEN 0
+               ELSE 1
+               END
+           ELSE
+               IF 'WSUM==(PN-2)*\pi'
+               THEN 0
+               ELSE 1
+               END
+           END
+         \>>
+
+         \-> WRAP
+         \<<
+            1 PN
+            FOR N
+               'PN+N-1' EVAL ROLL
+               DUP 360 SWAP -
+               IF WRAP
+               THEN SWAP
+               END
+            NEXT
+         \>>
+
+         1 PN
+         FOR N
+            PNTS 'N*2-1' EVAL GETI
+            3 ROLLD GET
+            '2*(PN+N)' EVAL ROLL
+            '2*(PN+N)' EVAL ROLL
+         NEXT
+
+         PN 4 2
+         \->LIST
+         \->ARRY
+      \>>
+   \>>
+\>>
+

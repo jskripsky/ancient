@@ -1,0 +1,184 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Kreisbestimmung
+===============
+            
+               
+
+Eingabe: A1 B1..A3 B3
+Ausgabe: X Y R"
+
+   DISPHELP
+
+   6 DUPN
+   GRP
+   5 ROLLD
+   GRP
+   4 ROLLD
+   GRP
+   3 ROLLD
+
+   3 \->LIST
+   \-> DATA
+   \<<
+
+      ERASE
+      { #0 #0 } PVIEW
+
+      1 2 FOR N
+         #60d
+         #19d N * 1 -
+         2 \->LIST
+         #131d
+         #19d N * 1 -
+         2 \->LIST
+         LINE
+      NEXT
+   
+      0 2 FOR N
+         PICT
+         #82d
+         #19d 2 N - * 10 +
+         2 \->LIST
+         ROT
+         2
+         \->GROB
+         GXOR
+         
+         PICT
+         #82d
+         #19d 2 N - * 1 +
+         2 \->LIST
+         ROT
+         2
+         \->GROB
+         GXOR
+      NEXT
+      
+      ICONS 0
+      SELECT
+      \-> SEL
+      \<<
+         SEL 2 3 FIND
+         IF
+         THEN
+            3 DROPN
+"3 MS bestimmen keinen
+Kreis!"
+            DOERR
+         END
+         
+         SEL 3 3 FIND
+         IF
+         THEN
+            3 DROPN
+            DATA 1 GET UNGRP
+            DATA 2 GET UNGRP             
+            DATA 3 GET UNGRP
+
+            TANG.TANG.TANG
+            KILL
+         END
+
+         SEL
+         DATA
+
+         DO
+            1 2
+            'MS2P' 'GRP' 'UNGRP' 1 1
+            SIMPLIFY
+
+            3 ROLLD
+            2 4
+            'SPKT' 'GRP' 'UNGRP' 1 0
+            SIMPLIFY
+
+            3 ROLLD
+            3 5
+            'WHALB' 'GRP' 'UNGRP' 2 1
+            SIMPLIFY
+
+            3 ROLLD
+            5 ROLLD
+            5 ROLLD
+           
+         UNTIL
+            OR OR 
+            NOT
+         END
+
+         'DATA' STO
+         'SEL' STO
+         
+         SEL SIZE
+         \-> ELEM
+         \<<
+            CASE
+               'ELEM==2'
+               THEN
+                  SEL 4 1 FIND
+                  DROP
+                  DATA SWAP GET
+                  UNGRP
+                  
+                  SEL 1 1 FIND
+                  IF
+                  THEN
+                     DATA SWAP GET
+                     UNGRP
+                     MPKT.PKT
+            
+                  ELSE
+                     SEL 3 1 FIND
+                     DROP
+                     DATA SWAP GET
+                     UNGRP
+                     MPKT.TANG
+                  END
+               END
+
+               'ELEM==3'
+               THEN
+                  SEL 1 1 FIND
+                  DROP
+                  DATA SWAP GET UNGRP
+
+                  SEL 2 1 FIND
+                  DROP
+                  DATA SWAP GET UNGRP
+
+                  SEL 3 1 FIND
+                  DROP
+                  DATA SWAP GET UNGRP
+
+                  PKT.MS.TANG
+               END
+
+               'ELEM==4'
+               THEN
+                  SEL 3 1 FIND
+                  DROP
+                  DATA SWAP GET UNGRP
+
+                  DATA 3 GET UNGRP
+                  DATA 4 GET UNGRP
+
+                  SEL 1 1 FIND
+                  IF
+                  THEN
+                     DATA SWAP GET UNGRP
+
+                     TANG.MS1.MS2.PKT
+                  ELSE
+                     SEL 2 1 FIND
+                     DROP
+                     DATA SWAP GET UNGRP
+
+                     TANG.MS1.MS2.MS
+                  END
+               END
+            END
+         \>>
+      \>>
+   \>>
+\>>

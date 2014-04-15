@@ -1,0 +1,145 @@
+(Comp.sys.handhelds)
+Item: 1360 by metcalf at akala.ifa.hawaii.edu
+Author: [Tom Metcalf]
+  Subj: HP48 Celestial Navigation
+  Date: Thu Dec 06 1990 09:41 
+
+I posted the following sight reduction program the other day with 
+a slight bug.  Here is the corrected version.  Sorry to waste bandwidth!
+
+---------------------------------------------------------
+
+Following is an HP-48SX program I wrote to do celestial navigation.
+It computes a position fix from observations of any number of celestial
+bodies using a least squares fit to the altitude of the bodies as a function
+of time.  The routine does all the standard corrections for dip, refraction,
+parallax etc. as well as correcting for motion of the observer between sights.
+
+It does not compute the GHA/declination of celestial bodies, so a copy of
+the nautical almanac is required to use these routines.  It will, however,
+interpolate the GHA and declination from the hourly entries on the daily pages
+of the nautical almanac.
+
+A detailed description of the mathematical basis of the algorithm is 
+available upon request.
+
+----------------------------------------------------------
+
+ Instructions
+
+
+There are several steps to go through to get a fix from a set of observations.
+When prompted for input, key in the requested data, and press "ENTER".
+All angular inputs must be in degrees and in the "hms" format: dddd.mmss, 
+where dddd is degrees, mm is minutes and ss is seconds of arc.  All times 
+must also be input in the "hms" format.
+For example, 16.3427 is 16 degrees 34 minutes 27 seconds if an angle is 
+being input and 14.0153 is 14:01:53 if a time is being input.
+
+The output is the optimum latitude and longitude, both in "hms" format.
+North latitude and west longitude are positive numbers, while south latitude
+and east longitude are negative numbers.  For example,
+157 deg 49 min 58 sec W, 21 deg 17 min 30 sec N would be output as
+
+ LON:  157.4958
+ LAT:   21.1730
+
+1. If you want to start a new set of observations purge the variable
+   "obs".  This variable stores all the observations, so, to start over, this
+   variable must be removed.  You may want to rename it rather than remove it
+   if it will be useful at a later time.
+
+2. Run the program "setup".  This sets up the appropriate corrections
+   and the GHA-declination interpolation
+   for the observed body.  This program must be run whenever a new body
+   is observed or whenever the observations have extended beyond the 
+   times given for the GHA/declination interpolation (TIM1,TIM2)
+   since the interpolation will become inaccurate.
+   If you are observing more than one body, input all the 
+   observations for each before proceeding to the next (temporal order 
+   does not matter).  The "setup" program asks for the following input:
+   a) BODY: S is for the Sun, M is for the Moon, VM
+      is for Venus or Mars, and anything else assumes a star or other planet.
+      Note that alpha mode is automatically initiated.
+   b) INDEX:  The index correction (degrees, in hms format) which is to be 
+      *added* to the observed sextant altitude,  e.g. 1' should be
+      input as 0.0100.
+   c) SEMI-D: Semi-diameter in degrees, "hms" format: e.g. 16.2 min
+      should be input as 0.1612 since 0.2 min = 12" (Sun only).
+   d) HP: Parallax in degrees, "hms" format (Moon,Venus,Mars only).
+   e) LIMB: For Upper limb enter "1", for lower limb enter "-1", and
+      for disk center enter "0" (Sun/Moon only).
+   f) HEIGHT: Height above water (in meters) at which the observations
+      were taken (for the dip correction).
+   g) GHA1 DEC1 TIM1: The Greenwich Hour Angle and declination at time TIM1.
+      The actual values for the observations will be interpolated linearly
+      from this value and the next.  TIM1 should be a whole hour near the 
+      observation times.  All three numbers should be input on the appropriate
+      line *before* pressing "ENTER".  To move to the next item, use the 
+      down-arrow key.  All three entries must be in "hms" format.
+   h) GHA2 DEC2 TIM2: The second set of values for the linear interpolation.
+      TIM2 should be a whole hour after TIM1 and in "hms" format
+      (generally, TIM1 and TIM2 should be consecutive hours).  All observations
+      must be between TIM1 and TIM2.  If this is not the case, the observations
+      should be input in several groups, running "setup " between groups.
+      If the GHA passes through zero between GHA1 and GHA2, 360 degrees should
+      be added to GHA2.
+   i) SPEED: Speed of vessel during the observations (knots). If the
+      speed is zero, the program will terminate at this point.
+   j) COURSE: True course of vessel during the observations (hms format).
+   k) DR LAT LON:  Dead reckoning latitude and longitude to use in the
+      correction of the observations for course and speed (hms format).
+      Negative values indicate East longitude or South latitude.
+   l) TIME OF FIX: The time to which the course and speed corrections 
+      are made (hms format).  This will be the time at which the fix is valid.
+
+3.  Enter the observations:
+    a) Enter the time of the observation (hms format) and then the 
+       uncorrected altitude (hms format) onto the stack.  
+    b) Run the "correct" program to correct the observations for index, 
+       dip, refraction (for standard conditions), parallax, and course/speed.
+    c) Run the "addob" program to add the observation to the "obs" variable.
+    d) Repeat until all observations are input.
+    e) Accurate dead reckoning information can be included by editing
+       the "obs" variable and inputing an additional row into  the matrix with
+       the first element equal to the DR longitude (West positive), the second
+
+       element equal to the DR latitude (North positive), and the final element
+       equal to 90.00.  The MatrixWriter application is particularly useful 
+       for editing the "obs" variable.
+
+4.  Get the fix by running the "solve" program.  This program can be run at 
+    any time when there are at least 3 observations (including dead reckoning)
+    in "obs".  It does not affect "obs", so more observations can be input 
+    after running "solve".  If "convergence error" appears or if the position 
+    estimate is far from your dead reckoning position, there is probably an 
+    error in the input data and it should be reentered (if the data is correct
+    and "convergence error" appears,  the position fix should not be trusted).
+    Remember: the fix is, at best, only as good as the data you supply, and
+    you should examine the results critically!
+
+5.  If all observations are for a *single celestial body*, run the "error" 
+    program to get an estimate of the position error (miles).  This program 
+    assumes an error on the observations of one arc minute, and should be 
+    multiplied by the actual sextant error in arc minutes if it is other than 
+    one.
+
+Important note:  If observations of more than one body are input, "setup"
+must be run before starting the input for each body.
+
+
+Disclaimer:
+
+
+This software is provided "as is" and is subject to change without
+notice.  No warranty of any kind is made with regard to this software,
+including, but not limited to, the implied warranties of merchantability 
+and fitness for a particular purpose.  The author shall not be liable for 
+any errors or for incidental or consequential damages in connection with 
+the furnishing, performance, or use of this software.
+
+Copyright 1990 by Thomas R. Metcalf.  Permission is granted to any
+individual or institution to use, copy, or redistribute this software
+so long as it is not sold for profit and provided that this copyright
+notice and the above disclaimer are retained.
+

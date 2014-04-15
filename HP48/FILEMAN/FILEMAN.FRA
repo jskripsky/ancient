@@ -1,0 +1,358 @@
+
+                                FILEMAN.FRA
+
+                             HP 48 File Manager
+                              James Donnelly
+
+              Copyright (c) Armstrong Publishing Company 1991
+
+
+Avertissement
+-------------
+
+Tous les droits de ce logiciel sont r‚serv‚s. Sa reproduction, sa
+transmission, son stockage … des fins de r‚cup‚ration, en tout ou
+en partie, sous quelque forme que ce soit et par tout moyen existant,
+‚lectronique, m‚canique, par photocopie, ou tout moyen futur, sont
+interdits sans autorisation expresse de l'auteur, James Donnelly.
+
+Ce logiciel et sa documentation sont fournis "en l'‚tat". Ils peuvent
+ˆtre modifi‚s sans notification expresse.  James Donnelly et Hewlett-
+Packard d‚clinent toute responsabilit‚ en matiŠre de garantie pour ce
+logiciel, y compris, mais sans limitations, les garanties implicites
+de commercialisation et de bon fonctionnement dans des applications
+particuliŠres.  Ni James Donnelly, ni Hewlett-Packard ne pourront
+ˆtre consid‚r‚s comme responsables des erreurs de logiciel et des
+cons‚quences de ces erreurs sur les performances ou l'utilisation
+des programmes, fichiers de documentation et exemples fournis ici.
+
+Le propri‚taire de la disquette b‚n‚ficie d'une licence non
+commercialisable pour un seul utilisateur et pour une utilisation
+personnelle du pr‚sent logiciel. Il lui est absolument interdit de copier
+ce programme, de le distribuer ou de le transf‚rer ‚lectroniquement,
+pour quelque raison que ce soit, sans l'autorisation ‚crite de l'auteur,
+James Donnely.  Les soci‚t‚s d‚sirant utiliser le produit … des fins
+commerciales ou de d‚veloppement, peuvent demander … en acqu‚rir les
+droits correspondants.
+
+"Kermit" est prot‚g‚ par Copyright (c) 1989, Trustees of Columbia
+University, New York.  Tout utilisateur, particulier ou professionnel,
+a le droit d'utiliser, de copier et de distribuer le logiciel Kermit, …
+condition toutefois, de ne pas en tirer de revenus, sous quelque forme
+que ce soit, et de communiquer le pr‚sent avertissement aux tiers
+b‚n‚ficiaires.
+
+MS-DOS est une marque d‚pos‚e de Microsoft Corporation.
+
+==========================================================================
+Note :
+
+Le texte suivant est une version condens‚e du fichier anglais d'origine,
+beaucoup plus complet. Le texte original est fourni par le fichier .ENG.
+==========================================================================
+
+G‚n‚ralit‚s
+-----------
+
+Le gestionnaire de fichiers HP 48 File Manager est un programme
+HP 48 destin‚ … simplifier les op‚rations d'affichage de donn‚es
+sur le HP 48 ainsi que les transferts de fichiers vers et … partir
+d'un serveur Kermit install‚ sur un ordinateur compatible MS-DOS.
+
+Les autres fichiers associ‚s … cette application sont d‚crits dans
+le fichier de documentation FILELIST.FRA.
+
+
+Proc‚dure d'installation
+------------------------
+
+1.  Connectez le HP 48 et le PC (nous supposons que nous utilisons
+    le port COM1 du PC, mais on peut utiliser COM2 de la mˆme fa‡on).
+
+2.  Sur le PC, lancez le programme Kermit en tapant :
+        KERMIT  [ENTER]
+    Lorsque s'affiche l'invite :    KERMIT>
+    Tapez :
+        SET PORT COM1          pour sp‚cifier le port s‚rie
+
+    Ensuite :
+        SET BAUD 9600          (9600 = valeur par d‚faut pour le HP 48)
+
+    ---------------------------------------------------------------------
+    Note : Vous pouvez automatiser cette op‚ration pour des utilisations
+    ult‚rieures en cr‚ant, dans le r‚pertoire FILEMAN, un fichier
+    MSKERMIT.INI qui contiendra simplement ces 2 lignes :
+               SET PORT COM1
+               SET BAUD 9600
+    ---------------------------------------------------------------------
+
+3.  Sur le HP 48, appuyez sur :
+
+          [LS]-[I/O] |SETUP|      Pour v‚rifier les paramŠtres de
+                                  communication et les modifier
+                                  si n‚cessaire.
+    La configuration par d‚faut est : transfert cƒbl‚, 9600 bauds,
+    pas de parit‚ et somme de contr“le de type 3.
+
+    ---------------------------------------------------------------------
+    Attention : Si vous avez l'intention de stocker dans votre PC des
+    donn‚es HP 48 contenant des caractŠres accentu‚s (‚, “, , ¤, , ‡),
+    veillez … choisir comme code de conversion : TRANSLATE CODE = 3
+    ---------------------------------------------------------------------
+
+4.  Sur le HP 48, appuyez sur :
+
+      [LS]-[I/O] |RECV|
+
+5.  Sur votre ordinateur, tapez :
+
+      SEND FM.LIB [ENTER]
+
+    Kermit va alors transf‚rer au HP 48 la bibliothŠque du programme
+    File Manager. Si l'op‚ration ‚choue, v‚rifiez que le port (COM1
+    ou COM2) est correctement configur‚ sur l'ordinateur et que les
+    paramŠtres de communication sont les mˆmes sur les deux machines.
+
+6.  Maintenant, sur le HP 48 :
+
+    [VAR] ['] |FMLIB| [RS]-[RCL]  Rappelle la bibliothŠque dans le
+                                  niveau 1 de la pile
+
+    ['] |FMLIB| [PURGE]           Purge la variable
+
+    0 [STO]                       Stocke la bibliothŠque dans le port 0
+                                  (1 ou 2 pour la carte RAM du HP 48SX)
+
+    [RS]-[OFF]  ensuite  [ON]     La bibliothŠque de File Manager se
+                                  rattache automatiquement au r‚pertoire
+                                  HOME du calculateur.
+
+Avant d'ex‚cuter le gestionnaire de fichiers File Manager, vous pouvez,
+si vous le d‚sirez, v‚rifier l'‚tat des indicateurs systŠme suivants du
+HP 48 : s'ils sont arm‚s, l'indicateur -36 autorise la r‚ception en
+r‚‚criture et l'indicateur -39 supprime l'affichage des messages Kermit
+sur le HP 48.
+
+Retrait du programme File Manager
+---------------------------------
+
+Si vous avez besoin de retirer la bibliothŠque du programme File
+Manager, allez dans le r‚pertoire HOME et appuyez sur :
+     :0:874 [ENTER] [ENTER]     (Si 0 est le num‚ro de port de FMGR)
+     [RS]-[MEMORY] |DETACH|
+     [RS]-[PURGE]
+
+
+Utilisation du programme File Manager
+-------------------------------------
+
+Le gestionnaire de fichiers File Manager est suppos‚ parler … un
+serveur Kermit … distance, s'ex‚cutant sur une plate-forme MS-DOS.
+Le programme KERMIT.EXE fourni sur la disquette fonctionne avec la
+plupart des ordinateurs IBM PC et compatibles.
+
+Connectez le HP 48 … l'ordinateur comme expliqu‚ ci-dessus.
+
+Sur l'ordinateur, lancez KERMIT, et … l'invite KERMIT>, tapez,
+si n‚cessaire :
+     SET PORT COM1  et  SET BAUD 9600  comme dans 2) ci-dessus.
+
+Pour acc‚der … des fichiers r‚sidant sur un disque de l'ordinateur,
+changez d'unit‚ … ce niveau de l'op‚ration. Par exemple :
+     CD A:     vous permet d'acc‚der … l'unit‚ a: … partir du HP 48.
+
+entrez :
+     SERVER                 pour lancer le serveur.
+     Le serveur peut ˆtre interrompu par pression de [Ctrl]-C.
+
+Sur le HP 48, appuyez sur :
+     [LS]-[LIBRARY] |FMGR|  active la bibliothŠque
+ (   |VER|                  affiche la version du logiciel  )
+     |FMGR|                 lance le programme File Manager.
+
+Le r‚pertoire en vigueur sur le HP 48 est affich‚ en premier.
+
+Les touches de menu libell‚es en bas de l'affichage, associ‚es avec
+diverses autres touches, permettent de contr“ler les op‚rations
+effectu‚es avec le gestionnaire de fichiers File Manager.
+
+
+Affichage des r‚pertoires
+-------------------------
+
+Le chemin du r‚pertoire en vigueur figure en haut de l'affichage.
+Les objets stock‚s dans ce r‚pertoire sont affich‚s dans la partie
+centrale de l'‚cran.  Si le r‚pertoire contient plus d'objets que
+ne peut en contenir l'affichage, des petites flŠches apparaissent
+… gauche du chemin, indiquant la pr‚sence d'objets suppl‚mentaires.
+
+
+Changement de r‚pertoire
+------------------------
+
+               Un pr‚fixe ( {v} ) indique qu'un objet est un r‚pertoire.
+[ENTER]        Descend dans le r‚pertoire.
+
+[LS]-[UP]      Passe au r‚pertoire sup‚rieur.
+
+[RS]-[HOME]    Retourne au r‚pertoire HOME.
+
+
+S‚lection d'objets
+------------------
+
+Les touches fl‚ch‚es ( [bas] [haut] [gauche] [droite] ) d‚placent
+la surbrillance d'un objet … l'autre.
+[LS]-[haut] et [LS]-[bas] )  D‚placement d'une page … l'autre.
+[RS]-[haut] et [RS]-[bas] )  D‚placement vers le d‚but ou la fin
+                             du r‚pertoire.
+
+|MARK|       S‚lectionne de(s) fichier(s) pour transfert ou suppression.
+             { |> }  indique qu'un fichier a ‚t‚ marqu‚. Si aucun
+             fichier n'est marqu‚, c'est le fichier en surbrillance
+             qui est s‚lectionn‚.
+
+[LS]-[PURGE]  Supprime des objets marqu‚s (ou l'objet en surbrillance).
+
+        -----------------------------------------------------------------
+        ATTENTION :  Si l'objet est supprim‚ dans un r‚pertoire du HP 48
+        le programme File Manager ‚mettra un bip pour vous en avertir.
+        La pression de |YES| supprime le r‚pertoire ainsi que tous les
+        objets qu'il contient, mˆme si ce sont des sous-r‚pertoires(*).
+        -----------------------------------------------------------------
+
+
+Commandes des touches des menus
+-------------------------------
+
+Le HP 48 affiche soit des donn‚es et des menus de touches dont les
+fonctions correspondent aux op‚rations effectu‚es sur le disque DOS
+(… distance), soit des donn‚es et des menus de touches se rapportant
+au HP 48 lui-mˆme (op‚rations locales).
+
+Toutes les commandes suivantes, lorsqu'elles ont un (*), peuvent
+ˆtre annul‚es par pression de [ATTN]
+
+
+Menu des op‚rations locales
+---------------------------
+
+|SEND|    TransfŠre l'objet en surbrillance (ou les objets marqu‚s)
+          du HP 48 au systŠme … distance. (*)
+
+          Le programme File Manager pr‚sente les options de
+          transfert ASCII ou binaire pour l'ensemble du groupe
+          des objets … transf‚rer.  Si un objet doit ˆtre transf‚r‚
+          en format ASCII, v‚rifiez que le code de conversion
+          (TRANSLATE CODE) du HP 48 est configur‚ comme
+          vous le d‚sirez.  Certains types d'objets, comme
+          les bibliothŠques, sont syst‚matiquement transf‚r‚s
+          en mode binaire, quelle que soit l'option de transfert
+          choisie dans ce menu.
+
+|CRDIR|   Cr‚e un nouveau r‚pertoire (sous-r‚pertoire)
+          dans le r‚pertoire HP 48 en cours. (*)
+
+|INFO|    Affiche le nom, le type et la taille de l'objet
+          actuellement en surbrillance.
+
+|MARK|    Marque l'objet en surbrillance pour une future
+          commande SEND ou PURGE.
+[LS]-|MARK|    marque tous les objets,
+[RS]-|MARK|    efface toutes les marques.
+
+|DISK|    Lit et affiche le r‚pertoire … distance.  Affiche
+          aussi le menu des op‚rations … distance.  Voir ci-aprŠs.
+
+|QUIT|    Met fin au programme File Manager et demande si
+          l'ordinateur … distance doit quitter le mode serveur.
+
+----  [NXT] ----
+
+|MEM|     Affiche la capacit‚ m‚moire disponible sur le HP 48.
+
+|NAME|    Rebaptise l'objet en surbrillance. (*)
+
+|ARCHI|   Sauvegarde le HP 48 sur le systŠme … distance
+          (voir le manuel d'utilisation du HP 48).
+          ---------------------------------------------------------------
+          Note :  La commande ARCHIVE du HP 48 ne sauvegarde ni le
+                  contenu de la m‚moire ind‚pendante ni l'‚tat des
+                  indicateurs utilisateur et systŠme.
+          ---------------------------------------------------------------
+
+
+Menu des op‚rations … distance
+------------------------------
+
+|GET|     Copie dans le HP 48, depuis le systŠme … distance, le
+          fichier en surbrillance (ou les fichiers marqu‚s).
+
+          Le type de transfert (ASCII ou binaire) est d‚termin‚
+          automatiquement par les premiers octets du fichier transf‚r‚.
+
+|CRDIR|   Cr‚e un r‚pertoire sur le systŠme … distance.
+
+|INFO|    Affiche le nom et la taille du fichier en surbrillance.
+
+|MARK|    Marque le fichier en surbrillance pour une future commande
+          GET ou PURGE.
+[LS]-|MARK| marque tous les fichiers,
+[RS]-|MARK| efface toutes les marques.
+
+|HP48|    Lit et affiche le r‚pertoire HP 48 en cours.  Affiche
+          aussi le menu des op‚rations locales.
+
+|QUIT|    Met fin au programme File Manager.
+
+--------- [NXT] ---------
+
+|FREE|    Affiche l'espace disponible sur le disque … distance.
+
+|NAME|    Rebaptise un fichier.
+
+|DIR|     Relit le r‚pertoire du systŠme … distance.
+
+
+Conventions des noms de fichiers
+--------------------------------
+
+Les noms des fichiers MS-DOS et les noms des variables du HP 48
+utilisent des jeux de caractŠres diff‚rents.  Cela risque de cr‚er
+des conflits lors de transferts de fichiers entre les deux systŠmes.
+
+
+Noms de variables HP 48 :
+
+Les noms de variables peuvent utiliser des lettres, des chiffres et la
+plupart des autres caractŠres. En revanche, ces noms ne doivent pas :
+
+ o Commencer par un chiffre.
+
+ o Contenir des d‚limiteurs d'objet, ni les symboles math‚matiques
+   +, -, *, /, ^, {int‚grale}, ,=, < (inf‚rieur …), > (sup‚rieur …),
+   {diff‚rent de}, {d‚riv‚e}, ! , @ , ni un espace.
+
+ o Avoir le mˆme nom qu'une commande int‚gr‚e ou qu'un mot r‚serv‚.
+
+
+Nom de fichiers MS-DOS :
+
+La longueur des noms de fichiers est limit‚e … huit caractŠres.
+Ils peuvent ˆtre suivis d'un point et d'une extension d'au maximum
+trois caractŠres. Ces noms ne doivent pas :
+
+ o Utiliser d'autre point que celui qui s‚pare l'extension du nom
+   du fichier.
+
+ o Avoir plus de huit caractŠres pour le nom et plus de trois pour
+   l'extension.
+
+ o Contenir les caractŠres  . " / \ < > + , : = ; ni un espace.
+
+ o Utiliser .EXE ou .COM comme nom d'extension. Ces extensions
+   sont r‚serv‚es aux fichiers de commande des applications DOS.
+
+Les op‚rations sur les fichiers qui utilisent * ou ? comme
+caractŠre "joker" ne sont pas autoris‚es.
+

@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> NEWROW
+   \<<
+      NEWROW
+      SELS
+      NEWROW GET
+      2 \->LIST
+      'CURPOS' STO
+
+      CURSOR
+      CURPOS
+      OBJ\->
+      DROP
+      PAINT
+   \>>
+\>>

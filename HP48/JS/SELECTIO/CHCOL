@@ -1,0 +1,36 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> NEWCOL
+   \<<
+      CURPOS
+      1 GET
+      \-> CROW
+      \<<
+         MARK
+         CROW
+         SELS CROW GET
+         PAINT
+
+         MARK
+         CROW
+         NEWCOL
+         PAINT
+      
+         CURSOR
+         CROW
+         NEWCOL
+         PAINT
+ 
+         CROW
+         NEWCOL
+         2 \->LIST
+         'CURPOS' STO
+
+         SELS
+         CROW
+         NEWCOL
+         PUT
+         'SELS' STO
+      \>>
+   \>>
+\>>

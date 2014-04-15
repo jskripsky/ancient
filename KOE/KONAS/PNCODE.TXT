@@ -1,0 +1,45 @@
+
+	long number = lastNumber + 1;
+
+	char string[10];
+	ltoa( number, string, 10 );
+
+
+	char *newPNumber = new char[9];
+
+	newPNumber[0] = '1';
+
+	date sysDate;
+	getdate( &sysDate );
+
+	newPNumber[1] = (sysDate.da_year % 10) + '0';
+
+	newPNumber[2] = '0';
+	newPNumber[3] = '0';
+	newPNumber[4] = '0';
+	newPNumber[5] = '0';
+	newPNumber[6] = '0';
+
+	strcpy( &newPNumber[7 - strlen( string )], string );
+
+	int check = 10 - (((newPNumber[0] - '0') * 7 +
+					   (newPNumber[1] - '0') * 9 +
+					   (newPNumber[2] - '0') * 3 +
+					   (newPNumber[3] - '0') * 1 +
+					   (newPNumber[4] - '0') * 7 +
+					   (newPNumber[5] - '0') * 9 +
+					   (newPNumber[6] - '0') * 3) % 10);
+
+	if( check == 10 )
+		check = 0;
+
+	newPNumber[7] = check + '0';
+
+	newPNumber[8] = 0;
+
+
+
+	newPNumber;
+
+	delete[] newPNumber;
+

@@ -1,0 +1,25 @@
+%&#
+
+#start_blockung
+40, 42, 53, 0, 
+
+#ende_blockung
+0, 
+
+#laenge_blockung
+4, 0, 
+
+#blockung
+1, 1, 1, 1, 	 * A -- 1
+0, 0, 0, 
+
+#felder
+1, 1, 1, 
+1, 1, 1, 	 * A -- 1
+0, 0, 0, 
+
+#formular1
+1b, 67, 1b, 44, f3, f3, 09, 1b, 1b, 50, fe, 01, 
+0c, 0, 0, 
+
+%

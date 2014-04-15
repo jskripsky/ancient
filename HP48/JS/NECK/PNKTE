@@ -1,0 +1,85 @@
+%%HP: T(3)A(D)F(.);
+\<<
+
+"Punkte im n-Eck
+======================
+A1, B1, C1,  A2, B2..
+\-> X1, Y1, X2, Y2,...
+
+Eingabe: [[Ax By C]..]
+Ausgabe: [[X Y]...]"
+
+"BEM"
+"Bemerkung
+======================
+ G1 + G2 \-> P1
+ G2 + G3 \-> P2
+ .. . ..   ..
+ G8 + G9 \-> P8
+ Gn + G1 \-> Pn"
+
+"VERSION"
+"======================
+     == Punkte ==
+      
+Version 1.1 - 12.11.93
+
+ (C) Skribby Soft '93
+======================"
+
+3 2.0
+
+   DISPHELP
+
+   \-> GL
+   \<< GL TYPE \-> GT
+      \<<
+         IF 'GT\=/3'
+         THEN
+            GL
+            "Matrix Eingeben!" DOERR
+         END
+      \>>
+      GL SIZE
+      OBJ\-> SWAP 3
+      IF ==
+      THEN
+         DROP
+      ELSE
+         GL
+         "Matrixbreite 3!" DOERR
+      END
+      \-> GN
+      \<<
+         1 GN
+         FOR N
+            GL 'N*3-2' EVAL GETI
+            3 ROLLD GETI
+            4 ROLLD GET
+            3 ROLL SWAP
+            IM\->EX
+
+            IF 'N==GN'
+            THEN
+               GL 1 GETI
+               3 ROLLD GETI
+               4 ROLLD GET 
+               3 ROLL SWAP
+            ELSE
+               GL 'N*3+1' EVAL GETI
+               3 ROLLD GETI
+               4 ROLLD GET
+               3 ROLL SWAP
+            END
+            IM\->EX
+
+            SPKT
+            EVAL SWAP EVAL SWAP
+         NEXT
+
+         GN 2 2
+         \->LIST
+         \->ARRY
+      \>>
+   \>>
+\>>

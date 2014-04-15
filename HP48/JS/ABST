@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Abstand zweier Punkte
+---------------------
+
+(X1/Y1), (X2/Y2)
+
+Eingabe: X1 Y1 X2 Y2
+Ausgabe: D"
+DISPHELP
+
+   \-> X1 Y1 X2 Y2
+   \<<
+      '\v/(SQ(X1-X2)+SQ(Y1-Y2))' EVAL
+      "D" \->TAG
+   \>>
+\>>

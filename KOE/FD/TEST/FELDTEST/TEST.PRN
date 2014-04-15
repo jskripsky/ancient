@@ -1,0 +1,40 @@
+%&#
+
+#start_blockung
+40, 42, 53, 0, 
+
+#ende_blockung
+0, 
+
+#laenge_blockung
+3, 0, 
+
+#blockung
+0, 0, 0, 
+
+#felder
+1, 1, 1, 
+0, 0, 0, 
+
+#felder
+1, 1, 1, 
+2, 87, 9, 	 * 1 AUFNAHMENUMMER -- 1
+1, 1, 47, 	 * 2 PSD-NAME, VORNAME -- 2
+2, 77, 10, 	 * 11 PSD-AKAD GRAD -- 3
+1, 48, 30, 	 * 12 PSD-GEB-NAME -- 4
+2, 96, 8, 	 * 13 PSD-GEB-DAT -- 5
+1, 78, 30, 	 * 14 PSD-GEB-ORT -- 6
+2, 109, 1, 	 * 15 PSD-SEX -- 7
+1, 119, 2, 	 * 16 PSD-KONF -- 8
+2, 104, 3, 	 * 17 PSD-STAAT -- 9
+2, 107, 2, 	 * 18 PSD-FAMSTAND -- a
+1, 108, 11, 	 * 19 PAT-P-I-CODE -- b
+2, 57, 20, 	 * 20 PSD-BERUF -- c
+2, 1, 30, 	 * 21 PSD-STR -- d
+2, 31, 26, 	 * 22 PSD-PLZ, ORT -- e
+0, 0, 0, 
+
+#formular1
+0, 0, 
+
+%

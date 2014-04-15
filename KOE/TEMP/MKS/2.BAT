@@ -1,0 +1,4 @@
+CLS
+GWBASIC MK
+MENU
+

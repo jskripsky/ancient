@@ -1,0 +1,111 @@
+/*----------------------------------------------*/
+/*												*/
+/*		PV 1.0									*/
+/*		Template                           		*/
+/*		Form Definition Source File				*/
+/*												*/
+/*----------------------------------------------*/
+
+#include "FormDef\SpecDef.Use"
+
+
+#include <TV.H>
+#include "FormDef\SpecDef.H"
+
+
+TSpecDefinition::TSpecDefinition( TForm *(*)(), TStrListMaker *(*)() ) :
+	TFormDefinition( TSpecDefinition::initForm,
+					 TSpecDefinition::initStringList )
+	{ }
+
+
+TForm *TSpecDefinition::initForm()
+{
+	TForm *f = new TForm();
+	TPage *p;
+
+	TMeasurements m = TMeasurements();
+
+	/* Contructing Page 1... */
+	p = new TPage( "Titel der ersten Seite" );
+	m.reset();
+
+//	Alle Felder der ersten Seite hier einfgen.
+
+//	Bsp:
+
+//	p->insert( new TNameField( m, "Name", 28 ) );
+//	p->lastInserted->enableCard( 0, 0 );
+//	p->lastInserted->enableCardLabel( 0, 0, 27 );
+
+
+//	Korrekturen bei der vertikalen Platzierung wie folgt anbringen:
+//	m.control.a.y += dist;
+//	m.control.b.y += dist;
+
+	f->insert( p );
+	/* end of Page 1 */
+
+
+	/* Contructing Page 2... */
+	p = new TPage( "Titel der zweiten Seite" );
+	m.reset();
+
+//	Alle Felder der zweiten Seite hier einfgen.
+
+	f->insert( p );
+	/* end of Page 2 */
+
+
+//	Alle weiteren Seite hier konstruieren.
+
+	return f;
+}
+
+
+TStrListMaker *TSpecDefinition::initStringList()
+{
+	TStrListMaker *sl = new TStrListMaker( strSize, indexSize );
+
+	sl->put( skCorporation,					"Xxxx" );
+	// Kann leer gelassen werden.
+
+	sl->put( skPerson,						"Patient" );
+	// Art des zu Verwaltenden "Objekts". Bsp: Patient, Mitarbeiter...
+	// (Bildschirm-String)
+
+	sl->put( skPersonList,                  "~P~atienten" );
+	sl->put( skNewPerson,                   "Patienten ~e~infgen..." );
+	sl->put( skDeletePerson,                "Patienten ~l~”schen" );
+	sl->put( skEditPerson,                  "Daten ~m~odifizieren..." );
+	sl->put( skPrintPerson,                 "~F~ormular drucken" );
+	sl->put( skRawPrintPerson,              "~D~aten drucken" );
+	sl->put( skEncodeCard,                  "~K~arte codieren" );
+	// (Bildschirm-Strings)
+
+
+	sl->put( skHeapView,			"" );
+	// Intern. (Debugging-Betrieb)
+
+	sl->put( skOldDevice,			"" );
+	sl->put( skFormatedRawPrint,	"" );
+	sl->put( skNumRPCopiesDlg,		"" );
+
+	sl->put( skAutoSave,			"" );
+
+	sl->put( skFormDlgOK,			"~O~K" );
+	sl->put( skFormDlgCancel,		"~A~bbrechen" );
+	// (Bildschirm-Strings)
+
+	sl->put( skPrintLog,			"" );
+
+	sl->put( skConfirmNewPerson,	"" );
+	sl->put( skDisableOptions,		"" );
+
+	sl->put( skListWindowTitle,		"Patientendaten-Verwaltung" );
+	// (Bildschirm-Strings)
+
+	sl->put( skExportData,			"" );
+
+	return sl;
+}

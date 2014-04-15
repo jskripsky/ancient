@@ -1,0 +1,28 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"KREIS GES. MIT TAN-
+GENTE
+K:(x-u)^2+(y-v)^2=r^2
+P: P(Xo/Yo)
+INPUT u,v,r,Xo,Yo
+OUTPUT T1:M1,Q1
+       T2:M2,Q2"
+DISPHELP \-> U V R Xo
+Yo
+  \<< U V R MR\->GL 'Xo
+-U' EVAL 'Yo-V'
+EVAL \-> H1 H2
+    \<< H1 H2 'H1*-U+
+H2*-V-R^2' EVAL
+    \>> KRGE \-> Bx1
+By1 Bx2 By2
+    \<< { HOME
+ANALYTGEO ALPER
+GERADEN } EVAL Bx1
+By1 Xo Yo GGLP Bx2
+By2 Xo Yo GGLP {
+HOME ANALYTGEO
+ALPER KREIS } EVAL
+    \>>
+  \>>
+\>>

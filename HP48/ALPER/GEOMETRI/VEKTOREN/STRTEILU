@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<<"Streckenteilung
+===============
+Input: [xA yA] [xB yB] M N
+ TA:TB=M:N
+Output: [xTi yTi] [xT„ yT„]"
+DISPHELP \-> A B M N
+\<< 'N/(M+N)*A+M/(M+N)*B' EVAL
+"Ti" \->TAG
+IF 'M<N' THEN
+'M/(N-M)*(A+B)-A'
+ELSE
+'N/(M-N)*(A+B)-B'
+END
+EVAL "T„" \->TAG
+\>>
+\>>

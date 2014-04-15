@@ -1,0 +1,58 @@
+/*****************************************************************************
+**                                                                          **
+**                                                                          **
+**  Form Designer                                                           **
+**  =============                                                           **
+**                                                                          **
+**  Version 1.00                                                            **
+**                                                                          **
+**                                                                          **
+**  Copyright (C) 1993 Skribby Soft                                         **
+**                                                                          **
+** ======================================================================== **
+**                                                                          **
+**  tvFormField Class                                                       **
+**  -----------------                                                       **
+**                                                                          **
+**  Declared classes:                                                       **
+**    - Class tvFormField                                                   **
+**                                                                          **
+**                                                                          **
+**                                                                          **
+**  Module Name: TVFRMFLD.H                                                 **
+**                                                                          **
+*****************************************************************************/
+
+#ifndef TVFRMFLD
+#define TVFRMFLD
+
+#include "tvFrmObj.H"
+
+
+class tvFormField : public virtual tvFormObj
+{
+public:
+	tvFormField( tvFolder *aFolder, const char *aTitle );
+
+	virtual Boolean handleNotification( TView * );
+
+	virtual void fillDlg();
+
+protected:
+	int field;
+
+	virtual TObjDlg *createDlg();
+
+	virtual void invalidateShadow( tvObject * );
+
+
+protected:
+	tvFormField( StreamableInit );
+
+protected:
+	virtual void write( opstream& );
+	virtual void *read( ipstream& );
+};
+
+
+#endif

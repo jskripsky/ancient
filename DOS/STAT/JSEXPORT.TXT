@@ -1,0 +1,230 @@
+========================== DateiStruktur ==========================
+
+  ==========================================
+  = DateiKopf                              =
+  ==========================================
+  =   PersonenInfo 1                       =
+  ==========================================
+  =     Tag 1                              =
+  ==========================================
+  =     Tag 2                              =
+  ==========================================
+  =     Tag 3                              =
+  ==========================================
+  =     .                                  =
+  ==========================================
+  =     .                                  =
+  ==========================================
+  =     Tag 31                             =
+  ==========================================
+  =   PersonenInfo 2                       =
+  ==========================================
+  =     Tag 1                              =
+  ==========================================
+  =     .                                  =
+  ==========================================
+  =     .                                  =
+  ==========================================
+
+
+============================ DateiKopf ============================
+30 x Character		Identifikation
+			("TMS Exportfile, JS Format")
+
+1  x Byte		Grosse Versionsnummer (Immer 1)
+1  x Byte		Kleine Versionsnummer (Immer 0)
+
+1  x Word		Jahr
+1  x Byte		Monat
+1  x Byte		Anzahl Tage in diesem Monat
+
+1  x Word		Anzahl Personen in dieser Datei
+1  x Boolean		Flag, ob Daten Kontrolliert wurden
+			(Immer 1)
+= Total 39 Bytes ==================================================
+
+=========================== PersonenInfo ==========================
+1  x DWord		Personalnummer
+
+1  x Byte		LÑnge des folgenden Namen
+31 x Character		Name
+
+1  x Word		Jahr der Anstellung
+1  x Byte		Monat der Anstellung
+1  x Byte		Tag der Anstellung
+
+1  x Word		Jahr des Austritts
+1  x Byte		Monat des Austritts
+1  x Byte		Tag des Austritts
+(Jahr, Monat und Tag sind gleich 0, falls noch nicht ausgetreten)
+
+1  x Byte		BeschÑftigungsgrad (50 fÅr 50%)
+
+1  x Byte		LÑnge der folgenden Funktion
+6  x Character		Funktion
+
+1  x Byte		Anzahl benutzter Felder
+1  x Byte (Bit-field)	Benutzte Felder (Falls z.B. Feld 0
+			benutzt wird, ist Bit 0 gesetzt)
+
+==== 7 x Feld: ====
+1  x Byte		LÑnge des Feldes
+6  x Character		Feld
+===================
+= Total 103 Bytes =================================================
+
+=============================== Tag ===============================
+1  x Byte		Anzahl benutzter Stempelungen
+
+==== 20 x Stempelung: ====
+1  x Word (Bit-field):	Bit 0-13:  Zeit der Stempelung
+			Bit 14:    Code der Stempelung
+			           (0=Eingang, 1=Ausgang)			
+==========================
+
+1  x Byte		Anzahl benutzter BegrÅndungen
+
+==== 21 x BegrÅndungen: ====
+1  x DWord (Bit-field):	Bit 0-13:  Dauer der BegrÅndung
+			Bit 16-25: Code der BegrÅndung
+			Bit 26-27: Typ der BegrÅndung
+			           (0=Abwesenheit,
+			            1=Anwesenheit,
+			            2=Neutral)
+			Bit 28-30: Herkunft-Code der Begr.
+			           (0=Manuell, 1=PrÑventif,
+			            2=am Terminal,
+			            3=automatisch,
+			            4=Sonderzeiten)
+============================
+
+1  x Byte		Anzahl benutzter Zeitkonti
+1  x DWord (Bit-field)	Benutzte Zeitkonti
+20 x Word mit Vorzeich. Zeitkonti
+= Total 171 Bytes =================================================
+
+
+=== Resultierende Dateigrîsse: ===
+
+ DateiKopf + ANZPERSONEN * (PersonenInfo + ANZTAGE * Tag)
+        39 + ANZPERSONEN * (         103 + ANZTAGE * 171)
+
+
+
+===== Allgemeine Informationen =====
+
+== Daten ==
+ - Jahresangaben enthalten die vollstÑndige Jahreszahl
+   (z.B. 1992)
+
+ - Monatsangaben enthalten die Nummer des Monats, mit 1
+   beginnend (z.B. 2 fÅr Februar)
+
+ - Tagesangaben beginnen ebenfalls mit 1.
+
+ Beispiel: 10. MÑrz 1993
+	   ==> Jahr 1993, Monat 3, Tag 10.
+
+== Strings ==
+ - Strings, d.h. Ketten von Characters, werden am
+   Schluss mit NULL (Character 0) aufgefÅllt.
+
+== Bit-fields ==
+ - Bei Bit-fields ist mit Bit 0 das tiefste Bit gemeint,
+   d.h. setzen oder lîschen dieses Bit Ñndert den Wert
+   des Byte um 1.
+
+== Boolean ==
+ - Booleans sind 1 Byte gross und enthalten entweder den Wert 0 oder 1.
+
+
+== Unbenutzte Dateistellen ==
+ - Es wird empfohlen, dass unbenutzte Dateistellen mit NULL
+   aufgefÅllt werden.
+
+
+
+==========================   C-Listing   ==========================
+
+typedef unsigned int        WORD;
+typedef signed int          SWORD;
+
+typedef unsigned long       DWORD;
+
+typedef unsigned char       BYTE;
+typedef unsigned char       CHAR;
+typedef unsigned char       BOOL;
+
+#define UNSIGNED        unsigned
+
+
+#pragma pack( 1 )  // Byte-Alignment!!
+
+struct DateiKopf
+    {
+    CHAR        IdMarke[30];
+    BYTE        GrVersion;
+    BYTE        KlVersion;
+
+    WORD        Jahr;
+    BYTE        Monat;
+    BYTE        AnzTage;
+
+    WORD        AnzPersonen;
+    BOOL        Kontrolliert;
+    };
+
+struct PersonenInfo
+    {
+    DWORD       Personalnummer;
+
+    BYTE        LaengeName;
+    CHAR        Name[31];
+
+    WORD        JahrAnstellung;
+    BYTE        MonatAnstellung;
+    BYTE        TagAnstellung;
+
+    WORD        JahrAustritt;
+    BYTE        MonatAustritt;
+    BYTE        TagAustritt;
+
+    BYTE        Beschaeftigungsgra
+
+    BYTE        LaengeFunktion;
+    CHAR        Funktion[6];
+
+    BYTE        AnzFelder;
+    BYTE        BenutzteFelder;
+    struct
+        {
+        BYTE    LaengeFeld;
+        CHAR    Feld[6];
+        }       Felder[7];
+    };
+
+struct Tag
+    {
+    BYTE        AnzStempelungen;
+    struct
+        {
+        UNSIGNED Zeit       : 14;
+        UNSIGNED EinAusgang :  1;
+        }       Stempelungen[20];
+
+    BYTE        AnzBegruendungen;
+    struct
+        {
+        UNSIGNED Dauer      : 14;
+        UNSIGNED Code       : 10;
+        UNSIGNED Typ        :  2;
+        UNSIGNED Herkunft   :  3;
+        }       Begruendungen[21];
+
+    BYTE        AnzZeitkonti;
+    DWORD       BenutzteZeitkonti;
+    SWORD       Zeitkonti[20];
+    };
+
+#pragma pack()
+

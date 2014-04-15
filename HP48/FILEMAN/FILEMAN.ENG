@@ -1,0 +1,487 @@
+                                     
+                          The HP 48 File Manager
+                                     
+                              James Donnelly
+                                     
+              Copyright (c) Armstrong Publishing Company 1991
+
+
+Notice of Rights and Warranty
+-----------------------------
+
+All rights reserved.  No part of this software may be reproduced,
+transmitted, or stored in a retrieval system in any form or by any process,
+electronic, mechanical, photocopying or means yet to be invented, without
+specific prior written permission of the author, James Donnelly.
+
+The software and this documentation are provided "as is" and are subject to
+change without notice.  Neither James Donnelly nor Hewlett-Packard Company
+make any warranty of any kind with regard to this software or manual,
+including, but not limited to, the implied warranties of merchantability
+and fitness for any purpose.  Neither James Donnelly nor Hewlett-Packard
+Company shall be liable for any error or for incidental or consequential
+damages in connection with the furnishing, performance, or use of this
+software, documentation, or examples presented herein.
+
+The owner of this software is granted a one-user, non-commercial license to
+use the enclosed software, and may not copy, distribute, or transfer the
+software under any circumstances without specific prior written permission
+of the author, James Donelly.  Commercial software developers may apply for
+licensing.
+
+Kermit is Copyright (c) Trustees of Columbia University in the City of New
+York 1990.  Permission is granted to any institution to use, copy, or
+redistribute Kermit software so long as it is not sold for profit, provided
+this copyright notice is retained.
+
+MS-DOS is a registered trademark of Microsoft Corporation.
+
+
+Acknowledgements
+----------------
+
+Special thanks go to Scott Burke, Mark Forbes, Nader Rahimizad, Eric L.
+Vogel, and Dennis York for their advice, ideas, support, and encouragement.
+
+
+Contents
+--------
+
+Getting Started
+Installing the File Manager
+Removing the File Manager
+Using the File Manager
+Viewing Directories
+Menu Key Commands
+Local Operations
+Remote Operations
+Exiting the File Manager
+File Naming Conventions
+
+
+Getting Started
+---------------
+
+The HP 48 File Manager is an HP 48 program that is designed to simplify the
+display of data within the HP 48, and simplify transfer to or from a Kermit
+server on an MS-DOS compatible computer.
+
+This application consists of eight files on the disk in the FILEMAN
+directory:
+
+FMREADME.ENG   Read this file to find the current version of the File
+               Manager and any update information.
+
+FILEMAN.ENG    This documentation file.
+
+FMLIB          The HP 48 File Manager library.
+
+KERMIT.EXE     The Kermit file exchange program for a PC.
+
+KERMIT.HLP     The Kermit help file.
+
+KERMIT.PIF     The Kermit PIF file for Windows.
+
+KERMIT.BWR     Known Bugs and Limitations of Kermit.
+
+KERMIT.UPD     The latest update information for Kermit.
+
+The files KERMIT.HLP, KERMIT.UPD, and KERMIT.BWR contain help information
+and information about this latest release or Kermit.
+
+
+Installing the File Manager
+---------------------------
+
+The File Manager has been implemented as a library object with library ID
+#832h.  To install the File Manager, perform the following:
+
+1.  Connect the HP 48 and the PC.
+
+2.  Start the Kermit program on the PC.  At the Kermit prompt, specify the
+    port that the HP 48 is connected to by typing:
+
+      SET PORT COM1
+
+    ( or COM2 as appropriate ).  Type
+
+      SET BAUD 9600
+
+    to specify the baud rate.
+
+3.  Press:
+
+      [LS]-[I/O] |SETUP|
+
+    on the HP 48 to set the baud rate to match the Kermit communications
+    settings.  The default settings are wire transfer, 9600 baud, no
+    parity, and checksum type 3.
+
+4.  Press:
+
+      [LS]-[I/O] |RECV|
+
+    then type:
+
+      SEND FM.LIB [ENTER]
+
+    on the computer.  Kermit will now transmit the File Manager library to
+    the HP 48.  If this doesn't work, check that the correct port has been
+    specified on the computer and that the communications settings match.
+
+5.  Recall the library to the stack from the variable FM.LIB.
+
+6.  Purge the variable FM.LIB, leaving the library object in level one of
+    the stack.
+
+7.  Store the library object in a port, such as port 0. For instance, when
+    the library object is in level one of the stack, press:
+
+      0 [STO]
+
+8.  Turn the calculator off, then on again.  The calculator will perform a
+    system halt, which updates the system configuration to recognize the
+    new library.  The File Manager library automatically attaches itself to
+    the HOME directory.
+
+Before running the File Manager,  you may want to verify your settings of
+HP 48 system flags -36, which enables receive overwrite if set, and -39,
+which suppresses Kermit messages in the HP 48 display if set.
+
+To display the File Manager commands, press [LS]-[LIBRARY] |FMGR|.  The
+command |FMGR| starts the File Manager, and |VER| displays the version of
+the software:
+
+Make sure that Kermit is running on the computer, and that the
+communications settings are correct.  At the Kermit prompt, type  SERVER
+to start the server operation.  The server may be interrupted by pressing
+[Ctrl]-C.
+
+
+Removing the File Manager
+-------------------------
+
+To remove the library, switch to the HOME directory, enter :0:823 (where 0
+refers to the port in which the library is stored), duplicate the entry,
+and execute DETACH and then PURGE.  The HP 48 display will flicker briefly
+as the library is purged.
+
+
+Using the File Manager
+----------------------
+
+The File Manager assumes it is talking to a remote Kermit server running on
+an MS-DOS platform.  The KERMIT.EXE program supplied on the disk will work
+on most IBM PC compatible systems.  Connect the HP 48 to the remote host,
+ensuring that the data transfer settings are correct.
+
+Press [LS]-[LIBRARY] |FMGR| to start the File Manager. The current
+directory in the HP 48 is displayed first.
+
+
+Viewing Directories
+-------------------
+
+The path to the current directory is shown at the top of the display. The
+objects stored in that directory are shown in the main portion of the
+screen.  If there are more objects in the current directory than will fit
+in the display, small arrows will appear to the left of the path to
+indicate that there are additional objects to view.
+
+
+MOVING THE HIGHLIGHT
+
+The menu keys at the bottom of the display, in combination with various
+other keys, control the actions of the File Manager.  The arrow keys (
+[down] [up] [left] [right] ) move the highlight from one object to another.
+The LSed arrow keys ( [LS]-[up] and [LS]-[down] ) move the highlight up or
+down a page at a time.  The right-shifted arrow keys ( [RS]-[up] and [RS]-
+[down] ) move the highlight to the top or bottom of the directory.
+
+
+SELECTING FILES
+
+The |MARK| menu key is used to select one or more files for transfer or
+deletion.  A prefix character ( |> ) indicates that an file has been
+marked.  If no files are marked, the currently highlighted file will be
+assumed.
+
+
+CHANGING DIRECTORIES
+
+A prefix character ( {delta} ) indicates that an object is a directory.  To
+show the contents of the directory, press [ENTER].  The path list at the
+top of the display will now indicate that the current path has changed.  To
+go up a directory level, press [LS]-[UP].  To go to the HOME directory,
+press [RS]-[HOME].
+
+
+Menu Key Commands
+-----------------
+
+The menu keys |HP48| and |DISK| switch the directory display between the HP
+48 and the remote system.  There are two sets of menu keys in the File
+Manager.  The first set, called the local menu, contains menu keys that
+refer to objects in the HP 48 directory.  The second set, called the remote
+menu, contains menu keys that refer to files on the remote host.
+
+
+LOCAL MENU KEYS
+
+The local menu keys are defined as follows:
+
+|SEND|    Sends the highlighted object (or marked objects) from the HP 48
+          to the remote system.
+
+|CRDIR|   Creates a new directory object in the current directory in the HP
+          48.
+
+|INFO|    Shows the name, type, and size of the currently highlighted
+          object.
+
+|MARK|    Marks the highlighted object for a future SEND or PURGE command.
+          Pressing [LS]-|MARK| marks all objects, and [RS]-|MARK| clears
+          all marks.
+
+|DISK|    Reads and displays the remote directory.  Also displays the
+          remote menu.
+
+|QUIT|    Terminates the File Manager.
+
+          [NXT]
+
+|MEM|     Displays the available memory in the HP 48.
+
+|NAME|    Renames an object.
+
+|ARCHI|   Backs up the HP 48 to the remote system.
+
+In addition to the menu keys, the [LS]-[PURGE] key is used for deleting
+marked objects (or the highlighted object if none are marked).
+
+
+REMOTE MENU KEYS
+
+When the local menu keys are displayed, pressing |DISK| displays the remote
+menu keys. The remote menu keys are defined as follows:
+
+|GET|     Copies the highlighted file (or marked files) from the remote
+          system to the HP 48.
+
+|CRDIR|   Creates a directory on the remote system.
+
+|INFO|    Displays the name and size of the highlighted file.
+
+|MARK|    Marks the highlighted file for a future GET or PURGE command.
+          Pressing [LS]-|MARK| marks all files, and [RS]-|MARK| clears all
+          marks.
+
+|HP48|    Reads and displays the current HP 48 directory.  Also displays
+          the local menu.
+
+|QUIT|    Terminates the File Manager.
+
+          [NXT]
+
+|FREE|    Displays the free space on the remote disk.
+
+|NAME|    Renames a file.
+
+|DIR|     Rereads the directory on the remote system.
+
+In addition to the menu keys, the [LS]-[PURGE] key is used for deleting
+marked files (or the highlighted file if none are marked).
+
+
+Local Operations
+----------------
+
+
+SENDING ONE OR MORE OBJECTS
+
+To transfer the marked objects (or the highlighted object if none have been
+marked) from the HP 48 to the remote system, press |SEND|.  The File
+Manager will present a choice of ASCII or binary file transfer.  If an
+object is to be sent in ASCII form, make sure the translate code for the HP
+48 has been set to your desired setting.  The [LS]-[I/O] |SETUP| menu or
+the TRANSIO command may be used to set the translate code.  The most
+reliable setting is TRANSIO 3.
+
+If no objects have been marked, the highlighted file will be sent.  The
+File Manager prompts for ASCII or binary transfer for the entire group of
+objects to be sent.
+
+To send all objects in ASCII, press |ASCII|.  To send all objects in
+binary, press |BIN|.  Some object types, such as libraries, will be sent in
+binary mode regardless of the choice made in this menu.  To abort the send
+process, press [ATTN].
+
+
+PURGING ONE OR MORE OBJECTS
+
+To purge the marked objects (or the highlighted object if none have been
+marked), press [LS]-[PURGE].  The File Manager will generate a confirmation
+screen for each object to be purged.
+
+If the object to be purged is a directory, the File Manager will sound a
+beep to alert you.  Press |YES| to purge the object, or |NO| to skip this
+object and continue on the the next marked object.  Press [ATTN] to abort
+the entire purge operation and return to the directory display.
+
+---------------------------------------------------------------------------
+WARNING:     If the object to be purged is a directory, the File Manager
+        will sound a beep to alert you.  Pressing  |YES| will purge the
+        directory and any objects it contains, including any sub-
+        directories.
+---------------------------------------------------------------------------
+
+
+CREATING A DIRECTORY
+
+To create a new subdirectory in the HP 48, press |CRDIR|.  Enter the name
+of the new directory and press [ENTER], or press [ATTN] to abort the
+operation.
+
+
+DISPLAYING OBJECT INFORMATION
+
+To display the name, type of stored object, and object size of the
+currently highlighted object, press |INFO|.  Press any key to return to the
+directory display.
+
+
+ARCHIVING THE HP 48
+
+To create an archive of the HP 48 on the remote system, press |ARCHI|.  The
+File Manager requests a remote file name, which defaults to Ammddyy, (or
+Addmmyy if flag -42 is set) where the digits are taken from the current
+date.  Edit the file name and press [ENTER], or press [ATTN] to abort the
+operation and return to the directory display.
+
+---------------------------------------------------------------------------
+ Note:  The ARCHIVE command on the HP 48 does not save either the contents
+        of independent memory or the states of user and system flags.
+---------------------------------------------------------------------------
+
+
+DISPLAYING AVAILABLE MEMORY
+
+To display the available memory in the HP 48, press |FREE|. Press any key
+to return to the directory display.
+
+
+RENAMING AN OBJECT
+
+To rename the highlighted object, press |NAME|.  Enter the new name and
+press [ENTER], or press [ATTN] to abort the operation and return to the
+directory display.
+
+
+Remote Operations
+-----------------
+
+
+GETTING ONE OR MORE FILES
+
+To transfer the marked files from the remote system into the HP 48 (or the
+highlighted file if none are marked), press |GET|.  The type of transfer
+(ASCII or binary) is determined by the first few bytes of the remote file,
+so the transmission mode doesn't have to be set on the HP 48.
+
+
+PURGING ONE OR MORE FILES
+
+To purge the marked files (or the highlighted file if none have been
+marked), press [LS]-[PURGE].  The File Manager will generate a confirmation
+screen for each file to be purged.
+
+If the file to be purged is a directory, the File Manager will sound a beep
+to alert you.  Press |YES| to purge the file, or |NO| to skip this file and
+continue on the the next file.  Press [ATTN] to abort the entire purge
+operation and return to the directory display.
+
+
+CREATING A DIRECTORY
+
+To create a new subdirectory on the remote system, press |CRDIR|.  Enter
+the name of the new directory and press [ENTER], or press [ATTN] to abort
+the operation.
+
+
+DISPLAYING FILE INFORMATION
+
+To display the name and size of the currently highlighted file, press
+|INFO|.  Press any key to return to the directory display.
+
+
+DISPLAYING FREE SPACE
+
+To display the free disk space, press  |FREE|.  Press any key to return to
+the directory display.
+
+
+RENAMING A FILE
+
+To rename the highlighted object, press |NAME|.  Enter the new name and
+press [ENTER], or press [ATTN] to abort the operation and return to the
+directory display.
+
+
+RE-READING THE DIRECTORY
+
+If you have changed disks in the remote system, press |DIR| to force the
+File Manager to read the new directory.
+
+
+Exiting the File Manager
+------------------------
+
+You may press either [ATTN] or |QUIT| to exit the File Manager.  If the HP
+48 has been communicating with a remote host, the File Manager will ask if
+a "finish" command should be sent to the remote host.
+
+Press |YES| to send the "finish" command which will either exit server mode
+in Kermit or turn off the Sparcom disk drive. Press |NO| to exit without
+sending the finish command.  You may also press [ATTN] to return to the
+directory display.
+
+
+File Naming Conventions
+-----------------------
+
+MS-DOS file names and HP 48 variable names allow different sets of
+characters in their file names.  This can create some problems when files
+are transferred between the two systems.
+
+
+HP 48 VARIABLE NAMES
+
+Variable names may contain letters, digits, and most characters.  Names
+must not:
+
+ o Start with a digit
+
+ o Contain object delimiters or the characters + - * / ^ {integral} = < >
+   {less-than-or-equal-to} {greater-than-or-equal-to} {not-equal-to}
+   {derivative} ! , @ or a space.
+
+ o Duplicate a built-in command name or reserved word
+
+
+MS-DOS FILE NAMES
+
+File names may contain up to eight characters, followed by an optional
+period and extension containing up to three characters.  Names must not:
+
+ o Use a period except to separate the extension
+
+ o Exceed eight characters in the name or three characters in the extension
+
+ o Contain the characters . " / \  < > + , : = ;  or a space.
+
+ o Contain .EXE or .COM extensions, which are reserved for DOS executable
+   files.
+
+---------------------------------------------------------------------------
+
+V 1.0 04/24/92 04:04 PM

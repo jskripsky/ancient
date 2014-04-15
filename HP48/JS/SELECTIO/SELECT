@@ -1,0 +1,19 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Select 1.0
+=========
+
+
+
+Eingabe: 
+Ausgabe: "
+   DISPHELP
+
+   PATH
+   \-> OLDDIR
+   \<<
+      { HOME JS.SELECTION } EVAL
+      SEL
+      OLDDIR EVAL
+   \>>
+\>>

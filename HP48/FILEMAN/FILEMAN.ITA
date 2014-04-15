@@ -1,0 +1,331 @@
+
+                                FILEMAN.ITA
+
+                           File Manager per HP 48
+                             di James Donnelly
+
+              Copyright (c) Armstrong Publishing Company 1991
+
+
+Informazioni su diritti e garanzia
+----------------------------------
+
+Tutti i diritti sono riservati. Nessuna parte di questo software pu• essere 
+riprodotta, trasmessa o memorizzata in un sistema di archiviazione in qualsiasi
+forma o per mezzo di qualunque processo, elettronico, meccanico, per fotocopia
+o con mezzi non ancora inventati, senza un precedente specifico permesso
+scritto da parte dell'autore, James Donnelly.
+
+Il software e questa documentazione sono soggetti a modifica senza preavviso. 
+James Donnelly e Hewlett-Packard Company non rilasciano nessuna garanzia 
+relativamente a questo software o questo manuale, comprese, ma non sole, le 
+garanzie implicite di commerciabilit… e idoneit… ad usi specifici. 
+James Donnelly, e Hewlett-Packard Company non saranno responsabili degli 
+errori o dei danni accidentali o conseguenti in relazione alla fornitura, alle 
+prestazioni, o all'uso di questo software, di questa documentazione, o degli 
+esempi qui presentati.
+
+Al possessore del software Š accordata una licenza per un solo utente, non
+commerciale, per l'uso del software accluso, e non gli sar… permesso copiare,
+distribuire o trasferire il software in qualunque circostanza senza il 
+precedente permesso scritto dell'autore, James Donnelly. Gli sviluppatori di 
+software commerciale possono fare richiesta di licenza.
+
+Kermit Š Copyright (c) di Trustees of Columbia University nella citt… di New
+York 1990. E' accordato a qualunque istituzione il permesso di usare, copiare,
+o ridistribuire il software Kermit a patto che questo non venga venduto per
+profitto e che questo avviso di copyright venga mantenuto.
+
+MS-DOS Š un marchio registrato di Microsoft Corporation.
+
+===============================================================================
+Nota:
+
+Tutto il testo che segue Š una versione abbreviata del testo originale inglese,
+che fornisce tutte le istruzioni per l'utente. Il testo completo lo si pu•
+trovare nel file .ENG.
+===============================================================================
+
+Introduzione
+------------
+
+Il programma File Manager per HP 48 Š un programma inteso a semplificare la 
+visualizzazione dei dati all'interno di HP 48 e a semplificare il 
+trasferimento verso o da un server Kermit su un computer MS-DOS compatibile.
+
+Gli altri file che sono in relazione con questa applicazione sono spiegati in
+FILELIST.LLL.
+
+
+Installazione di File Manager
+-----------------------------
+
+1.  Collegare HP 48 e il PC (si presume che venga usata la porta COM1 del
+    PC, ma si pu• usare anche COM2).
+
+2.  Sul PC, avviare il programma Kermit scrivendo:
+          KERMIT  [ENTER]
+    Quando appare il prompt:    KERMIT>
+    scrivere:
+
+          SET PORT COM1                per specificare la posta seriale
+    poi:
+          SET BAUD 9600                (9600 Š il valore predefinito di HP 48)
+
+    ------------------------------------------------------------------------
+    Nota: Si pu• automatizzare questa operazione per usi futuri, creando 
+          nell'indice FILEMAN un file chiamato MSKERMIT.INI che contenga 
+          semplicemente queste due righe:
+               SET PORT COM1
+               SET BAUD 9600
+    ------------------------------------------------------------------------
+
+3.  Su HP 48 premere:
+
+          [LS]-[I/O] |SETUP|   per verificare le impostazioni di comunicazione
+                               e cambiarle, se necessario.
+    Le impostazioni predefinite sono: trasferimento cablato, 9600 baud, nessuna
+    parit… e checksum di tipo 3.
+
+    ------------------------------------------------------------------------
+    Avvertenza: Se si vogliono memorizzare sul disco del PC dei dati di 
+    HP 48 che contengono caratteri accentati come , ¤, , ‡, accertarsi di 
+    avere TRANSLATE CODE = 3
+    ------------------------------------------------------------------------
+
+4.  Su HP 48, premere:
+
+      [LS]-[I/O] |RECV|
+
+5.  Sul computer, scrivere:
+
+      SEND FM.LIB [ENTER]
+
+    Kermit trasmette ad HP 48 la libreria File Manager. Se non funziona,
+    controllare che sul computer sia stata specificata la porta corretta 
+    (COM1 o COM2) e che le impostazioni di comunicazione concordino.
+
+6.  Su HP 48 premere:
+
+    [VAR] ['] |FMLIB| [RS]-[RCL]  Richiama la libreria al livello di catasta 1
+
+    ['] |FMLIB| [PURGE]           Cancella la variabile
+
+    0 [STO]                       Memorizza la libreria nella porta 0 (o 1, 
+                                  o 2 per una scheda RAM di HP 48SX)
+
+    [RS]-[OFF]   e poi [ON]       La libreria File Manager si unisce automati-
+                                  camente all'indice HOME.
+
+Prima di eseguire File Manager, Š consigliabile verificare le impostazioni dei
+seguenti flag di sistema di HP 48: -36, che permette la sovrascrittura in
+ricezione se Š attivato, e -39, che sopprime i messaggi Kermit nel visore
+di HP 48, se attivato.
+
+Rimozione di File Manager
+-------------------------
+
+Se si deve togliere la libreria, passare all'indice HOME e premere
+     :0:874 [ENTER] [ENTER]     (Se 0 Š il numero della porta di FMGR)
+     [RS]-[MEMORY] |DETACH|
+     [RS]-[PURGE]
+
+
+Uso di File Manager
+-------------------
+
+File Manager Š basato sulla comunicazione con un server Kermit remoto funzio-
+nante su una piattaforma MS-DOS. Il programma KERMIT.EXE fornito sul disco 
+funziona con la maggior parte dei sistemi IBM PC compatibili.
+
+Collegare HP 48 e il computer come illustrato sopra.
+
+Sul computer, avviare KERMIT; al prompt KERMIT> scrivere, se Š necessario:
+     SET PORT COM1   e     SET BAUD 9600      come illustrato al punto 2).
+
+Se si vuole accedere a dei file che si trovano in un altro disco del 
+computer, scrivere:   
+     CD A:     per accedere da HP 48 all'unit… disco A:.
+
+Scrivere:
+     SERVER         per avviare il funzionamento come server.
+                    Il server pu• essere interrotto premendo [Ctrl]-C.
+
+Su HP 48, premere:
+     [LS]-[LIBRARY] |FMGR|  attiva la libreria
+   ( |VER|                  visualizza semplicemente la versione del software)
+     |FMGR|                 avvia File Manager.
+
+Per primo viene visualizzato l'indice corrente di HP 48.
+
+I tasti di menu nella parte inferiore dello schermo, in combinazione con 
+vari altri tasti, controllano le funzioni di File Manager.
+
+
+Visualizzazione degli indici
+----------------------------
+
+Il percorso all'indice corrente Š mostrato nella parte alta del visore. Gli
+oggetti memorizzati in questo indice sono presentati nella parte principale 
+dello schermo. Se nell'indice corrente vi sono pi— oggetti di quanti ne
+possono essere visualizzati sul visore, a sinistra del percorso compariranno 
+delle freccette per indicare che vi sono altri oggetti da visualizzare.
+
+
+Cambiamento di indici
+---------------------
+
+               Un prefisso ( {v} ) indica che un oggetto Š un indice;
+[ENTER]        scende di un livello di indice.
+
+[LS]-[UP]      sale di un livello di indice,
+
+[RS]-[HOME]    porta all'indice HOME.
+
+
+Selezione di oggetti
+--------------------
+
+[gi—] [su] [sin.] [des.] )  spostano l'evidenziatura da un oggetto all'altro
+[LS]-[su] e [LS]-[gi—]   )  spostano una pagina per volta
+[RS]-[su] e [RS]-[gi—]   )  portano all'inizio o alla fine dell'indice.
+
+|MARK|       Seleziona i file da trasferire o da cancellare.
+             { |> }  indica che un file Š stato selezionato. Se non vi sono 
+                     file contrassegnati, le operazioni richieste vengono
+                     eseguite solo sul file attualmente evidenziato.
+
+[LS]-[PURGE]  cancella gli oggetti contrassegnati (o il singolo oggetto 
+              evidenziato).
+
+        ----------------------------------------------------------------------
+        AVVERTENZA: Se l'oggetto che si deve cancellare Š un indice di HP 48, 
+        File Manager emette un segnale acustico di avviso. Se si preme |YES|, 
+        viene cancellato l'indice e gli oggetti in esso contenuti, compresi 
+        tutti i sottoindici(*).
+        ----------------------------------------------------------------------
+
+
+Comandi con tasto a menu
+------------------------
+
+Lo schermo di HP 48 mostra i tasti di dati e di menu che si riferiscono
+al disco DOS (remoto), oppure i tasti di dati e menu che si riferiscono
+allo stesso HP 48 (locale).
+
+I comandi affiancati da un (*) possono essere interrotti premendo [ATTN].
+
+
+Menu locale
+-----------
+
+|SEND|    Invia l'oggetto evidenziato (o gli oggetti contrassegnati) da HP 48
+          al sistema remoto. (*)
+
+          File Manager permette di scegliere tra il trasferimento dei file in 
+          modo ASCII o binario per l'intero gruppo di oggetti da inviare. Se
+          un oggetto deve essere inviato in formato ASCII, accertarsi che il 
+          codice di traduzione per HP 48 sia stato impostato sui valori
+          desiderati. Alcuni tipi di oggetti, come le librerie, sono inviati 
+          in modo binario, indipendentemente dalla scelta effettuata in questo 
+          menu.
+
+|CRDIR|   Crea un nuovo indice nell'indice attuale di HP 48. (*)
+
+|INFO|    Mostra il nome, il tipo e la dimensione dell'oggetto attualmente
+          evidenziato.
+
+|MARK|    Seleziona l'oggetto evidenziato per un futuro comando SEND o PURGE.
+[LS]-|MARK|    Seleziona tutti gli oggetti.
+[RS]-|MARK|    Cancella tutte le selezioni.
+
+|DISK|    Legge e visualizza l'indice remoto. Visualizza anche il menu 
+          remoto. Vedere pi— avanti.
+
+|QUIT|    Termina File Manager e chiede se il computer remoto deve uscire
+          dal modo server.
+
+----  [NXT] ----
+
+|MEM|     Visualizza la memoria disponibile in HP 48.
+
+|NAME|    Cambia nome all'oggetto evidenziato. (*)
+
+|ARCHI|   Effettua un backup di HP 48 sul sistema remoto (vedere il manuale 
+          utente di HP 48).
+          -------------------------------------------------------------------
+          Nota:  Il comando ARCHIVE di HP 48 non memorizza n‚ il contenuto
+                 della memoria indipendente, n‚ gli stati dei flag utente e
+                 dei flag di sistema.
+          -------------------------------------------------------------------
+
+
+Menu remoto
+-----------
+
+|GET|     Copia il file evidenziato (o i file contrassegnati) dal sistema 
+          remoto ad HP 48.
+
+          Il tipo di trasferimento (ASCII o binario) Š determinato automatica-
+          mente dai primi byte del file remoto.
+
+|CRDIR|   Crea un indice sul sistema remoto.
+
+|INFO|    Visualizza il nome e la dimensione del file evidenziato.
+
+|MARK|      Seleziona il file evidenziato per un futuro comando GET o PURGE.
+[LS]-|MARK| Seleziona tutti i file.
+[RS]-|MARK| Cancella tutte le selezioni.
+
+|HP48|    Legge e visualizza l'indice corrente di HP 48. Visualizza anche
+          il menu locale.
+
+|QUIT|    Termina File Manager.
+
+          [NXT]
+
+|FREE|    Visualizza lo spazio libero sul disco remoto.
+
+|NAME|    Cambia nome a un file.
+
+|DIR|     Rilegge l'indice sul sistema remoto.
+
+
+Convenzioni sull'assegnazione dei nomi ai file
+----------------------------------------------
+
+I nomi dei file MS-DOS e i nomi delle variabili HP 48 consentono di usare
+gruppi diversi di caratteri nei rispettivi nomi di file. Ci• pu• causare 
+qualche problema quando i file vengono trasferiti da un sistema all'altro.
+
+
+Nomi di variabili HP 48:
+
+I nomi delle variabili possono contenere lettere, numeri e la maggior parte
+dei caratteri. I nomi non devono:
+
+ o Iniziare con una cifra
+
+ o Contenere delimitatori di oggetti o i caratteri + - * / ^ {integrale} = < >
+   {minore-di-o-uguale-a} {maggiore-di-o-uguale-a} {non-uguale-a}
+   {derivata} ! , @ o lo spazio.
+
+ o Avere lo stesso nome di un comando incorportato o di una parola riservata.
+
+
+Nomi di file MS-DOS
+
+I nomi di file possono contenere fino a otto caratteri, seguiti facoltativamente
+da un punto e un'estensione con un massimo di tre caratteri. I nomi non devono:
+
+ o Usare un punto tranne che per separare l'estensione
+
+ o Superare otto caratteri nel nome o tre caratteri nell'estensione
+
+ o Contenere i caratteri . " / \  < > + , : = ;  o uno spazio
+
+ o Contenere estensioni .EXE o .COM, che sono riservate per file DOS 
+   eseguibili.
+
+Non sono permesse operazioni sui file con l'uso di * o ? come caratteri 
+globali.

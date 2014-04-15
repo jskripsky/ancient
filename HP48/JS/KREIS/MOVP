@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Punkt verschieben  
+-----------------
+
+
+
+Eingabe: X Y VX VY
+Ausgabe: X Y"
+DISPHELP
+
+   \-> X Y VX VY
+   \<<
+      X VX +
+      Y VY +
+   \>>
+\>>

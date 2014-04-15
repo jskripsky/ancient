@@ -1,0 +1,5 @@
+#include "DataBase\File.Use"
+#include "DataBase\Entry.Use"
+
+#define Uses_TSortedCollection
+#define Uses_fpstream

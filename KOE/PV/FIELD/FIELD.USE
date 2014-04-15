@@ -1,0 +1,13 @@
+#include "Person\Info.Use"
+#include "Device.Use"
+#include "InfoHead.Use"
+
+#define Uses_TOject
+#define Uses_TStreamable
+#define Uses_TPoint
+#define Uses_TRect
+#define Uses_TView
+#define Uses_TGroup
+#define Uses_TStaticText
+#define Uses_TLabel
+#define Uses_TScrollBar

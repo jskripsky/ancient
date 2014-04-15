@@ -1,0 +1,138 @@
+.topic NoCxt=0
+
+Keine Hilfe verfuegbar.
+
+.topic HelpOnHelp=1000
+
+ Hilfe
+ ÍÍÍÍÍ
+
+.topic Hierarchy
+
+ Ordner-Hierarchie Version I
+ ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+  Hauptordner
+  ÄÄÄÄÄÂÄÄÄÄÄ
+       ÃÄÄÄÄÄÄÄ Systeme
+       ³        ÄÄÄÂÄÄÄ
+       ³           ÃÄÄÄÄÄÄ IBM PC
+       ³           ÃÄÄÄÄÄÄ IBM PS2
+       ³           ÃÄÄÄÄÄÄ IBM Host
+       ³           ÀÄÄÄÄÄÄ Siemens
+       ³
+       ³
+       ÃÄÄÄÄÄÄÄ Klinikum Hof
+       ³        ÄÄÄÄÄÄÂÄÄÄÄÄ
+       ³              ÃÄÄÄÄÄÄÄ Tasten
+       ³              ³        ÄÄÄÂÄÄ
+       ³              ³           ÃÄÄÄÄÄÄÄ Tab
+       ³              ³           ÃÄÄÄÄÄÄÄ Enter
+       ³              ³           ÀÄÄÄÄÄÄÄ Space
+       ³              ³
+       ³              ÃÄÄÄÄÄÄÄ Personalien I
+       ³              ³        ÄÄÄÄÂÄÄÄÄÄÄÄÄ
+       ³              ³            ÃÄÄÄÄÄÄÄ Vorname
+       ³              ³            ÃÄÄÄÄÄÄÄ Name
+       ³              ³            ÀÄÄÄÄÄÄÄ Geburtsdatum
+       ³              ³ 
+       ³              ÃÄÄÄÄÄÄÄ Personalien II
+       ³              ³        ÄÄÄÄÂÄÄÄÄÄÄÄÄÄ
+       ³              ³            ÃÄÄÄÄÄÄÄ Strasse, Nr.
+       ³              ³            ÃÄÄÄÄÄÄÄ Postleitzahl
+
+
+Siehe auch:
+
+ {Hierarchie Version II:Hierarchy2}
+ 
+.topic Hierarchy2
+
+ Ordner-Hierarchie Version II
+ ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+           ÚÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+           ³ Hauptordner ³
+           ÀÄÄÄÄÄÄÂÄÄÄÄÄÄÙ
+           ÚÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂ Ä Ä
+      ÚÄÄÄÄÄÄÄÄÄ¿    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄ¿ÚÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+      ³ Systeme ³    ³ Applikation ³³ Applikation ³
+      ÀÄÄÄÄÂÄÄÄÄÙ    ÀÄÄÄÄÄÄÂÄÄÄÄÄÄÙÀÄÄÄÄÄÄÂÄÄÄÄÄÄÙ
+      ÚÄÄÄÄÁÄÄÄÄÂ Ä      Ä ÄÁÄ Ä    ÚÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄ¿
+ ÚÄÄÄÄÄÄÄÄ¿ÚÄÄÄÄÄÄÄÄ¿          ÚÄÄÄÄÄÄÄÄ¿        ÚÄÄÄÄÄÄÄÄ¿
+ ³ System ³³ System ³          ³ Dialog ³        ³ Tasten ³
+ ÀÄÄÄÄÄÄÄÄÙÀÄÄÄÄÄÄÄÄÙ          ÀÄÄÄÂÄÄÄÄÙ        ÀÄÄÄÂÄÄÄÄÙ
+                                           Ä Ä ÄÂÄÄÄÄÁÄÄÂ Ä Ä
+                                           ÚÄÄÄÄÄÄÄ¿ÚÄÄÄÄÄÄÄ¿
+                                           ³ Taste ³³ Taste ³
+                                           ÀÄÄÄÄÄÄÄÙÀÄÄÄÄÄÄÄÙ
+
+
+Siehe auch:
+
+ {Hierarchie Version I:Hierarchy}
+ 
+.topic Folder
+
+ Ordner
+ ÍÍÍÍÍÍ
+
+
+
+.topic MainFolder=1100
+
+ Hauptordner
+ ÍÍÍÍÍÍÍÍÍÍÍ
+
+
+Siehe auch:
+
+ {Ordner-Hierarchie:Hierarchy}
+ {Hilfe fr Hilfe:HelpOnHelp}
+ 
+.topic SystemsFolder = 1111
+
+ Systeme
+ ÍÍÍÍÍÍÍ
+
+
+
+
+ {Ordner:Folder}
+
+.topic System = 1112
+
+ System
+ ÍÍÍÍÍÍ
+
+ Feld "ID":
+Der hier eingefllte Text wird beim Download
+im "#scancode_xxx" Tag verwendet (ID "pc"
+generiert "#scancode_pc").
+
+ Alt-I:
+Import eines Systems aus einer bereits
+bestehenden Datei. Das ID-Feld muss zuvor
+eingefllt werden (ID "pc" w„hlt die Daten
+unter "#scancode_pc"). Nach der Dateiauswahl
+und einigen Sekunden Wartezeit sollten die
+importierten Daten im System gespeichert sein.
+
+.topic Project = 1121
+
+ Applikation
+ ÍÍÍÍÍÍÍÍÍÍÍ
+
+.topic SingleField = 1132
+
+ Einfaches Feld     
+ ÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+.topic DoubleField
+
+ Doppeltes Feld = 1133
+ ÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+.topic MovingObject=1020
+
+ Object verschieben
+ ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ

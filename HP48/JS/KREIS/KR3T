@@ -1,0 +1,18 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Kreis aus 3 Tangenten
+---------------------
+
+Eingabe: M1 Q1...M3 Q3
+Ausgabe: MX MY R"
+DISPHELP
+
+   \-> M1 Q1 M2 Q2 M3 Q3
+   \<<
+      M1 Q1 M2 Q2 SPKT
+      M2 Q2 M3 Q3 SPKT
+      M3 Q3 M1 Q1 SPKT
+
+      ...
+   \>>
+\>>

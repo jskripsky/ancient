@@ -1,0 +1,11 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> MX MY X Y
+   \<<
+      MX MY X Y
+      ABST
+      EVAL "R" \->TAG
+      MX EVAL "X" \->TAG
+      MY EVAL "Y" \->TAG
+   \>>
+\>>

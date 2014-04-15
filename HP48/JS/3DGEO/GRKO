@@ -1,0 +1,36 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Geradenpunkt
+------------
+ X 'X' \-> X/Y/Z oder
+ Y 'Y' \-> X/Y/Z oder
+ Z 'Z' \-> X/Y/Z oder
+Eingabe: V0 VT A 'A'
+Ausgabe: P(x/y/z)"
+DISPHELP
+   
+   4 PICK
+   4 PICK
+   \-> A LETTER V0 VT 
+   \<<
+      A
+      V0 V\->
+      91 LETTER NUM -
+      ROLL
+      3 ROLLD
+      DROP DROP
+      -
+
+      VT V\->
+      91 LETTER NUM -
+      ROLL
+      3 ROLLD
+      DROP DROP
+      /
+
+      VT *
+      V0 +
+
+      "P" \->TAG
+   \>>
+\>>

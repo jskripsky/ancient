@@ -1,0 +1,34 @@
+
+                         The HP 48 File Manager
+
+                             James Donnelly
+
+                   Copyright (c) James Donnelly 1991
+
+                     Software Product of the USA
+
+                     Armstrong Publishing Company
+                        3135 NW Ashwood Drive
+                       Corvallis, OR 97330 USA
+
+        The original purchaser of this software is granted a one-
+        user, non-commercial license to use the software, and may
+        not copy, distribute, or transfer the software under any
+        circumstances without specific prior written permission of
+        the author.  Commercial software developers may apply for
+        licensing.
+
+  IDENTIFICATION:
+
+        This disk contains version B.1 of The HP 48 File Manager.
+
+
+  NOTES:
+
+        The DIR command in DOS 5.0 may be customized with the
+        environment variable DIRCMD.  This will confuse Kermit to
+        the point that the File Manager will not operate properly,
+        because the normal directory information returned by the
+        PC to the HP 48 is no longer is the expected format.  To
+        get around this, just unset DIRCMD while File Manager is
+        running.

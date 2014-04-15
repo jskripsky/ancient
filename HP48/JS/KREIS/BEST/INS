@@ -1,0 +1,16 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> LST ELEM IDX
+   \<<
+      IF 'IDX==0'
+      THEN
+         LST
+         OBJ\->
+         ELEM
+         SWAP
+         1 +
+         \->LIST
+      ELSE
+      END
+   \>>
+\>>

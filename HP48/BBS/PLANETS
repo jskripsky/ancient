@@ -1,0 +1,13 @@
+%%HP: T(3)A(D)F(.);
+\<< { "MERCURY"
+"VENUS" "EARTH"
+"MARS" "SATURN"
+"JUPITER" "URANUS"
+"NEPTUNE" "PLUTO" }
+{ "SUN" "MOON"
+"TEMP" "DIST"
+"ORBIT" "QUIT" } {
+1 1
+"  Choose a planet:  "
+} TBR
+\>>

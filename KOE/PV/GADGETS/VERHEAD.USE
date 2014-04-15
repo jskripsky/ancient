@@ -1,0 +1,3 @@
+#define Uses_TObject
+#define Uses_TStreamable
+

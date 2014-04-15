@@ -1,0 +1,26 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Gerade verschieben  
+------------------
+
+
+
+Eingabe: M Q VX VY
+Ausgabe: M Q"
+DISPHELP
+
+   \-> M Q VX VY
+   \<<
+      M
+      IF
+         M "\|^" ==
+      THEN
+         Q VX + 
+      ELSE
+         Q VY +
+         M VX * -
+      END
+
+      EVAL "Q" \->TAG
+   \>>
+\>>

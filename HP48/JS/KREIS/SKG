@@ -1,0 +1,41 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Schnitt Kreis, Gerade
+---------------------
+SQ(x-u)+SQ(y-v)=SQ(R)
+y = Mx + Q
+
+Eingabe: U V R M Q
+Ausgabe: X1 Y1 X2 Y2"
+DISPHELP
+   
+   \-> X Y R M Q
+   \<<
+      IF
+         M "\|^" ==
+      THEN
+         1
+         '-2*X' EVAL
+         'SQ(Q)+SQ(X)+SQ(Y)-SQ(R)-2*Q*X' EVAL
+         QGL
+         EVAL "Y1" \->TAG SWAP
+         EVAL "Y2" \->TAG
+         Q EVAL "X1" \->TAG
+         3 ROLLD
+         Q EVAL "X2" \->TAG
+         SWAP
+      ELSE
+         '1+SQ(M)' EVAL
+         '2*(M*Q-M*Y-X)' EVAL
+         'SQ(Q)+SQ(X)+SQ(Y)-SQ(R)-2*Y*Q' EVAL
+         QGL
+         DUP2
+         M * Q +
+         "Y2" \->TAG SWAP
+         M * Q +
+         "Y1" \->TAG SWAP
+         3 ROLL
+         SWAP
+      END
+   \>>
+\>>

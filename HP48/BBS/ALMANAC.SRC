@@ -1,0 +1,353 @@
+%%HP: T(3)A(D)F(.);
+@ by Tom Metcalf
+DIR
+  SOLVE
+    \<< -22 SF 4 FIX
+DEG 0 0 0 0 0 GSUM
+a0 \->NUM 'A0' STO a1
+\->NUM 'A1' STO EV1
+\->NUM DUP '\Ga1' STO
+EIGEN 'E1' STO EV3
+\->NUM DUP '\Ga3' STO
+EIGEN 'E3' STO EV2
+\->NUM DUP '\Ga2' STO
+EIGEN 'E2' STO R E1
+DOT '\Gb1' STO R E2
+DOT '\Gb2' STO R E3
+DOT '\Gb3' STO 0
+'NIT' STO 0 '\Gm' STO
+      DO \Gm 'OLD'
+STO ITER '\Gm' STO 1
+'NIT' STO+
+      UNTIL 'ABS((\Gm
+-OLD)/\Gm)<.000001 OR
+NIT>50'
+      END
+      IF 'NIT>50 OR
+\Gm >\Ga1'
+      THEN
+"CONVERGENCE ERROR"
+      END UVW OBJ\->
+DROP OUT
+    \>>
+  ADDOB
+    \<< \-> T A
+      \<< T HMS\-> 'T'
+STO A HMS\-> 'A' STO
+OBS
+        IFERR OBJ\->
+        THEN T GHA1
+GHA2 INTERP T DEC1
+DEC2 INTERP A { 1 3
+} \->ARRY SWAP STO
+        ELSE OBJ\->
+ROT 1 + ROT ROT
+\->LIST T GHA1 GHA2
+INTERP SWAP T DEC1
+DEC2 INTERP SWAP A
+SWAP \->ARRY 'OBS'
+STO
+        END
+      \>>
+    \>>
+  CORRECT
+    \<< DEG HMS\-> INDX
++ HGT \v/ .0293 * -
+DUP DUP DUP 4.4 +
+7.31 SWAP / + TAN
+.0167 SWAP / SWAP
+COS
+      CASE BODY 'S'
+SAME
+        THEN .0024
+* SEMI
+        END BODY
+'M' SAME
+        THEN HP *
+HP .2724 *
+        END BODY
+'VM' SAME
+        THEN HP * 0
+        END 0 * 0
+      END LU * +
+SWAP - +
+      IF 'SPD>0'
+      THEN SWAP
+HMS\-> DUP DUP GHA1
+GHA2 INTERP SWAP
+DEC1 DEC2 INTERP
+SWAP DRLAT DRLON
+AZIM DUP CSCORR ROT
+SWAP - SWAP \->HMS
+SWAP
+      END \->HMS
+    \>>
+  SETUP
+    \<< "BODY?" { ""
+\Ga V } INPUT OBJ\->
+'BODY' STO
+"INDEX? (Deg)" { ""
+V } INPUT OBJ\-> HMS\->
+'INDX' STO
+      IF BODY 'S'
+SAME
+      THEN
+"SEMI-D? (Deg)" {
+"" V } INPUT OBJ\->
+HMS\-> 'SEMI' STO
+      END
+      IF BODY 'M'
+SAME BODY 'VM' SAME
+OR
+      THEN
+"HP? (Deg)" { "" V
+} INPUT OBJ\-> HMS\->
+'HP' STO
+      END
+      IF BODY 'M'
+SAME BODY 'S' SAME
+OR
+      THEN
+"LIMB (L/U/C=1/-1/0)?"
+{ "" V } INPUT OBJ\->
+'LU' STO
+      END
+"HEIGHT (m)?" { ""
+V } INPUT OBJ\->
+'HGT' STO
+"GHA1 DEC1 TIM1?" {
+":GHA1:
+:DEC1:
+:TIM1:"
+{ 1 0 } V } INPUT
+OBJ\-> HMS\-> 'T1' STO
+HMS\-> 'DEC1' STO
+HMS\-> 'GHA1' STO
+"GHA2 DEC2 TIM2" {
+":GHA2:
+:DEC2:
+:TIM2:"
+{ 1 0 } V } INPUT
+OBJ\-> HMS\-> 'T2' STO
+HMS\-> 'DEC2' STO
+HMS\-> 'GHA2' STO
+"SPEED? (Knots)" {
+"" V } INPUT OBJ\->
+'SPD' STO
+      IF 'SPD\=/0'
+      THEN
+"COURSE? (True)" {
+"" V } INPUT OBJ\->
+HMS\-> 'CRS' STO
+"DR LAT LON?" {
+":LAT:
+:LON:" { 1 0
+} V } INPUT OBJ\->
+HMS\-> 'DRLON' STO
+HMS\-> 'DRLAT' STO
+"TIME OF FIX?" { ""
+V } INPUT OBJ\-> HMS\->
+'TF' STO
+      ELSE 0 'CRS'
+STO 0 'DRLAT' STO 0
+'DRLON' STO 0 'TF'
+STO
+      END
+    \>>
+  ERROR
+    \<< 0 0 0 0 0 0 0
+0 \-> H1 H2 D1 D2 G1
+G2 DT DH
+      \<< OBS { 1 3 }
+GET 'H1' STO OBS {
+N 3 } GET 'H2' STO
+OBS { 1 2 } GET
+'D1' STO OBS { N 2
+} GET 'D2' STO OBS
+{ 1 1 } GET 'G1'
+STO OBS { N 1 } GET
+'G2' STO T2 T1 -
+GHA2 GHA1 - / G2 G1
+- * 'DT' STO H2 H1
+- 'DH' STO 1 DT / N
+\v/ / 57.3 H1 H2 + 2
+/ COS * * 225 D1 D2
++ 2 / COS SQ * DH
+DT / SQ - \v/ / "ERR"
+\->TAG
+      \>>
+    \>>
+  NIT 4
+  ITER
+    \<< 0 0 \-> f fp
+      \<< \Gb1 \Ga1 \Gm - /
+SQ DUP 'f' STO+ 2 *
+\Ga1 \Gm - / 'fp' STO+
+\Gb2 \Ga2 \Gm - / SQ DUP
+'f' STO+ 2 * \Ga2 \Gm -
+/ 'fp' STO+ \Gb3 \Ga3 \Gm
+- / SQ DUP 'f' STO+
+2 * \Ga3 \Gm - / 'fp'
+STO+ -1 'f' STO+ \Gm
+f fp / -
+      \>>
+    \>>
+  a0 '-(G12*G23-G13
+*G22)*G13+(G11*G23-
+G12*G13)*G23-(G11*
+G22-G12^2)*G33'
+  a1 'G11*G22-G12^2
++G11*G33-G13^2+G22*
+G33-G23^2'
+  TF 0
+  DRLON 0
+  DRLAT 0
+  CRS 0
+  SPD 0
+  CSCORR
+    \<< \-> T
+      \<< SPD T TF -
+AZ CRS - COS 60 / *
+*
+      \>>
+    \>>
+  AZ 239.148905272
+  AZIM
+    \<< \-> D G L A
+      \<< G A - 'A'
+STO L COS D SIN * L
+SIN D COS A COS * *
+- A SIN D COS NEG *
+R\->C ARG 'AZ' STO
+        IF 'AZ<0'
+        THEN 360
+'AZ' STO+
+        END
+      \>>
+    \>>
+  EV3 '-2*\v/Q*COS((\Gh
++360)/3)+N/3'
+  EV2 'N-\Ga1-\Ga3'
+  EV1 '-2*\v/Q*COS(\Gh/
+3)+N/3'
+  OLD
+-1.47280528459E-7
+  \Gm
+-1.47296963855E-7
+  \Gb3 -13.5624809912
+  \Gb2
+-1.50525051351E-2
+  \Gb1
+-3.950284015E-7
+  E3
+[ .188406852706 .980097318647 6.25468131232E-2 ]
+  E2
+[ -1.40179729991E-2 6.63646826456E-2 -.997696960669 ]
+  E1
+[ -.981991016574 .187096170084 2.62424562793E-2 ]
+  INTERP
+    \<< \-> T V1 V2
+      \<< V1 V2 V1 -
+T2 T1 - / T T1 - *
++
+      \>>
+    \>>
+  GSUM
+    \<< \-> DS DC GS GC
+HS
+      \<< 0 'G11' STO
+0 'G12' STO 0 'G13'
+STO 0 'G22' STO 0
+'G23' STO { 3 } 0
+CON 'R' STO OBS
+OBJ\-> OBJ\-> DROP DROP
+'N' STO 1 N
+        START SIN
+'HS' STO DUP SIN
+'DS' STO COS 'DC'
+STO DUP SIN 'GS'
+STO COS 'GC' STO DS
+SQ 'G11' STO+ DS DC
+GC * * 'G12' STO+
+DS DC GS * * 'G13'
+STO+ DC SQ GC SQ *
+'G22' STO+ DC SQ GS
+GC * * 'G23' STO+ R
+OBJ\-> DROP DC GS HS
+* * + ROT DS HS * +
+ROT DC GC HS * * +
+ROT { 3 } \->ARRY 'R'
+STO
+        NEXT N G11
+G22 + - 'G33' STO
+      \>>
+    \>>
+  OUT
+    \<< \-> U V W
+      \<<
+        IF 'ABS(U)>
+1'
+        THEN U SIGN
+'U' STO
+        END U ASIN
+V W R\->C ARG \->HMS
+"LON" \->TAG SWAP
+\->HMS "LAT" \->TAG
+      \>>
+    \>>
+  UVW
+    \<< \Gb1 \Ga1 \Gm - /
+E1 * \Gb2 \Ga2 \Gm - / E2
+* \Gb3 \Ga3 \Gm - / E3 *
++ +
+    \>>
+  EIGEN
+    \<< \-> EV
+      \<< 'G12*G23-
+G13*G22+G13*EV'
+\->NUM 'G13*G12-G11*
+G23+G23*EV' \->NUM '
+G11*G22-SQ(G12)-(
+G11+G22)*EV+SQ(EV)'
+\->NUM { 3 } \->ARRY
+DUP ABS /
+      \>>
+    \>>
+  \Ga2 .0363326349
+  \Ga3 17.9636667352
+  \Ga1 .0000006299
+  \Gh 'ACOS(R1/Q^1.5)
+'
+  R1 'A0/2+N/3*(A1/
+6-Q)'
+  Q '(N/3)^2-A1/3'
+  N 18
+  A0
+-4.110603687E-7
+  A1 .6526786832
+  G33 .1064412066
+  R
+[ -2.55505296373 -13.2935502826 -.833272135648 ]
+  G23 1.09880240075
+  G22 17.255892215
+  G13 .212196428198
+  G12 3.31708381131
+  G11 .637666578414
+  GHA2
+92.6916666667
+  DEC2
+16.4916666667
+  T2 18
+  GHA1 77.65
+  DEC1
+16.4916666667
+  T1 17
+  LU 1
+  SEMI
+.266666666667
+  HP .986666666667
+  HGT 0
+  INDX 0
+  BODY T
+END
+

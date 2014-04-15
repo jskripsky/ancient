@@ -1,0 +1,35 @@
+
+                   El Gestor de Ficheros de la HP 48
+
+                             James Donnelly
+
+                   Copyright (c) James Donnelly 1991
+
+                   Producto de Software de los EE.UU.
+
+                     Armstrong Publishing Company
+                        3135 NW Ashwood Drive
+                       Corvallis, OR 97330 EE.UU.
+
+         El comprador original de este software tiene garantizada la
+         licencia no comercial de un usuario para utilizar el software 
+         y no puede copiar, distribuir o transferir el software en 
+         ninguna circunstancia sin el previo consentimiento espec¡fico 
+         por escrito del autor. Los encargados del desarrollo del 
+         software puede solicitar la licencia.
+
+  IDENTIFICATION:
+
+        Este disco contiene la versi¢n B.1 del Gestor de Ficheros de la HP 48.
+
+
+  NOTAS:
+
+        El comando DIR en DOS 5.0 puede personalizarse con la
+        variable de entorno DIRCMD. Esto confundir  a Kermit
+        hasta el punto que el Gestor de Ficheros no podr  funcionar
+        correctamente, ya que la informaci¢n sobre el directorio
+        normal presentada por el ordenador personal a la HP 48 ya
+        no tiene el formato esperado. Para resolverlo, anule el
+        ajuste de DIRCMD mientras el Gestor de Ficheros se est 
+        ejecutando.

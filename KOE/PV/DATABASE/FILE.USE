@@ -1,0 +1,5 @@
+#include "DataBase\Entry.Use"
+
+#define Uses_TObject
+#define Uses_TStreamable
+#define Uses_fpstream

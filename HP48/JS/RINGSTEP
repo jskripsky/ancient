@@ -1,0 +1,20 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> ELEMENTS POS DIRECTION
+   \<<
+      POS DIRECTION +
+      IF
+         DUP
+         1 <
+      THEN
+         ELEMENTS +
+      END
+
+      IF
+         DUP
+         ELEMENTS >
+      THEN
+         ELEMENTS -
+      END
+   \>>
+\>>

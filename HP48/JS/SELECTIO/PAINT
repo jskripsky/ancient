@@ -1,0 +1,16 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> PIC ROW COL
+   \<<
+      PICT   
+      COL 1 -
+      # 19d
+      *
+      ROW 1 -
+      # 19d
+      *
+      2 \->LIST
+      PIC
+      GXOR
+   \>>
+\>>

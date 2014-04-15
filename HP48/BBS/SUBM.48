@@ -1,0 +1,253 @@
+
+			Subs game to hp48
+
+Here comes a submarine game called U137, from M&M
+
+Mattias Dahl                 &            Morgan Lindvqist
+d89-mdl@sm.luht.se                        d89-mlt@sm.luth.se
+
+                 University of Lulea, SWEDEN
+
+-------------------------------------------------------------------------
+        _           _           _ _                   _           _
+       /   \       /   \      /     \              /   \       /   \ 
+      |     |     |     |    |       |             |     |     |     |
+      |      \ _ /      |    |       |             |      \ _ /      |
+      |       |_|       |     \     /              |       |_|       |
+      |                 |       \ /                |                 |
+      |                 |       / \                |                 |
+      |                 |     /     \              |                 |
+      |                 |    |        \   /        |                 |
+ /    |                 |    |          X     /    |                 |
+ \ _ /                   \_   \ _ _ _ /   \   \ _ /                   \ _
+              
+
+-------------------------------------------------------------------------
+
+Excuse for any grammar mistakes.
+
+In this game you are going to sink submarines in the Swedish
+archipelago.
+
+All the subs exists in a 10x10 square.
+
+You move your ship with the arrow keys (Up down left right) and drop bombs
+with enter. On the left part of the screen you can watch the distances to
+the subs and in the upper right corner your current position.
+
+
+The * in the figure below is your ship and the numbers symbolizes 
+the distances to the subs. 
+
+The numbers aren't there in the game we just plotted them here 
+so it shouldn't be so hard to explain.
+   __________________________________________
+   |    |   |   |   |   |   |   |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    | 2 | 2 | 2 | 2 | 2 |   |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    | 2 | 1 | 1 | 1 | 2 |   |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    | 2 | 1 | * | 1 | 2 |   |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    | 2 | 1 | 1 | 1 | 2 |   |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    | 2 | 2 | 2 | 2 | 2 |   |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    |   |   |   |   |   | 3 |   |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    |   |   |   |   |   |   | 4 |   |   |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    |   |   |   |   |   |   |   | 5 | 6 |
+   |____|___|___|___|___|___|___|___|___|___|
+   |    |   |   |   |   |   |   |   | 6 | 6 |
+   |____|___|___|___|___|___|___|___|___|___|
+   
+
+
+   To start the game
+
+   4:
+   3:
+   2:
+   1: number off subs        2-8
+
+   Then press U137
+
+   Play the game
+
+   4:
+   3:
+   2:      Moves:10
+   1: Submarines: 3
+
+
+You have four difficulty levels 
+
+  1:   The subs light up after you have dropped a bomb. And they
+       are still at that position the next move.
+       Flag 59 set 
+       Flag 60 Clear 
+       (This is a very easy level)
+
+  2:   The subs don't light up and they are lying still.
+       Flag 59 Clear
+       Flag 60 Clear
+
+  3:   The subs light up and they are moving around.
+       Flag 59 Set
+       Flag 60 Set
+
+  4:   The subs don't light up and they are moving around.
+       Flag 59 Clear
+       Flag 60 Set
+
+You must set and clear the flags by your self.
+
+
+
+Background:
+
+  Why did we call the game U137, if you think hard you might remember 
+  a Russian submarine named U137 that drove up on SWEDISH land an night in
+  the early 80's . The Russians got there sub back and the swedish marine
+  got more money, but we still have Unidentified underwater activity in our
+  territorial water, as it so nicely is called.
+  
+____________________________________________________________________________
+%%HP: T(3)A(D)F(.);
+DIR 
+ U137
+\<< 2 - 7 MOD 2 + DUP INIT (5,5) \-> ANT POS AIM
+  \<< 0 POS AIM ANT WFACT 'POS' STO DROP
+      AIM GMARK
+      DO 1 + POS AIM GETK DUP 'AIM' STO ANT WFACT 'POS' STO OBJ\->
+      UNTIL 1 SWAP 1 -
+      START + 
+      NEXT 0 SAME
+    END MOVES \->TAG
+  \>>
+\>>
+
+ GETK
+\<<
+  DO
+    DO KEY UNTIL END
+  UNTIL
+    CASE
+     DUP 25 SAME
+      THEN 24 - GMOVE 0
+      END
+     DUP DUP DUP 34 SAME SWAP 35 SAME OR SWAP 36 SAME OR
+      THEN 32 - GMOVE 0
+      END
+     51 SAME
+      THEN 1
+      END
+     0
+    END
+  END
+\>>
+
+ GMOVE
+\<< \-> P V
+  \<< P C\->R
+    CASE V 1 SAME
+      THEN
+        IF DUP 1 SAME NOT
+        THEN 1 -
+        END
+      END V 2 SAME
+      THEN SWAP
+        IF DUP 1 SAME NOT
+        THEN 1 -
+        END SWAP
+      END V 3 SAME
+      THEN
+        IF DUP 10 SAME NOT
+        THEN 1 +
+        END
+      END SWAP
+      IF DUP 10 SAME NOT
+      THEN 1 +
+      END SWAP
+    END R\->C DUP 'V' STO GMARK P GMARK 
+    PICT { # 107d # 0d } V \->STR " " + 1 \->GROB REPL V
+  \>>
+\>>
+
+ GMARK
+\<< C\->R
+    1 - 6 * 1 + R\->B SWAP
+    1 - 6 * 2 + R\->B SWAP
+    2 \->LIST PICT SWAP "*" 1 \->GROB GXOR
+\>>
+
+ INIT
+\<< \-> A
+  \<<
+    PICT { # 0d # 0d } # 131d # 64d
+    BLANK REPL { # 0d# 0d } PVIEW
+    0 10 FOR X
+      # 0d X 6 * R\->B 2 \->LIST DUP 1 # 60d PUT LINE
+      6 X * R\->B # 0d 2 \->LIST DUP 2 # 60d PUT LINE
+    NEXT
+    PICT { # 67d # 0d } "Aiming at (5,5)" 1 \->GROB REPL
+    PICT { # 67d # 6d } "MOVES" 1 \->GROB REPL
+    1 A FOR X
+     PICT # 67d X 1 + 6 * R\->B 2 \->LIST "SUB :" X + 1 \->GROB REPL
+     RAND 10 * IP 1 + RAND 10 * IP 1 + R\->C
+    NEXT A \->LIST
+  \>>
+\>>
+
+ WFACT
+\<< 0 \-> POS AIM ANT DIS
+  \<< POS ANT AIM MSUB 'POS' STO 'DIS' STO 
+     1 ANT FOR X 
+       PICT # 104d X 1 + 6 * R\->B 2 \->LIST 'DIS' X GET
+       IF DUP 0 SAME THEN 
+         DROP "SUNKEN"
+       ELSE 
+         \->STR
+       END 1 \->GROB REPL
+     NEXT PICT {# 104d # 6d } 3 PICK \->STR 1 \->GROB REPL
+     DIS POS
+  \>>
+\>>
+
+ MSUB
+\<< \-> POS ANT AIM
+  \<< 1 ANT
+    FOR X 'POS' X GET
+      IF DUP 0 SAME NOT
+      THEN AIM - C\->R ABS SWAP ABS MAX
+        IF DUP 0 SAME
+        THEN 'POS' X 0 PUT
+        ELSE
+          IF 59 FS?
+          THEN
+            'POS' X GET DUP GMARK GMARK
+          END
+          IF 60 FS?
+          THEN
+            'POS' DUP X GET C\->R 1 2
+            START 
+              RAND 3 * IP 1 - + 
+              IF DUP 10 >
+              THEN 1 -
+              END
+              IF DUP 1 <
+              THEN 1 +
+              END
+              SWAP
+            NEXT
+            R\->C X SWAP PUT
+          END
+        END
+      END
+    NEXT ANT \->LIST POS
+  \>>
+\>>
+
+END

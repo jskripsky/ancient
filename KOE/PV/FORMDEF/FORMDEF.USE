@@ -1,0 +1,8 @@
+#include "Form.Use"
+#include "Person\Person.Use"
+#include "InfoHead.Use"
+
+#define Uses_TObject
+#define Uses_TResourceFile
+#define Uses_TStringList
+#define Uses_TStrListMaker

@@ -1,0 +1,6 @@
+#include "InfoHead.Use"
+#include "DataBase\Entry.Use"
+#include "Person\Person.Use"
+
+#define Uses_TCollection
+#define Uses_TStreamable

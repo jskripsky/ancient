@@ -1,0 +1,94 @@
+
+Dateikopf
+---------
+
+Format	Pos.	# Bytes		Beschreibung
+
+Ascii	0	30		Identifikationsmarke ("TMS Exportfile, JS Format")
+Bin„r	30	1		Grosse Versionsnummer (1)
+Bin„r	31	1		Kleine Versionsnummer (0)
+
+Bin„r	32	2		Jahr (z.B. 1992)
+Bin„r	34	1		Monat (1-12)
+Bin„r	35	1		Anzahl Tage (28, 29, 30 oder 31)
+
+Bin„r	36	2		Anzahl Personen
+Bin„r	38	1		Flag, ob alle Daten kontrolliert sind (0: Nein, 1: Ja)
+
+
+
+Person
+------
+
+Bin„r	0	4		Personalnummer
+Bin„r	4	1		L„nge des Namen
+Bin„r	5	30		Name und Vorname
+
+Bin„r	35	2		Jahr der Anstellung
+Bin„r	37	1		Monat der Anstellung
+Bin„r	38	1		Tag der Anstellung
+
+Bin„r	39	2		Jahr des Austrittes (0 falls noch nicht ausgetr.)
+Bin„r	41	1		Monat des Austrittes (0 falls noch nicht ausgetr.)
+Bin„r	42	1		Tag des Austrittes (0 falls noch nicht ausgetr.)
+
+Bin„r	43	1		Besch„ftigungsgrad
+
+Bin„r	44	1		L„nge der Funktion
+Ascii	45	5		Funktion
+
+Bin„r	50	1		Anzahl benutzter Felder
+Bin„r	51	1		Benutzte Felder (Bit 0: Feld 0,...)
+
+	52	7 x 6:		7 Felder
+		Bin„r	1	L„nge des Feldes
+		Ascii	5	Feld
+
+
+
+Tag
+---
+
+Bin„r	0	1		Anzahl der Stempelungen
+
+	1	20 x 2:		Stempelungen 	Bitfields:
+		Bin„r	2	Zeit		14 Bits
+				Ein-/Ausgang	1  Bit
+
+Bin„r	41	1		Anzahl der Begrndungen
+
+	42	21 x 4:		Begrndungen 	Bitfields:
+		Bin„r	4	Dauer		14 Bits
+				Code		10 Bits
+				Typ		2  Bits
+				Herkunft	3  Bits
+
+Bin„r	126	1		Anzahl benutzter Zeitkonti
+Bin„r	127	4		Benutzte Zeitkonti
+	131	20 x 2		Zeitkonti
+		Bin„r	2	Zeitkonto (mit Vorzeichen)
+
+
+
+
+
+
+
+Allgemeine Informationen
+------------------------
+
+-	Alle ungenutzten Bytes werden mit 0 (Bin„r) gefllt.
+  	Beispiel: 	Name ist krzer als 30 Zeichen.
+			Alle Bytes nach dem letzten Buchstaben
+			werden mit 0 gefllt.
+
+	Dies gilt auch bei unbenutzten Feldern, Stempelungen
+	Begrndungen und Zeitkonti.
+
+-	Alle Bitfields folgen dem ANSI C Standart.
+
+-	Die Dateigr”sse l„sst sich wie folgt berechnen:
+
+	L„nge "Dateikopf" + Anzahl Personen  x
+	( L„nge "Person" + Anzahl Tage  x  L„nge "Tag" )
+	= Dateigr”sse.

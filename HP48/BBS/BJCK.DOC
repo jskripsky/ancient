@@ -1,0 +1,206 @@
+                            HP-48 BlackJack
+                              Ron Dippold
+                  (C)1990 Ron Dippold and Freezesoft
+
+
+
+I am on the HP BBS (1-503-750-4448) as icefalcon if you have any questions or
+comments.
+
+
+                              Introduction
+
+When you show your HP-48 to some awed and impressed Casio user, the utility
+programs are really impressive only if the guy knowshow hard it should normally
+be to do what your HP-48 does effortlessly.  In addition, everyone gets the
+urge now and then to do something other than manipulate equations...
+And that's where all those slick HP-48 graphics demos come from.
+Unfortunately, there don't seem to be that many games, except those for the
+HP-28, and those certainly don't stress your HP-48's capabilites.  Maybe
+because writing a good game is so time-consuming...
+
+
+                              BlackJack 48
+
+We wrote a howitzer battle, Defender, and Tetris for the HP-28, but this is our
+first release for the HP-48.  It's a simple card game, BlackJack 48.  It uses
+the full graphics capabilities of the HP-48, including background pictures...
+We spent quite a bit of time on graphics and getting it to look professional.
+This is took a while to write, which is why we have the:
+
+                      
+                             Shareware Fee
+
+This game is shareware.  You do not have to pay to download it from someone or
+somewhere and take a look at it and play it for a while.  However, if you do
+decide to keep the program, you need to send your name, address, and $5 to:
+
+   Ron Dippold c/o Freezesoft
+   8318 Counterpane Lane
+   Juneau, Alaska 99801
+
+This is the same as buying a program in the store except you get to "test
+drive" it first.  And it is just as illegal to keep a copy without paying for
+it as it is to copy commercial software from someone else.  We suggest you try
+it out for a few days to a week, and if you don't like it, wipe it out.  If
+you like it and decide to keep it in your calculator or back it up to your PC,
+send the registration fee.
+
+We expect to be releasing many more software titles for the HP-48 in the
+future, and in many cases we will stipulate that paying for any of them will
+constitute valid payment on the rest, so you also buying into future software.
+For instance, we plan to introduce poker fairly soon, and this will be covered
+by the blackjack fee.  How much new software we produce depends on the
+response.
+
+
+                                License
+
+Freezesoft grants full rights to copy and transfer BlackJack 48, including
+uploading to bulletin board services, copying to personal computers, and
+transfering from calulator to calculator, under the following conditions:
+
+    1) This file MUST be included with the program if possible.
+    2) Neither the program nor this file may be modified.
+    3) You may not charge money for this program.  It must be given freely.
+       You may recover your shipping and handling costs, but that is it.
+
+Any copies or backups of BlackJack 48 that you possess must be deleted within
+one week of the time you first recieve BlackJack 48, unless you pay the
+shareware fee.  Bulletin board systems may make the program available for
+downloading for unlimited time without payment.
+
+
+
+                              The Instructions!
+
+In case you do not know how to play BlackJack, or if you have forgotten, which
+is more likely, here is a rehash of the rules, as BlackJack 48 uses them:
+
+  *  A standard 52-card deck of cards is used.  More can be used, but one is
+     typical.
+  *  The goal is to get as close to 21 as you can without going over it.
+  *  Cards 2 thru T (10) are worth their own value.  Jack, Queens, and Kings
+     are worth 10 points.
+  *  Aces are worth either one point OR eleven points, your choice.
+
+  *  The player (you) places a bet.
+  *  Two cards are dealt to you face up.  Two cards are dealt to the
+     dealer, one face up.
+
+  *  If the dealer has a "BlackJack," which is an Ace and any card worth 10
+     points, the dealer _immediately_ wins.
+  *  If you have a"BlackJack, you win, and also win 50% more of your
+     bet as a bonus, so a $20 dollar bet would win $30 on BlackJack.
+  *  If the dealer _and_ the player have a BlackJack, it it a tie, or a "push"
+     and you get your bet back.
+
+  *  You then have the following options:
+     - Hit :    Get another card from the deck.  If your card total exceeds 21,
+                you have "Busted," and you lose.  You can Hit as many times as
+                you want.
+     - Stand :  Stay with your cards
+     - Double : Double your bet and get ONLY one more card.  If your card total
+                exceeds 21, you have Busted, and you lose your doubled bet.
+
+  *  If you Stand or Double (and haven't exceeded 21), the dealer then gets to
+     hit or stand.  The rules are _very_ simple for the dealer:
+     - If his cards total less than 17, he _has_ to hit.
+     - If his cards total 17 or more, he _has_ to stand.
+  *  If the dealer exceeds 21, he has Busted, and you win.
+
+  *  If he stands at less than 21, it is then a simple matter of who has the
+     highest total.  If you have more points, you win.  If he has more points
+     then you win.  If you both have the same, it is a Push, and no one wins.
+
+
+                                Variations
+
+There are many variations of BlackJack.  Some casinos use 6 decks.  Some only
+allow Doubling on the first two cards.  Some say the dealer does not have to
+stand on 17 if one of his cards is an Ace.  There is a variation in which you
+win if you get 5 cards without going over 21.  We have just implemented a
+fairly standard version.  There are two things in particular that need
+explaining:
+
+  *  Some casinos offer "Insurance," if the dealer is showing an Ace.  You pay
+     an extra amount of cash, and if the dealer does have a BlackJack, you
+     don't lose.  It sounds good, but in reality it is just another ploy by
+     the casinos to soak you of more money.  Odds are you are going to lose
+     more money on the insurance than you will save when the dealer actually
+     does have BlackJack.
+
+  *  Another variation states that if your two bottom cards are the same, such
+     as an eight of spades and eight of diamonds, you may split your hand into
+     two hands.  A card is dealt out to each of the hands so that they each
+     have two cards.  Your bet is the same for both hands, so you have
+     effectively doubled your bet.  Each hand is played separately.  This is
+     not implemented, because we don't really have the room to show both hands.
+     If one of the split hands is a pair, you can split again, and the screen
+     is only SO big!
+
+
+                             Running BlackJack 48
+
+After you transfer the BJCK directory to your HP, choose VAR and hit BJCK to
+get you into the BlackJack 48 directory.  The first two programs in the
+directory, called ABOUT and PLAY are the only ones you need to know about.
+All the rest are called by these two programs.
+
+    ABOUT  Run this to see a little title screen for the game and run the game.
+
+    PLAY   After you are sick of the ABOUT screen, you can just run PLAY to
+           go straight to the game.
+
+
+
+                                Betting
+
+The first screen/menu you will see is a nice background and some information.
+The top box should say "You have: $1000" or whatever your current total is.
+You will be asked to place your bet.
+
+The bottom box contains the current amount of your bet.  Use the keys labeled
+-10, +10, -50, and +50 to add or subtract 10 or 50 dollars from your bet.
+Choose the key labeled BET to play the hand.
+
+   *   The maximum bet is $500
+   *   You can't bet more than you have.
+
+
+
+                                Playing
+
+Two cards are dealt to you and two cards to the dealer.  One of his cards will
+be face down.  If you or he has a BlackJack, the hand is over.  Otherwise you
+have the following choices:
+
+   HIT:       Get another card.  If you go over 21 you lose.
+   DBL:       Double your bet and get only one more card.  If you go over 21
+              you lose.
+   STAND:     Stand with the cards you have.  It is the dealer's turn.
+
+The dealer will then hit or stand.  If he goes over 21, you win.  Otherwise,
+whoever has the highest card total wins.
+
+
+                               OK / QUIT
+
+Once you have won or lost a hand, you will get an OK / QUIT menu.  If you
+choose QUIT, you will be shown your final total and the game is ended.  If you
+choose OK, you will be returned to the betting menu except for two special
+occasions:
+  
+  *  If you have no money left, the game is over.
+  *  If you have $10,000, you have broken the bank, and you win.  Game over!
+
+
+
+                            Technical Info
+
+This program sets some flags and system variables.  It turns off the clock, so
+it doesn't show up in the upper right corner over the picture.  It sets the
+screen dimensions to 131 * 64 (one full screen).  It also uses many user flags.
+
+It saves all flags when it first runs, and it restores them when it quits.  It
+leaves the picture size at 131 * 64.

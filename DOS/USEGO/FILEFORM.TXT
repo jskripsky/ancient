@@ -1,0 +1,34 @@
+1.10.92
+
+CONVERT.EXE   Ziel-Format
+=========================
+
+LEN = 256
+
+Pos.     Num. Char.     Beschreibung
+==============================================================================
+1-47     47             Daten identisch mit Quelldatei, Pos.  1-47
+48-116   69             Daten identisch mit Quelldatei, Pos.  949-1017
+
+117-119  3              Daten identisch mit Quelldatei, Pos. 48-50
+120-124  5              Daten identisch mit Quelldatei, Pos. 51-55
+125      1              Daten identisch mit Quelldatei, Pos. 56
+
+126-255  ---> wie 117-125 fr soviele Begrndungen, wie Platz haben.
+
+256      1              Flag: 1 = Weiterer Satz (LEN = 256) folgt.
+                              0 = Mitarbeiter abgeschlossen.
+
+
+
+Struktur aller weiteren S„tze desselben Mitarbeiters:
+
+Pos.     Num. Char.     Beschreibung
+==============================================================================
+1-255    ---> wie 117-125 (erster Satz) fr soviele Begrndungen, wie Platz
+              haben.
+
+256      1              Flag: 1 = Weiterer Satz (LEN = 256) folgt.
+                              0 = Mitarbeiter abgeschlossen.
+
+

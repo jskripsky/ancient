@@ -1,0 +1,204 @@
+================================
+====  Development Protocol  ====
+================================
+
+1.4.94 - 0.5 MaTa
+=================
+
+- Brain Storming
+
+
+4.4.94 - 0.5 MaTa
+=================
+
+- (FD-Code) Inserted tvDocument above tvProject,
+  creating a abstract base class for independently
+  stored Folders.
+  Moved all general Methods from tvProject up to
+  tvDocument.
+  Replaced write-/readFile with read-/writeDocument
+  to support inherited content saving.
+
+  Notice: At the end of a constructor of a
+          tvDocument-derived class, there MUST be
+          a call to writeFile()!
+
+  Notice: As long as a tvDocument object isn't open,
+          its contents aren't loaded and can't be
+          manipulated!
+
+- (FD-Code) Moved all general tvObject, Helper
+  Class and Generic Class files to a common root
+  directory (\Koe\TVObject, \Koe\Generic).
+
+
+5.4.94 - 0.25 MaTa
+==================
+
+- Created DG diectory and BC++ Project.
+
+
+9.4.94 - 0.75 MaTa
+==================
+
+- (tvObj-Code) Added connectToDocument() and
+  getDocument() methods to tvObject. Enhanced all
+  shadow-related tvObject method to allow the
+  embedding of objects into objects belonging
+  to a tvDocument hierarchy. When an object that is
+  shadowed in such a hierarchy is being deleted,
+  the tvDocument gets loaded, updated and saved
+  automatically.
+  tvDocument objects always establish a connection
+  to themselves, while tvMainFolder objects connect
+  to the null object.
+
+  Notice: Currently, sub-document aren't supported.
+
+
+10.4.94 - 1.0 MaTa
+==================
+
+- (tvObj-Code) Created TtvApplication class,
+  derived from TApplication. This class serves as
+  base for concrete application classes (e.g.
+  TtvDG and TFD), manages the creation, loading and
+  saving of the main folder, creates the clock
+  and heap status view. At last, it manages the
+  help subsystem.
+
+- Created TtvDG (TtvApplication) class.
+- Created tvDGMainFolder (tvMainFolder) class.
+- Created tvProject and TProjDlg classes (modified 
+  copies of FD-Code).
+
+
+29.4.94 - 0.5 MaTa
+==================
+
+- (tvObj-Code) 
+...tvDialog, TDialogDlg...
+...fillDlg, queryDlg, Undo reorganization idea...
+
+
+
+30.4.94 - 1.25 MaTa
+===================
+...TObjLBox enhancements (dataSize, get/setData)...
+...new inpedendent Undo for tvObject...
+...FD & DG queryDlg elimination, rewrite of handleNotification for
+instant saving of user changed data....
+
+1.5.94 - 1.50 MaTa
+==================
+...new (optional) Shadow Protocol...
+
+2.5.94 - 1.25 MaTa
+==================
+...tvField, tvSingleField, tvDoubleField...
+
+3.5.94 - 0.25 MaTa
+==================
+...TDialogDlg layout refinements....
+
+4.5.94 - 1.0 MaTa
+==================
+...tvKeyFolder, tvKey, tvSystemsFolder...
+
+5.5.94 - 1.0 MaTa
+=================
+...tvSystem, TUnique::~TUnique, Printer, FormPrinter....
+
+6.5.94 - 1.0 MaTa
+=================
+...StreamDevice, FormDevice, Printer, FormPrinter, Dialog, FormDialog...
+...FormObj, addition of FormObj as parent class for all Form Objects
+
+7.5.94 - 1.25 MaTa
+==================
+...TAbout, TCard....
+
+8.5.94 - 1.0 MaTa
+=================
+...SystemImport, Download/Port Selection, Final Bugs, Code Maintenance....
+...started Help File Source...
+
+===============
+   13 MaTa
+===============
+
+Offerte: ca. 17 MaTa
+
+
+
+==================================
+====  Documentation Protocol  ====
+==================================
+
+24.09.94 - 0.75 MaTa
+25.09.94 - 1.00 MaTa
+26.09.94 - 0.25 MaTa
+27.09.94 - 0.50 MaTa
+28.09.94 - 0.50 MaTa
+01.10.94 - 0.25 MaTa
+02.10.94 - 1.00 MaTa
+--------------------
+           4.25 MaTa
+
+
+
+============================
+====  Version Protocol  ====
+============================
+
+08.05.94: Version 0.9á
+======================
+
+First Beta Drop.
+
+
+05.06.94: Version 0.9, MC
+=========================
+
+Same as 0.9á, but with MC-Reader extensions (Ulrich).
+
+
+26.06.94: Version 0.92á and 0.92, MC
+====================================
+
+- Corrected Bug in tvDoubleField that prevented it
+  from saving the second "DataField" in the dialog.
+
+- Changed order of the "new line" codes in FormDevice.
+  (LF, CR --> CR, LF)
+
+
+27.09.94: Version 1.00
+======================
+
+- No changes, same as 0.92á (just no Beta note).
+
+
+02.10.94: Version 1.01 (0.25 MaTa)
+==================================
+
+- (tvObj-Code) Eliminated MenuBar, moved Clock to bottom.
+  Added AboutDialog hook-out to TtvApplication and refined
+  AboutDialog, StatusLine & MainFolder appearance order.
+
+- (tvObj-Code) Corrected Bug in HeapStatus View
+  conditional creation code.
+  In 1.00 the HeapStatus View always got created.
+
+- (tvObj-Code) Numeric '+' now opens a Object in a
+  Folder. Numeric '-' closes a Object.
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:
+====================
+ESC from MainFolder =>
+Crash

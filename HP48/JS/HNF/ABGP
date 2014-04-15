@@ -1,0 +1,25 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Abstand Gerade - Punkt
+----------------------
+ax + by + c = 0
+P(x/y)          
+
+Eingabe: a b c x y
+Ausgabe: D"
+DISPHELP
+
+   \-> X Y
+   \<<
+      I\->HNF
+      3 ROLL
+      X *
+      3 ROLL
+      Y *
+      + +
+      EVAL
+      ABS
+
+      "D" \->TAG
+   \>>
+\>>

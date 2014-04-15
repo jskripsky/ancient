@@ -1,0 +1,221 @@
+===============
+==   KONOS   ==
+===============
+
+======
+Module
+======
+
+Das Programm lÑsst sich in folgende Module zerlegen:
+
+Patientenliste
+--------------
+Diese Modul ist fÅr die Verwaltung aller Patientendaten zustÑndig. Es kennt nur ein Minimum an Angaben Åber die einzelnen Patienten (Name, Vorname, Geburtsdatum, ev. weitere). Es holt Patientendaten bei der Datenbank ab und gibt neue oder modifizierte Daten in sie weiter.
+Ausserdem muss es die Patientennamen (und Geburtsdaten,...) am Bildschirm darstellen. Dem Benutzer mÅssen Funktionen zur Arbeit mit den einzelnen Patientendaten zur VerfÅgung gestellt werden. So kann der Benutzer einen neuen Patienten aufnehmen, alte Daten modifizieren, in eine andere Liste transferieren oder lîschen. Zum Druck eines Patienten oder von Reportlisten mÅssen auch Buttons vorhanden sein.
+Es muss die Mîglichkeit bestehen, mehrere Patientenlisten erstellen zu kînnen. Auch der Transfer eines (oder mehrerer) Patienten in eine andere Liste muss mîglich sein.
+
+Bei der Modifikation der Daten eines Patienten (oder bei Aufnahme eines neuen Patienten) wird die Kontrolle an das Modul "Bildschirm-Formular" Åbergeben.
+
+Beim Druck von Patientendaten erhÑlt das Modul "Printer" die Kontrolle.
+
+
+(Bildschirm-)Formular
+---------------------
+Die vom "Patientenlisten"-Modul gesandten Daten werden in die einzelnen Felder, bzw. deren Feld-Objekte zerlegt. Da das Formular eine Liste aller Felder besitzt, kann jedes Feld-Objekt seine Daten aus dem Daten Stream extrahieren.
+Das Bildschirmformular kann aus mehreren Seiten bestehen. Sobald die Seite gewechselt wird, werden die darzustellenden Feld-Objekte ermittelt. Diese Feld-Objekte mÅssen nun je ein Feld-Anzeige-Objekt bereitstellen (ausserdem kînnen weitere Bildschirmelemente beigefÅgt werden). Dieses stellt die Daten des Feld-Objekts auf dem Bildschirm dar und erlaubt dem Benutzer sie zu Ñndern.
+Alle énderungen am Bildschirm mÅssen sofort (vom Feld-Anzeige-Objekt) an das Feld-Objekt (weiter)geleitet werden.
+Das Bildschirmformular kann dadurch verlassen werden, dass die neuen Daten gespeichert oder alle énderungen ignoriert werden.
+
+Feld-Objekt  === erstellt ===> Feld-Anzeige-Objekt (besitzt Pointer auf Feld-Objekt)
+
+
+File System/Datenbank Wrapper
+-----------------------------
+...
+
+
+Printer (Print Stream Generation)
+---------------------------------
+Diese Modul erhÑlt die Daten eines Patienten vom "Patientenlisten"-Modul. Nun zerlegt es diese Daten mit Hilfe des "Formular"-Moduls in die einzelnen Felder, bzw. deren Feld-Objekte. Anschliessend muss jedes Feld-Objekt ein Feld-Druck-Objekt an dieses Modul Åbergeben. Danach kann jedes Feld-Druck-Objekt (in Zusammenarbeit mit dem Printer-Objekt) seinen Teil des Print Stream generieren. Dabei holt sich das Feld-Druck-Objekt die Daten vom Feld-Objekt (auf welches es einen Pointer besitzt), ergÑnzt/formatiert/konvertiert sie und schickt sie an das Printer-Objekt.
+
+Feld-Objekt  === erstellt ===> Feld-Druck-Objekt (besitzt Pointer auf Feld-Objekt)
+
+
+Allgemeine Elemente und deren UI
+--------------------------------
+Die Auswahl des Druckerports und andere Settings(-Dialoge) gehîren zu diesem Modul.
+
+
+
+
+
+
+Allgemeines
+===========
+
+Die FunkionalitÑt der im folgenden beschriebenen Klassen, Objekte und Hierarchien beschrÑnkt sich auf den Programmteil, der es dem Benutzer erlaubt, die Daten eines Patienten zu editieren (Modul Formular). (Die Klassen, die die Patientenliste verwalten, sind hier nicht aufgefÅhrt.)
+
+
+Konzept
+=======
+
+Das Bildschirmformular und die einzelnen Felder des Formulars werden durch Klassen realisiert, die sich zwei Hierarchien zuordnen lassen:
+
+1. Data-Hierarchy
+-----------------
+Diese Klassen "verwalten" alle Daten.
+
+Jede Klasse stellt Methoden (public) zur VerfÅgung, die es ermîglichen, die von der Klasse versteckten Daten zu manipulieren. So kînnte z.B. die Klasse "Datum-Feld" Methoden zur Abfrage und zum Setzen des Jahres, Monats und Tages besitzen.
+
+Die Klassen sind auch fÅr die Verwaltung von Meta-Daten zustÑndig. So mÅsste z.B. eine Klasse "Text-Feld" nicht nur den (vom Benutzer eingegeben) Text, sondern auch Informationen, wie die maximale TextlÑnge oder eine Liste verbotener Zeichen speichern.
+
+
+2. Presentation-Hierarchy
+-------------------------
+Diese Klassen stellen die Daten am Bildschirm dar oder drucken sie. Entsprechend gibt es zwei Kategorien:
+
+Window-Klassen und Print-Klassen.
+
+Alle Klassen der Presentation-Hierarchie besitzen einen Pointer, der auf das Objekt (der Data-Hierarchie) zeigt, welches die anzuzeigenden oder zu druckenden Daten verwaltet.
+Die Objekte dieser Hierarchie werden (at Run-Time) von den einzelnen Objekten der Data-Hierarchie erstellt.
+
+(Die Lifetime der Objekte der Window-Klasse entspricht etwa der Dauer der Sichtbarkeit der entsprechenden Fenster am Bildschirm).
+
+
+Da die Klassen beider Hierarchien von einer Klasse abgeleitet sind, die sich selbst speichern (Datei/Datenbank) kann ("PersistentObject"), mÅssen auch alle abgeleiteten Klassen die so geerbten Methoden zur Speicherung und Wiederherstellung ("write(StorageUnit&)" / "read(StorageUnit&)") ersetzten, um die neu eingefÅhrten Daten/Variabeln zu speichern.
+
+
+Beispiel
+--------
+
+(Klasse "TextField")
+(Klasse "TextFieldWindow")
+
+1. Der Benutzer "îffnet" das Formular eines Patienten.
+
+.....die Felder der ersten Seite werden dargestellt, darunter auch das Text-Feld:
+
+2. TextField::createWindow() wird aufgerufen.
+
+3. Der Constructor des neuen Objekts (der Klasse "TextFieldWindow") erstellt (z.B. per native API) ein Fenster am Bildschirm und registriert die Methode "TextFieldWindow::handleEvent()" als Event Handler.
+
+4. Sobald der Benutzer nun eine Taste drÅckt, wird die Methode "handleEvent()" aufgerufen. Diese interpretiert den Event, ermittelt (z.B. per native API) den geÑnderten Text und schickt ihn an das Objekt der Klasse "DataField". (z.B.: "((DataField *)dataObject)->setNewText(string);" ).
+
+...
+
+
+
+=====================
+Klassen-Dokumentation
+=====================
+
+PersistentObject
+----------------
+
+Alle Sub-Klassen dieser Klasse besitzen automatisch einen "einzigartigen" (unique) ID-String und kînnen sich, bzw. ihre Variabeln selbstÑndig in/aus einer "StorageUnit" abspeichern/einlesen. Alle konkreten Sub-Klassen mÅssen die Methode "getClassName" bereitstellen und so ihren Klassenname (z.B. "TextField") angeben.
+
+- getID/setID
+Liefert/setzt den ID-String des Objekts. Diese Methoden sollten nicht ersetzt werden!
+
+- getClassName
+Liefer den Klassennamen (z.B. {return "TextField";}). Muss von konkreten Klassen bereitgestellt werden!
+
+- writeToStorage/readFromStorage
+Wird von dem Objekt aufgerufen, welches dieses Objekt speichern/einlesen will. Beim Speichern werden so der ID- und Klassennamen-String in der StorageUnit gespeichert. Diese Methoden sollten nicht ersetzt werden!
+
+- write/read
+Diese Methoden sollten ersetzt werden, falls neue Variabeln eingefÅhrt wurden. Zuerst muss immer die Methode der Superclass aufgerufen werden. Danach werden die neuen Variablen gespeichert/eingelesen.
+
+
+
+StorageUnit
+-----------
+
+- startIDBlock/endIDBlock
+Werden automatisch von PersistentObject::writeToStorage benutzt.
+
+- openIDBlock
+Wird automatisch von PersistentObject::readFromStorage benutzt.
+
+- writeLong/readLong
+- writeShort/readShort
+- writeChar/readChar
+- writeBoolean/readBoolean
+
+- writeString/readString
+
+- writeData/readData
+
+- operator <<, operator >> fÅr long, short, char, Boolean
+
+
+
+DataObject (PersistentObject)
+-----------------------------
+
+- openWindow/closeWindow
+Erstellt/schliesst ein Bildschirmfenster, welches diese Data-Objekt representiert. Diese Methoden sollten nicht ersetzt werden!
+
+- createWindow
+Muss bei konkreten Subklassen bereitgestellt werden und ein neues Window-Objekt zurÅckliefern.
+
+
+
+Field (DataObject)
+------------------
+
+- initializeData
+...
+
+- isFilledIn
+...
+
+- getString
+...
+
+- setToDefault
+...
+
+- validate
+...
+
+- hasChanged
+...
+
+- writeData/readData
+...
+
+- createWindow( FormWindow * )
+...
+
+- createPrinter( Printer * )
+...
+
+- destroyWindow
+No override!
+
+- destroyPrinter
+No override!
+
+- attachToForm
+No override!
+
+
+- createWindow()
+...
+
+- createPrinter( const char *printerID )
+...
+
+
+
+
+EntryField (public Field)
+-------------------------
+
+- setText/getText
+Setzt/Liefert den aktuellen Text.
+
+- getMaxTextLength
+Liefert die maximal zulÑssige LÑnge des Textes (ohne Null-Byte).
+

@@ -1,0 +1,27 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Gerade aus 2 Punkten
+--------------------
+ A( x / y / z )
+ B( x / y / z )      
+
+Eingabe: VA VB
+Ausgabe: V0 VT"
+DISPHELP
+   
+   \-> VA VB
+   \<<
+      VA
+      'VB-VA' EVAL
+
+      0 "Z"
+      GRKO
+
+      3 ROLL
+      DROP
+
+      "V0" \->TAG
+      SWAP
+      "VT" \->TAG
+   \>>
+\>>

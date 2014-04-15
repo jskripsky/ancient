@@ -1,0 +1,5 @@
+#include "Form.Use"
+#include "Gadgets\TransGrp.Use"
+#include "Person\Person.Use"
+
+#define Uses_TDialog

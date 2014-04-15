@@ -1,0 +1,35 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Gerade um Origo rot.
+--------------------
+
+
+
+Eingabe: M Q \<)
+Ausgabe: M Q"
+DISPHELP
+
+   \-> M Q W
+   \<<
+      IF
+         M
+         "\|^"
+         ==
+      THEN
+         Q 0
+         Q 1
+      ELSE
+         0 Q
+         1 M Q +
+      END
+
+      W
+      ROTP
+
+      4 ROLL
+      4 ROLL
+      W
+      ROTP
+      GRGL
+   \>>
+\>>

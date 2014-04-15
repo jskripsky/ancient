@@ -1,0 +1,32 @@
+JSLIB - Graphic Standards
+-------------------------
+
+Image - Format
+--------------
+Disk:		- Header Identification (8 Bytes)
+		- Imagename (16 Bytes)
+		- Palettename (16 Bytes)
+
+Memory:		- XDelta (2 Bytes)
+		- YDelta (2 Bytes)
+
+
+Iconlibrary - Format
+--------------------
+Disk:		- Header Identification (8 Bytes)
+		- Iconlibname (16 Bytes)
+		- Palettename (16 Bytes)
+		- Number of Icons (1 Byte)
+
+Memory:		- XDelta (1 Byte)
+		- YDelta (1 Byte)
+		- Iconsize (2 Bytes)
+
+Font - Format
+-------------
+Disk:		- Header Identification (8 Bytes)
+		- Fontname (16 Bytes)
+
+Memory:		- XDelta (4 Bits)
+		- YDelta (4 Bits)
+		- Charactersize (1 Byte)

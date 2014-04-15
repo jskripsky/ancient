@@ -1,0 +1,70 @@
+
+class Field : public PersistentObject
+{
+	// Do not include any variable for data of the field!
+	// Derived classes have to include a variable for their data.
+
+public:
+	//=== constructors and destructor =====
+	Field();
+	virtual ~Field();
+
+	//=== general data handling =====
+	initializeData();
+
+
+
+
+	boolean obligatory;
+	virtual boolean isFilledIn() = 0;
+
+//	virtual long getMaxSize() = 0;
+//	virtual long getSize() = 0;
+
+	virtual const char *getString() = 0;
+
+	virtual void setToDefault() = 0;
+	virtual boolean validate();
+	// Check, if data is valide (e.g. if Date/Time is possible)
+
+	virtual void hasChanged();
+	// E.g.: Allow a selection field to manipulate a connected field.
+
+
+	//=== data storage =====
+	virtual void writeData( StorageUnit& ) = 0;
+	virtual void readData( StorageUnit& ) = 0;
+
+	//=== field presentation =====
+	void createWindow( FormWindow * );
+	void createPrinter( Printer * );
+
+	void destroyWindow();
+	void destroyPrinter();
+
+	//=== form =====
+	void attachToForm( Form * );
+
+
+protected:
+	Form *form;
+
+	FieldWindow *window;
+	FieldPrinter *printer;
+
+	virtual FieldWindow *createWindow() = 0;
+	virtual FieldPrinter *createPrinter( const char *printerID ) = 0;
+
+
+protected:
+	//=== storage (PersistentObject) =====
+	virtual void write( StorageUnit& );
+	virtual void read( StorageUnit& );
+
+};
+
+
+
+
+Lifetime der Window Objekte entspricht der Dauer der Sichtbarkeit der
+entsprechenden Windows.

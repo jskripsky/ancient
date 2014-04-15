@@ -1,0 +1,30 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Parametergl.\-> Koord.gl
+----------------------
+x = MX*z + QX
+y = MY*z + QY
+
+Eingabe: V0 VT
+Ausgabe: MX QX MY QY"
+DISPHELP
+   
+   V\->
+   4 ROLL
+   V\->
+
+   \-> MX MY MZ OX OY OZ
+   \<<
+      'MX/MZ' EVAL
+      "MX" \->TAG
+
+      'OX-(MX*OZ/MZ)' EVAL
+      "QX" \->TAG
+
+      'MY/MZ' EVAL
+      "MY" \->TAG
+
+      'OY-(MY*OZ/MZ)' EVAL
+      "QY" \->TAG
+   \>>
+\>>

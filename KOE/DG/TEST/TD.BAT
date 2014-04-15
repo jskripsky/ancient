@@ -1,0 +1,4 @@
+@ECHO OFF
+CD F:\KOE\DG
+TD F:\KOE\DG\Test\%1
+CD F:\KOE\DG\Test

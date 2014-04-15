@@ -1,0 +1,75 @@
+(Comp.sys.handhelds)
+Item: 803 by mcgovern at ee.su.oz.au
+Author: [Hamish McGovern]
+  Subj: puzzle-24 game for HP-48SX
+  Date: Fri Sep 28 1990 07:55 
+
+Here's a game I wrote (for hp-48sx) a couple of weeks ago but couldn't send
+till now.  Its the puzzle-24 game.  I read that someone wrote
+a similar program using the chip8 interpreter.  I thought I'd send this
+anyway, it's rather hacked out and it's got a bug, but its still quite
+playable.
+
+The problem is that it creates a random layout of the pieces and this 
+doesn't always result in a puzzle which can be solved.  About every second
+puzzle is solvable.  I wonder if the guy that wrote puzzle-15 knows of
+a test to see if the puzzle has a solution, or is the only way to do it
+scrambling a completed puzzle.  The program RARR creates an array of
+the number 1 to 24 in a random order, this is then used to place the
+pieces on the board.  I wonder if some sort of test can be performed on 
+this to see if the puzzle will have a solution.  I thought maybe taking
+the dot product with [1 2 ... 24 ] and testing if even, but this is not
+correct.
+
+Load the directory PUZZLE, go into the the directory's CST menu, then
+to play run PLAY and use the arrow keys to move a piece adjacent to the 
+empty square into that square.  Due to extreme lazyness on my behalf 
+you need to use key y^x as the down arrow ; i.e.
+
+                  ^
+               <     >
+                 y^x          
+
+
+                    Hamish McGovern
+                    mcgovern@ee.su.oz.au
+
+------------
+(Comp.sys.handhelds)
+Item: 813 by rcorless at uwovax.uwo.ca
+Author: [Robert Corless]
+  Subj: puzzle-24 for HP48-SX
+  Date: Sat Sep 29 1990 11:13 
+
+With regard to the solvability of the puzzle-24 game, I seem to
+remember from my number-theory days (about 12 years ago now... sigh)
+that the puzzle will be solvable precisely when you have written
+the numbers down as an - even - permutation of the sequence
+1..24 (or n, if you like).  This is because the smallest exchange
+you can make with the puzzle is a three-cycle.
+
+By "even permutation" I mean a permutation that can be written
+as a product of three-cycles, and by "three-cycle" I mean a 
+permutation of the sort (1,2,3) -> (2,3,1).  These are called even
+because every permutation can be written as a product of simple 
+exchanges, and every three-cycle needs 2 exchanges.  For example,
+the above permutation is the product of 1<=>2 and 2<=>3.  It turns out that
+exactly half of all permutations are even, so your observation
+that half your games are solvable sounds spot-on.
+
+I seem to recall that the inventor of the 15-puzzle (he was
+famous for puzzles) made a big splash by offering a big prize
+for solving a particular puzzle - which, as he well knew, was
+in the impossible half.
+
+I don't remember if there is a simple test for evenness of
+a permutation.  It ought to be easy to write an "even" permutatation
+generator, though.  Just start with the ordered set and perform 
+random three-cycles on it.  This is equivalent to starting with 
+your puzzle solved, I guess.
+
+-- 
+========
+Robert Corless, Applied Mathematics, University of Western Ontario
+========               London, Ontario, Canada N6A 5B9
+e-mail    : RCORLESS@uwovax.uwo.ca

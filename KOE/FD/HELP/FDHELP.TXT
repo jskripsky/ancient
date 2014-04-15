@@ -1,0 +1,61 @@
+.topic NoCxt=0
+
+Keine Hilfe verfuegbar.
+
+.topic HelpOnHelp=1000
+
+ Hilfe
+ อออออ
+Text ueber Hilfe....
+
+.topic MainFolder=1001
+
+ Hauptmenu
+ อออออออออ
+
+
+
+
+
+
+
+
+
+
+
+ {Hilfe ueber Hilfe:HelpOnHelp}
+
+.topic Project
+
+ Applikation
+ อออออออออออ
+
+.topic FieldsFolder
+
+ Felder   
+ ออออออ   
+
+.topic Field
+
+ Feld     
+ ออออ
+
+.topic FormFolder
+
+ Formular/Etikette
+ อออออออออออออออออ
+
+.topic FormTextField
+
+ Text       
+ ออออ
+
+.topic FormStaticText
+
+ Fester Text
+ อออออออออออ
+
+.topic FormFolder_MoveObject
+
+ Object verschieben
+ ออออออออออออออออออ

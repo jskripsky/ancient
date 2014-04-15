@@ -1,0 +1,14 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Kreis aus Tan, MS, Pkt
+----------------------
+
+Eingabe: TM, TQ,
+         MM, MQ, X, Y
+Ausgabe: MX MY R"
+DISPHELP
+
+   \-> TM TQ MM MQ X Y
+   \<<
+   \>>
+\>>

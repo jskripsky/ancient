@@ -1,0 +1,117 @@
+Wirkungsweise des seriellen Treibers RS232DRV
+---------------------------------------------
+
+RS232DRV besitzt einen internen Datenbuffer als Zwischenspeicher. Vom UART
+eingehende Zeichen lîsen einen Hardware-Interrupt aus und werden in den Receive-
+Buffer (RXBUF) aufgenommen. Umgekehrt schreibt die hîhere Programmiersprache
+Zeichen in den Transmit-Buffer (TXBUF) und der Treiber ist selbst fÅr die
+"Leerung" das Buffers unter BerÅcksichtigung des Handshakes mit dem UART verant-
+wortlich. Wie Åblich handelt es sich bei RXBUF und TXBUF um Ringbuffer mit zwei
+Zeigern "Kopf" und "Schwanz".
+
+Der "Kopf" (Head) zeigt immer auf das erste eingegangene Zeichen, also auf das
+Zeichen, das als nÑchstes aus dem Buffer geholt wird und der "Schwanz" (Tail)
+auf den Platz fÅr das nÑchste einzulesende Zeichen.
+
+Der Buffer wird geleert, indem das Zeichen mit dem "Kopf" adressiert geholt und der
+"Kopf" vorgeschoben wird, bis er mit dem "Schwanz" Åbereinstimmt. Neue Zeichen
+werden mit dem "Schwanz" adressiert in den Buffer geschrieben und der "Schwanz"
+vorgeschoben. Ein leerer Buffer ist dadurch gekennzeichnet, das "Kopf" und
+"Schwanz" Åbereinstimmen.
+
+Erreicht ein Zeiger beim Vorschieben das Bufferende, so wird er auf den
+Bufferanfang zurÅckgeschoben, sodass aus dem physikalisch linearen Buffer ein
+Ringbuffer entsteht.
+
+Die Zwischenbufferung leuchtet ein: es ist offenbar weniger wahrscheinlich, dass
+Zeichen durch einen Ueberlauf verloren gehen, falls der Treiber die Zeichen vom
+UART genÅgend schnell in seinen Buffer holt. Die Abhol-Routine muss eine
+zeitoptimierte Hardware-Interrupt-Routine sein, und ist daher in Assembler
+geschrieben. Allerdings ist trotzdem bei schnellem Datentransfer ein Ueberlauf
+der  Ringbuffer zu erwarten, da mîglicherweise das HLL-Programm RXBUF zu wenig
+schnell leert oder zu schnell in TXBUF hineinschreibt. Um einen Ueberlauf von
+RXBUF zu vermeiden, ist daher ein Handshaking mit dem angeschlossenen
+PeripheriegerÑt nîtig. Bekanntlich kann dies durch ein "Software-Handshake", d.h.
+durch gegenseitiges Aussenden der Zeichen CTRL/Q-CTRL/S (XON-XOFF), oder
+durch ein "Hardware-Handshake", d.h. beispielsweise mittels der  Leitungen CTS
+(Clear to send) und RTS (Ready to send) geschehen.
+
+Das Handshake lÑuft wie folgt ab: Hat RXBUF die Tendenz zum Ueberlaufen, weil
+die Peripherie die Daten zu schnell schickt bzw. das HLL-Programm den Buffer zu
+langsam leert, so schickt der Treiber ein "Halte-Signal" zur Peripherie. Sobald
+RXBUF soweit geleert ist, dass keine Gefahr zum Ueberlaufen mehr besteht,
+schickt der Treiber ein "Sende-Signal". Umgekehrt: Schickt der PC seine Daten so
+schnell zur Peripherie, dass diese Åberlaufen wÅrde, schickt das PeripheriegerÑt
+ein "Halte-Signal" zum PC, um den Datenstrom zu unterbrechen. Ein "Sende-Signal"
+von der Peripherie signalisiert dem PC, mit der Aussendung weiterzufahren.
+Offenbar muss dem HLL-Programm mitgeteilt werden, falls TXBUF voll ist, damit
+es ihn nicht zum Ueberlaufen bringt.
+
+Der Treiber wird "installiert", indem man ihn vom DOS-Prompt aus aufruft. Er
+besitzt mehrere Kommandozeilen-Parameter, deren Syntax ausgeschrieben wird,
+falls man den Treiber mit keinen (oder falschen) Parametern aufruft. Ein
+installierter Treiber wird entfernt, indem man ihn noch einmal (mit richtigen
+Parametern) aufruft.
+
+
+Die Schnittstelle zur hîheren Programmiersprache
+------------------------------------------------
+
+Zur Kommunikation zwischen der Programmiersprache C und dem Treiber stehen
+einige wenige Funktionen zur VerfÅgung, deren Prototypen in UNICOM.H definiert
+sind und die in UNICOM.OBJ als enthalten sind. Da alle Funktionen "FAR" 
+definiert sind, kann UNICOM.OBJ in jedem Memory-Modell verwendet werden.
+
+
+int far initcom(void)
+/* Sucht nach dem RS232-Treiber und gibt die Nummer des Com-Ports zurÅck */
+/* Gibt 0 zurÅck, falls der Treiber nicht gefunden wird */
+
+int far txchar(int ch)
+/* Falls TXBUF nicht voll ist, wird ch dort abgelegt (und 0 zurÅckgegeben */
+/* Falls TXBUF voll ist, wird 1 zurÅckgegeben */
+
+int far txcharw(int ch)
+/* Wartet, bis TXBUF nicht mehr voll ist und legt ch dort ab */
+
+int far tx_queue_full(void)
+/* Gibt 1 (TRUE) zurÅck, falls TXBUF voll ist */
+/* andernfalls gibt 0 (FALSE) zurÅck */
+
+int far rxchar(void)
+/* Gibt das Ñlteste Zeichen in RXBUF zurÅck */
+/* Falls kein Zeichen vorhanden ist, wird 0 zurÅckgegeben */
+
+int far rxcharw(void)
+/* Wartet, bis eine Zeichen in RXBUF ist und gibt dieses zurÅck */
+
+int far rx_queue_empty(void)
+/* Gibt 1 (TRUE) zurÅck, falls RXBUF leer ist */
+/* andernfalls gibt 0 (FALSE) zurÅck */
+
+void far flush_rx_queue(void)
+/* Lîscht RXBUF solange, bis innerhalb 100 ms keine Zeichen mehr ankommen */
+
+void far send_ctrls(void)
+/* Schickt ein CTRL_S Åber die Schnittstelle */
+/* unabhÑngig von TXBUF und Handshake-Zustand */
+
+void far send_ctrlq(void)
+/* Falls vorher ein CTRL_S geschickt wurde, schickt ein CTRL_Q */
+
+void far act_rts(void)
+/* Desaktiviert das RTS-Signal */
+
+void far deact_rts(void)
+/* Aktiviert das RTS-Signal */
+
+void far act_dtr(void)
+/* Aktiviert das DTR-Signal */
+
+void far deact_dtr(void)
+/* Desaktiviert das DTR-Signal */
+
+int far carrier_detect(void)
+/* Gibt 1 (TRUE) zurÅck, falls Carrier detect aktiv */
+/* andernfalls gibt 0 (FALSE) zurÅck */
+

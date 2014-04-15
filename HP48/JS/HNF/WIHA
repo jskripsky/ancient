@@ -1,0 +1,26 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Winkelhalbierende
+-----------------
+a1x + b1y + c1 = 0
+a2x + b2y + c2 = 0
+
+Eingabe: a1 b1..b2 c2
+Ausgabe: a1 b1..b2 c2"
+DISPHELP
+
+   I\->HNF
+   \->V3
+
+   4 ROLLD
+   I\->HNF
+   \->V3
+
+   \-> G1 G2
+   \<<
+      G1 G2 -
+      V\->
+      G1 G2 +
+      V\->
+   \>>
+\>>

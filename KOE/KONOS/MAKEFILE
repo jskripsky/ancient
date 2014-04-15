@@ -1,0 +1,45 @@
+NAME = KONOS
+OFILES = \
+        $(NAME).Obj Frame.Obj \
+        Form.Obj FormWin.Obj \
+        zFormWin.Obj \
+        DataPres.Obj \
+        Time.Obj Date.Obj \
+        Persist.Obj \
+        Contain.Obj \
+        StrCntr.Obj \
+        Storage.Obj \
+        DataObj.Obj \
+        Present.Obj \
+        Window.Obj \
+        Field.Obj \
+        FieldWin.Obj \
+        FldPres.Obj \
+        EntryFld.Obj EFldWin.Obj \
+        DateFld.Obj TimeFld.Obj \
+        ListFld.Obj \
+        SelFld.Obj
+
+
+LFILES = $(NAME).Obj+Frame.Obj+^
+        Form.Obj+FormWin.Obj+^
+        zFormWin.Obj+^
+        DataPres.Obj+^
+        Time.Obj+Date.Obj+^
+        Persist.Obj+^
+        Contain.Obj+^
+        StrCntr.Obj+^
+        Storage.Obj+^
+        DataObj.Obj+^
+        Present.Obj+^
+        Window.Obj+^
+        Field.Obj+^
+        FieldWin.Obj+^
+        FldPres.Obj+^
+        EntryFld.Obj+EFldWin.Obj+^
+        DateFld.Obj+TimeFld.Obj+^
+        ListFld.Obj+SelFld.Obj
+
+
+!include "template.mak"
+

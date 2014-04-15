@@ -1,0 +1,20 @@
+
+
+C:\PV> SELDEL  <Jahr, 1- oder 2-stellig>  <Bereich Start> <Bereich Ende>
+                                          ^^^^^^^^^^^optional^^^^^^^^^^^
+
+
+BSP:
+====
+
+1. C:\PV> SELDEL 92
+
+2. C:\PV> SELDEL 92 100 1400
+
+3. C:\PV> SELDEL 92 800 2300
+
+
+Es entstehen jeweils zwei Dateien:
+ 
+ - PList.Dat
+ - PListDel.Dat

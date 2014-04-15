@@ -1,0 +1,110 @@
+
+// Formatierungskommandos
+// ======================
+
+const ushort moHor;
+// Feld wird rechts neben dem Feldtitel platziert (d.h. auf gleicher
+// vertikaler H”he).
+
+const ushort moVert;
+// Feld wird unterhalb des Feldtitels platziert.
+
+const ushort moRight;
+// Feld wird (falls m”glich) rechts neben dem letzten Feld platziert.
+
+const ushort moDown;
+// Feld wird unterhalb des letzten Feldes platziert.
+
+const ushort moNoSpace;
+// Keine Leerzeile zwischen neuem und letzten Feld unterdrcken (wird immer
+// im Modus "moHor" verwendet).
+
+
+
+// Feldtypen
+// =========
+
+TTextField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			ushort options = 0 );
+// Einfaches Textfeld.
+// "aStringLength" gibt die maximale Textl„nge an.
+// "options" (Siehe "Formatierungskommandos") enth„lt eine Bitmaske, die mit
+// den Konstanten "moHor", "moVert", "moRight", "moDown", "moNoSpace"
+// konstruiert ("|") wird.
+
+
+TNameField( TMeasurements& m, const char *aLabel, ushort aStringLength,
+			ushort options = 0 ) :
+// Textfeld, dessen Inhalt automatisch in der Listenansicht anzeigt wird.
+
+
+TNumericField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			   const char *aValidChars = 0, ushort options = 0 );
+// Textfeld, welches nur Ziffern und explizit angefhrte Zeichen zul„sst.
+// "aValidChars" (String) beinhaltet alle zus„tzlich erlaubten Zeichen.
+
+
+TDateField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			const char *format = 0, ushort options = 0 );
+// Datenfeld.
+// "format" (String) ist entweder "TT.MM.JJ" oder "TT.MM.JJJJ".
+
+
+TSystemDateField( TMeasurements& m, const char *aLabel,
+				  ushort aStringLength, const char *format = 0,
+				  ushort options = 0 ) :
+// Datenfeld, welches automatisch (beim Einfgen einer neuen Person)
+// das Systemdatum enth„lt.
+// "format" (Siehe "TDateField").
+
+
+TSystemTimeField( TMeasurements&, const char *aLabel,
+				  ushort options = 0 );
+// Zeitfeld, welches automatisch (beim Einfgen einer neuen Person)
+// die Systemzeit enth„lt.
+
+
+TBirthDateField( TMeasurements& m, const char *aLabel,
+				 ushort aStringLength, const char *format = 0,
+				 ushort options = 0 ) :
+// Datenfeld, welches seinen Inhalt (ein Geburtsdatum) auf Validit„t
+// berprft (Geburtsdatum > aktuelles Datum).
+// "format" (Siehe "TDateField").
+
+
+TRadioField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			 TSItem *aStrings, TSItem *aDeviceStrings,
+			 ushort options = 0 );
+
+
+
+TListField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			const char *aListFilename, int visibleLines,
+			ushort options = 0 );
+
+
+THiddenConstField( TMeasurements&, char *aText, ushort aStringLength );
+// Unsichtbares Feld mit konstantem Text.
+// "aText" (String) der gegebenenfalls zum Drucker/Codierer gesandt wird.
+
+
+
+TSpecCardTextField( TMeasurements& m, const char *aLabel,
+					ushort aStringLength, ushort options = 0 ) :
+
+TPNumberField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			   const char *aNumberRangeFilename, ushort options = 0 );
+
+
+TSchwyzPNumberField( TMeasurements&, const char *aLabel,
+					 ushort aStringLength,
+					 const char *aNumberRangeFilename,
+					 ushort options = 0 );
+
+
+
+TControlField( TMeasurements&, const char *aLabel, ushort aStringLength,
+			   TSItem *aStrings, TSItem *aDeviceStrings,
+			   ushort options = 0 );
+
+

@@ -1,0 +1,29 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Impl.\->HNF Geradengl.
+--------------------
+ax + by + c = 0
+Ax + By + C = 0
+
+Eingabe: a b c
+Ausgabe: A B C"
+DISPHELP
+
+   \-> A B C
+   \<<
+      '\v/(SQ(A)+SQ(B))'
+      EVAL
+
+      \-> Q
+      \<<
+         A Q /
+         "A" \->TAG
+
+         B Q /
+         "B" \->TAG
+                
+         C Q /
+         "C" \->TAG
+      \>>
+   \>>
+\>>

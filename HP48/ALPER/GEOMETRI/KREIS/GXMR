@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"M(U/V) UND R AUS 
+DER KREISGLEICHUNG
+Ax^2+Ay^2+Bx+Cy+D=0
+
+EINGABE: A B C D
+AUSGABE: U V R"
+DISPHELP \-> A B C D
+  \<< '-B/2*A' \->NUM
+DTAG "U" \->TAG '-C/2
+*A' \->NUM DTAG "V"
+\->TAG '(B^2+C^2-4*D*
+A)/(4*A^2)' \v/ \->NUM
+DTAG "R" \->TAG
+  \>>
+\>>

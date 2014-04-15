@@ -1,0 +1,47 @@
+(User.programs)
+Item: 101 by _bigdave at hpcvbbs.UUCP
+Author: [David Ruchien Liu]
+  Subj: ROBORUN 2.0: Arcade game w/ bonus round
+  Keyw: roborun 1.1 games hp48
+  Date: Mon Aug 20 1990 10:29 
+
+[Note: The ROBORUN file is the whole directory.  Its source code is so
+huge, however, that I broke it up into two pieces, ROBORUN.SRC and
+ROBORUN2.SRC, the latter being just the GROBs required.  Although you
+will not need to download the source code, you can do so by first
+downloading ROBORUN.SRC, entering that directory, and then downloading
+ROBORUN2.SRC.  -jkh-]
+
+Attached to this file is Roborun 2.0, a very new version of Roborun 1.1. 
+The graphics and music are improved, and I have added a very fun BONUS
+ROUND that you play after completing every third round.  While
+instructions are included in the program, here are some important points:
+
+- After clearing level 3, 6, 9, etc., you will see a "Bonus Round" box
+and will hear Joplin's "Entertainer."
+
+- Then you will see your 3-way laser.  Press any key to start each of 10
+stages.
+
+- After pressing any key, you will hear a low tone, followed by pictures
+of three robots in the left, middle, and right thirds of the screen.
+
+- Press [7] to fire the left gun, [8] to fire the middle gun, and [9] to
+fire the right laser.
+
+- Points are awarded if you hit the target robot (the one shown in
+roborun's intro screen, and if you avoid destroying the decoy robots (in
+the instructions).
+
+- You are given an exponetially decreasing amount of time to key in your
+responses, so be quick and accurate.
+
+- When your time to key in responses is up, the program will emit a high
+tone and will lock out any further shots.
+
+- This game is shareware!  Please send $5 to David Liu, 1345 Iverson
+Place, Riverside, CA 92506.  Enjoy!
+
+[Note: The High Score roster defaults are outrageously high scores by the
+game's author.  You may wish to edit HS (High Scores) and HSN
+(High Score Names) to make the game more friendly to beginners!  -jkh-]

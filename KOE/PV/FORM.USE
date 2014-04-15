@@ -1,0 +1,3 @@
+#include "Page.Use"
+
+#define Uses_TCollection

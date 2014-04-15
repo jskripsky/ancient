@@ -1,0 +1,42 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Expl.\->Impl. Geradengl.
+----------------------
+y = Mx + Q
+Ax + By + C = 0
+
+Eingabe: M Q
+Ausgabe: A B C"
+DISPHELP
+
+   \-> M Q
+   \<<
+      IF
+         M
+         "\|^"
+         ==
+      THEN
+         1
+         0
+         Q NEG EVAL
+      ELSE
+         IF 'M>0'
+            THEN
+               M EVAL
+               -1
+               Q EVAL
+            ELSE
+               M NEG EVAL
+               1
+               Q NEG EVAL
+            END
+      END
+   
+      3 ROLL
+      "A" \->TAG
+      3 ROLL
+      "B" \->TAG
+      3 ROLL
+      "C" \->TAG
+   \>>
+\>>

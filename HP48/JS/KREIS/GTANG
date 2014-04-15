@@ -1,0 +1,32 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Gemeinsame Tangenten
+--------------------
+SQ(x-u)+SQ(y-v)=SQ(R)
+\-> „ussere, innere
+    Tangenten
+Eingabe: U V R U V R
+Ausgabe: M1 Q1..M4 Q4"
+DISPHELP
+   
+   \-> U1 V1 R1 U2 V2 R2
+   \<<
+      IF 'R1==R2'
+      THEN "R1 == R2 !!!" DOERR
+      END
+
+      IF
+         'R1<R2'
+      THEN
+         U2 V2 R2
+         U1 V1 R1
+         'R2' STO 'V2' STO 'U2' STO
+         'R1' STO 'V1' STO 'U1' STO
+      END
+
+      U1 V1 'R1-R2' EVAL
+      U2 V2
+      TANG
+
+   \>>
+\>>

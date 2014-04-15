@@ -1,0 +1,499 @@
+File KERMIT.UPD          MS-DOS KERMIT 3.0 UPDATES               March 1990
+
+See the end of this file for a list of changes from version 3.00 to 3.01.
+
+This file lists and briefly describes the features that are new to version
+3.0 of MS-DOS Kermit, January 1990.  The previous release of MS-DOS Kermit
+was 2.32/A, January 1989.
+
+The user manual for MS-DOS Kermit 3.0 is "Using MS-DOS Kermit", by Christine
+M. Gianone, published by Digital Press, Bedford, MA, 1990, order number
+EY-C204E-DP, and includes a 5.25-inch MS-DOS Kermit 3.0 diskette.  Call
+1-800-343-8321 (toll free, USA) to order.  The technical reference by
+Professor Joe R. Doupnik is in preparation.
+
+NEW FEATURES OF MS-DOS KERMIT 3.0
+
+ 1. Emulation of most features of the DEC VT320 terminal, plus many features
+    of the VT340.
+ 2. International character sets in terminal emulation and file transfer.
+ 3. Sliding window packet protocol.
+ 4. Expanded support for local area networks.
+ 5. Enhanced graphics commands in the Tektronix emulator, suitable for use
+    with mainframe WordPerfect versions 5 and 4.2.
+ 6. Many other improvements.
+
+1. VT320/VT340 EMULATION
+
+MS-DOS Kermit 3.0 emulates the DEC VT320 terminal, international model, with
+many features of the more advanced VT340/330 text/graphics terminals thrown
+in.  VT320 is the default terminal type for MS-DOS Kermit 3.0.  Kermit
+continues to offer emulations for the DEC VT52, Heath/Zenith-19, and DEC
+VT100/102 terminals, as well as of Tektronix graphics terminals.  Kermit's
+VT320/340 emulation offers many capabilities beyond the VT102, including:
+
+ . A selection of character sets, with the ability to switch among them.
+ . Translation of the above sets to/form any of the five Code Pages.
+ . User-defined soft function keys, downloadable by the host.
+ . Tektronix 4010/4014 graphics with many extensions, including color,
+   "sixel" graphics, rectangle fill with various patterns, and more.
+ . Support of the DEC LK250 keyboard, a DEC LK201 keyboard for IBM-PCs
+   (via a special driver, LK250.*).
+
+A new mechanism is provided for switching between 80 and 132 columns when your
+display adapter supports this.  Create two files, COLS80.BAT and COLS132.BAT,
+in your current disk and directory or anywhere in your DOS PATH.  These files
+should contain the DOS commands required to put your particular display
+adapter into 80-column and 132-column mode, respectively. They will be invoked
+automatically if the host sends the VT100/200/300 escape sequences to change
+screen width (for example if you SET TERMINAL /WIDTH=132 in VAX/VMS). Several
+EGA boards known to Kermit will be switched automatically without these files.
+You may also change the screen width manually by running these batch programs
+either outside of Kermit or from within Kermit by using Kermit's RUN command.
+
+Graphics screens may now be saved to disk files in uncompressed
+Aldus/Microsoft TIFF 5.0 format (approximately 110K per EGA screen) by
+invoking the keyboard verb \kdump (initially assigned to Ctrl-End) when the
+graphic is on the screen, for importation into applications such as
+WordPerfect 5.0, Pagemaker, Ventura Publisher, PC Paint, and Gem Paint.  The
+file names are TEKPLT01.TIF, TEKPLT02.TIF, etc.
+
+See KERMIT.BWR for a list of VT320/340 features not supported by MS-DOS 
+Kermit 3.0.
+
+2. INTERNATIONAL CHARACTER SET SUPPORT
+
+MS-DOS Kermit 3.0 supports translation between the PC's local character set
+(Code Page) and ISO Latin Alphabet 1 (ISO 8859-1) during file transfer.
+The relevant new commands are:
+
+  SET TRANSFER CHARACTER-SET { TRANSPARENT, LATIN1 }
+  SET FILE CHARACTER-SET { CP437, CP850, CP860, CP863, CP865 }
+
+The default transfer character set is TRANSPARENT (that is, no translation is
+done) for compatibility with previous releases of MS-DOS Kermit.  The default
+file character set is your PC's current code page, such as CP437, and that
+is detected automatically.
+
+These new commands allow you to transfer files containing accented and other
+special characters with Kermit programs on computers that represent these
+same characters using different codes, such as VAX/VMS, UNIX, Macintosh, IBM
+mainframes, etc, when the Kermit programs on these computers also support
+international text file transfer; new versions of C-Kermit for UNIX and
+VAX/VMS, Macintosh Kermit, IBM mainframe Kermit, and others which support
+this feature are in preparation.  International file transfer is also useful
+between two PCs that use different code pages.
+
+The introduction of this new capability requires for the first time that
+MS-DOS Kermit distinguish between text files (which MIGHT need translation)
+and binary files (which should not be translated) during file transfer.  This
+is done using the new command:
+
+  SET FILE TYPE { BINARY, TEXT }
+
+TEXT is the default.  However, since the default text character set is
+TRANSPARENT, binary file transfers should continue to work, even if you forget
+to SET FILE TYPE BINARY in MS-DOS Kermit (but you must still issue this
+command to other Kermit programs).
+
+Various host-based international character sets are also supported during
+VT320 terminal emulation, including 8-bit ISO Latin Alphabet 1, the DEC
+8-bit Multinational Character Set, 12 different 7-bit National Replacement
+Character (NRC) Sets, and several others.  The command to select your
+terminal character set is:
+
+  SET TERMINAL CHARACTER-SET xxx
+
+where xxx is the desired name (for a list, type ? in place of xxx).  LATIN1
+and DEC-MCS are 8-bit character sets, intended primarily for use in the 8-bit
+environment, meaning that the host uses 8 data bits, no parity.  In MS-DOS
+Kermit, you must SET PARITY NONE and SET DISPLAY 8 in order to operate in this
+environment.  In 7-bit-with-parity environments, MS-DOS Kermit will respond
+to shift-in/shift-out codes for displaying 8-bit characters, but the method
+for transmitting 8-bit characters to the host is host-dependent.  Normally,
+NRC sets are used in the 7-bit environment.
+
+Kermit automatically translates incoming characters from the current
+terminal character set (SET TERMINAL CHARACTER-SET) to the current PC code
+page, and it automatically translates keystrokes from the current code page
+to terminal character set.  The default terminal character set is LATIN1
+(Latin Alphabet 1).  SET KEY assignments take precedence on a per-key basis.
+
+3. SLIDING WINDOW PACKET PROTOCOL
+
+For increased efficiency during file transfer across long-distance,
+long-delay communication links such as public data networks, MS-DOS Kermit
+3.0 includes sliding window packet protocol.  This means that Kermit does
+not have to wait for an acknowledgement for the current packet before
+sending the next packet.  The number of packets that may be sent before
+acknowledgements arrive is called the "window size", and this may range from
+1 to 31.  A sufficiently large window size allows transmission of packets to
+be continuous, and makes maximum effective use of the transmission channel.
+The command to select the window size is:
+
+  SET WINDOW n
+
+where n is a number from 1 to 31.  The default window size is 1 for Kermit's
+normal stop-and-wait operation.  Window sizes greater than 1 can be used only
+with other Kermit programs that support this option, including PRIME Kermit,
+C-Kermit 5A or later (still in preparation), certain commercial programs, or
+another copy of MS-DOS Kermit 3.0.
+
+Sliding windows may be used in conjunction with long packets.  The product of
+the packet size and the window size may not exceed 2000.
+
+4. LOCAL AREA NETWORK SUPPORT
+
+MS-DOS Kermit 3.0 for the IBM PC, PS/2, and compatibles supports the following
+local area networks and protocols:
+
+ . Netbios via SET PORT NETBIOS for PC-to-PC file transfers.  Requires
+   a Netbios-based PC network (like IBM PC Network or IBM Token Ring) and
+   accompanying hardware and drivers.
+ . Netbios via SET PORT NETBIOS for PC to AT&T Unix systems over StarGroup
+   (formerly StarLAN) and for PC-to-host file transfer across any NetBios
+   compatible system.  Requires a Netbios driver for your network interface.
+ . Novell Terminal Emulation Service (TES) via SET PORT BIOSx.
+   Requires Novell TES BIOS-Level COMx driver (e.g. COM1, COM2) that
+   intercepts BIOS interrupt 14H and controls the network interface, and
+   a host VAX running NetWare/VMS.
+ . Novell NASI/NACS V2 and compatible asynchronous communication servers, 
+   via SET PORT NOVELL.  Requires Novell or compatible network.
+ . IBM EBIOS/LANACS via SET PORT EBIOS 1, 2, 3, 4.
+ . DECnet-DOS, both LAT and CTERM interfaces, via SET PORT DECNET.
+   Requires installation of DECnet-DOS or DECnet PCSA.
+ . Ungermann-Bass Net/One Int 6BH via SET PORT UB-NET1.
+   Requires an Ethernet board with U-B Net/One drivers or compatibles.
+ . Intel OpenNET via SET PORT OPENNET, a NetBios implementation.
+ . IBM asynchronous communication servers accessed through IBM EBIOS,
+   via SET PORT BIOSx.  Requires EBIOS Int 14H interceptor.  Needs testing.
+ . 3COM Bridge Application Program Interace (BAPI) to asynchronous
+   communication servers via SET PORT BIOSx.  Requires 3COM Int 14H
+   interceptor.
+ . 3COM BAPI, newer version which uses higher-numbered BIOS interrupts
+   particular to that interface, via SET PORT 3COM(BAPI).
+ . TCP/IP Telnet via SET PORT BIOSx.  Requires vendor's Int 14H interceptor
+   to execute Telnet protocol, for example FTP Software's PC/TCP v2.04
+   (TNGLASS dated 6 Dec 1989 or later), or Interlan's TCP/IP Gateway for
+   Novell Networks.   
+
+Use ? in the SET PORT command to learn about additional fields such as node
+names and passwords.
+
+Connections established with SET PORT NOVELL can be controlled by invoking the
+new Kermit keyboard verb \Knethold.  First assign this verb to a key using SET
+KEY (for example, "SET KEY \315 \Knethold" to assign it to the F1 key), then
+press the key during terminal emulation.  This will invoke a Novell menu to
+select connections, select modem speeds, keep sessions on hold while starting
+more sessions, and resume old sessions.
+
+5. TEKTRONIX GRAPHICS
+
+The name Tektronix may no longer be adequate to describe the new features
+drawn from DEC VT340/330 and HDS 2000/3000 graphics terminals.  Principle
+additions are:
+ . Rectangle (border only) and pattern filled rectangle drawing commands.
+ . More preprogrammed line patterns, many rectangle fill patterns, both
+   include several host definable patterns.  Fill patterns are tiling kinds
+   synchronized to the screen boundaries, for smooth joinery and easy
+   pattern overlaying operations.
+ . Host control of destructive space and backspace.
+ . User control of opaque or transparent character writing.
+ . Control of pixel basic operations such as write absolute, OR, XOR with
+   existing colors, including DEC VT340 ORing of color palette numbers.
+ . DEC Sixel graphics commands.
+ . Screen dumping in TIFF v 5.0 formats (class B for B/W, class P palette for
+   EGA and VGA screens), uncompressed.  One file for each screen capture.
+ . Support of most common cursor steering and line/screen erasure escape
+   sequences of ANSI text terminals, scaled to the text terminal's screen
+   shape, so that text, Tektronix, and Sixel graphics can be mingled.
+ . Automatic switching from text terminal to graphics terminal upon receipt
+   of a Sixel Device Control String.
+ . Presence, use, and reporting of the 16 color and b/w palettes of the DEC
+   VT340/330 terminals.  DEC characteristic of black always writes absolutely.
+ . Coloring commands acceptable in ANSI ESC [ 3x; 4x m  format and in Device
+   Control Strings for both RBG and HLS (hue, lightness, saturation) systems.
+ . Reporting of the graphics screen size and number of colors upon host
+   request, an MS-DOS Kermit escape sequence in DEC private format.
+ . Support for mainframe WordPerfect 5.0 and 4.2 to view and edit figures
+   (pictures) and pages in graphics mode while preparing documents in text
+   mode.  TIFF files from MS-DOS Kermit screens are directly readable into
+   WordPerfect (and several other packages).
+ . Terminal identification response of VT300 with Sixel and other attributes.
+ . Recognition of 8-bit control sequences, but truncation of other 8-bit
+   characters to 7-bit form.  For this, parity must be NONE and DISPLAY 8-bits.
+ . Recognition of the ESC [ ? 34 h and l  TerminalS and TerminalR MS-DOS
+   Kermit macro invokation sequences from the host.
+
+6. OTHER IMPROVEMENTS
+
+* Communications
+ . Support for advanced features of the PS/2's National Semiconductor 16550A
+   UART (serial communications) chip for improved performance.
+ . New SET DUPLEX { HALF, FULL } command includes support for RTS/CTS
+   handshake for use with half duplex modems, radio transmitters, etc.
+   RTS/CTS is used if DUPLEX is set to HALF and the DSR signal is present.
+
+* Terminal Emulation (in addition to features listed above):
+ . Expanded storage for rollback screens.  If memory is available, Kermit
+   will allocate room for about 10 screens.  More is available via the new
+   DOS environment variable, KERMIT: SET KERMIT=ROLLBACK nn, memory permitting.
+ . Screen rollback is now instantaneous.
+ . New REPLAY command to replay a Kermit session log through the terminal
+   emulators.
+ . Transparent print now works properly in the presence of parity.
+ . New SET TERMINAL KEYPAD { APPLICATION, NUMERIC } command gives users 
+   explicit control over VT terminal keypad mode.  Formerly the keypad mode 
+   could be changed only by escape sequences sent from the host.
+ . Visual bell for deaf users (SET TERMINAL BELL VISUAL) during CONNECT.
+ . Support for additional monitors and display adapters:
+   - Wyse-700 (graphics in several high resolution dimensions)
+   - ATT EGA VDC600 (automatic recognition of 80/132 column mode)
+   - STB VGA/EM, VGA/EM-15 boards (automatic recognition of 80/132 column mode)
+   - Other boards to or from 80/132 columns via COLS80.BAT and COLS132.BAT.
+
+* Kermit Protocol (in addition to international character sets and sliding
+  windows, described above):
+ . Maximum file transfer packet size increased from 1000 to 2000 bytes.
+ . New server security features, including login/password, available via
+   DISABLE, ENABLE, and SET SERVER commands.
+ . Redirection of output of REMOTE commands to file or printer via
+   DOS redirection symbol (>), e.g. REMOTE DIRECTORY > PRN.
+ . Non-control versions of single-character file transfer interrupt commands
+   (X,Z,E,C) are now available.
+ . Many new options for SET ATTRIBUTES command, to control attributes
+   individually, for example SET ATTRIBUTES DATE OFF.  Attributes now include
+   date and time, file size, file type, and transfer character set.
+ . MS-DOS Kermit server now recognizes REMOTE KERMIT SET commands.
+ . New REMOTE SET command, used to change settings on remote Kermit server.
+   Also supported by MS-DOS Kermit server.  This is a new Kermit protocol
+   feature, as yet unsupported by other Kermit programs, but will be in future
+   releases of C-Kermit, IBM mainframe Kermit, etc.
+
+* Miscellaneous Features and Commands:
+ . Space for macro names expanded from 500 to 1000 bytes.  Space for macro
+   definitions was formerly 3000.  Now it's dynamically allocated and will
+   use as much memory as can be found.
+ . SHOW commands added for many types of things (file, protocol, terminal, 
+   memory, modem, statistics, etc).
+ . Keyboard verbs (like \Kexit) can now be embedded within keyboard definition
+   text strings and mixed with other keyboard verbs.
+ . New WRITE <logfile> <object> command to annotate log files.  <logfile> may
+   be SESSION, PACKET, TRANSACTION, or SCREEN.  <object> may be TIME, DATE,
+   PATH, TEXT, etc (use ? to see all options).
+ . New IF statements for arithmetic comparison: IF <, IF >, IF =, for example:
+     IF < %\1 3 echo Argument is less than 3.
+ . New numeric variables, can be used with IF <, etc, and WRITE:
+   - ARGC        Number of words in a macro invocation
+   - COUNT       Loop counter (set via SET COUNT)
+   - ERRORLEVEL  Error level (set via SET ERRORLEVEL)
+   - VERSION     Program version (built in, 3.0 = 300)
+   Note: ARGC allows construction of macros that can test for the presence
+   of arguments and supply defaults, without being confused by leftover
+   parameters from previous macro invocations.
+ . ASK command now operational, and allows backslash codes in prompt.
+   ASK <variable> <prompt> prints prompt, stores what user types in variable.
+ . New ASKQ command, like ASK but does not echo what the user types, useful
+   for passwords.
+ . Allow ECHO string and ASK prompt string to contain backslash codes for the
+   PC's 8-bit characters, so that fancy effects and international characters
+   can be displayed.
+ . New controls and options for TRANSMIT command (SET TRANSMIT ?).
+ . New command SET FILE WARNING { ON, OFF, NO-SUPERSEDE }.  ON and OFF are
+   like previous SET WARNING command.  NO-SUPERSEDE option can be used for
+   continuing interrupted wildcard file reception, skipping over files that
+   already exist.
+ . A patch mechanism for applying corrections to the binary executable
+   program image.
+
+7. COMPATIBILITY
+
+MS-DOS Kermit 3.0 is upwards compatible in most respects with the previous
+release, MS-DOS Kermit 2.32/A of January 1989.  Old initialization and command
+files should still work, and script programs written for 2.32/A should
+continue to work.  Obviously, commands that are new to version 3.0 will not
+work in earlier versions.  To ease compatibility issues in future releases,
+MS-DOS Kermit now has a built-in read-only VERSION variable, whose value is
+300 for version 3.0, and will be increased in subsequent releases (for
+example, 3.01 would be 301, 3.10 would be 310, 4.0 would be 400, etc).  Script
+programs written for new releases can test this variable before attempting to
+execute any new commands.  Incompatibilities between 3.0 and 2.32/A are:
+ . The default terminal type is VT320 rather than VT102.  VT102 can be
+   selected manually via SET TERMINAL VT102 or within a Take file such as
+   MSKERMIT.INI.  The VT320 is a superset of the VT102, and so Kermit's VT320
+   terminal emulation can be used with a host that thinks it is communicating
+   with a VT100 or VT102 (or for that matter, with a VT200).
+ . The default terminal character set in VT320 mode is ISO Latin-1, which
+   means that 8-bit characters received from the host (when parity is NONE
+   and DISPLAY is 8) are translated rather displayed as-is.  You may restore
+   Kermit's previous behavior by giving the command SET TERMINAL CHARACTER-SET
+   TRANSPARENT.
+ . The default timeout interval while waiting for a file transfer packet has
+   been reduced from 13 seconds to 5 seconds.  This interval may be changed
+   with the command SET RECEIVE TIMEOUT.
+ . Handling blockage of sending by the arrival of an XOFF flow control
+   character differs.  Previously Kermit waited as much as the packet receive
+   timeout interval for an XON and then broke through anyway, and the timeout
+   was ignored if SET TIMER OFF had been given.  In version 3.0 the timeout
+   value is fixed at 15 seconds and does not depend on the SET TIMER command.
+   In both cases the timeout is present to break possible standoffs if an XON
+   gets lost (or if an XOFF arrived by accident, such as by typing a binary
+   file, and there is no XON).  None of this applies if FLOW is set to NONE.
+
+CHANGES FROM MS-DOS KERMIT 3.00 TO 3.01                      March 21, 1990
+
+Version 3.01 of MS-DOS Kermit is best regarded as a maintenance release,
+intended to incorporate fixes to problems reported in version 3.00 and a few
+small additions.  The following items note problems or limitations of MS-DOS
+Kermit version 3.00 which were fixed by patches to 3.00, and now are
+permanently fixed in version 3.01:
+ 1. Internal patching mechanism is activated.
+ 2. Avoid Kermit becoming blocked by presence of DOS command MODE COM1...,P.
+    This patch prevents the serial port from being returned to the original
+    owner (DOS) while Kermit's prompt is displayed.  The ",P" option above
+    tells DOS to try and retry some more to get control of the port and you
+    might have had to type Control-C or Control-BREAK to regain control.  With
+    this patch the problem should disappear and the ",P" may be reinstated.
+ 3. Correct deficiencies in SET DUPLEX HALF, for half duplex hardware RTS/CTS
+    operation of a physical serial port.  Do not use this command for IBM
+    mainframe work.
+ 4. Correct accidental truncation of a command line to 17 characters if it
+    follows the command SET PORT DECnet.
+ 5. Prevent loss of the character following the arrival of transparent printing
+    termination escape sequence ESC [ 4 i while in terminal emulation mode.
+ 6. Use correct logging kind if logging is initiated via a macro, such as:
+      MS-Kermit>DEFINE mymac log session monday.log
+      MS-Kermit>mymac
+ 7. Avoid display of the path when command CD or CWD is given while in
+    a macro or Take file, but show the result if SET TAKE-ECHO ON has been
+    stated.  Assists quiet-screen scripts.
+ 8. Prevent a test for the supplementary keyboard driver MSLK25.COM from
+    occurring on regular PC and XT machines; let this test still occur on AT's
+    and above.  This test caused Kermit to hang AT&T 6300 machines running
+    MS-DOS 3.1, but not for other DOS versions.  It also occurs on Olivetti
+    M24 PCs with various versions of DOS, including 2.11 and 3.20.
+ 9. Make an arriving Control-Z character be displayed while emulating a
+    VT320/VT102/VT52/Heath-19 terminal. It now shows as a right facing arrow.
+10. Correct a bug in processing of IF = COUNT and other math expressions using
+    names of keywords (ARGC, VERSION, etc).
+11. If the command SET TERMINAL CHARACTER-SET TRANSPARENT has been given then
+    let the C1 area control codes, 128-159 decimal or 80h-9fh hex, be usable
+    as displayable text rather than as control codes.  Assists translation of
+    certain Cryillic and other character sets that put graphcis in the C1
+    area.  Note that SI and SO control codes may be used to shift between
+    ASCII and high bit set IBM-PC characters.
+12. Modify the location of SET TRANSLATION INPUT to occur after, rather than
+    before, normal ISO-2022 character set translations and after SI/SO
+    shifting to left and right halves of tables.  When used together with
+    SET TERMINAL CHARACTER-SET TRANSPARENT then the right half, the line
+    drawing and greek characters of the IBM display adapter (or whatever other
+    characters you have loaded in your display adapter), are available
+    as either regular 8-bit codes or as a SI (Control-N) followed by 7-bit
+    codes.  Single and locking shifts are still active.
+    Limitation: C1 control characters arriving from the host are exempt from
+    translation mechanisms (as they should be in a "standard" 8-bit character
+    set).  However, in the real world some host character sets have graphic
+    characters in the C1 positions, e.g. Russian DKOI. SET TERM CHAR TRANSP
+    is the likely best current solution because it uses C1 characters as text.
+13. Modify the indentification of the LATIN1 character set for file transfers
+    from I2/100 to I6/100, to be in agreement with our latest understanding
+    of the "proper" ISO reference identifier.  If this causes problems between
+    MS-DOS Kermits with and without this patch then use this workaround: SET
+    TRANSFER CHARACTER-SET LATIN1 and SET ATTRIBUTE CHARACTER-SET OFF.
+14. Ensure trailing spaces are removed from commands like DEFINE \%a string.
+15. Avoid a possible delay in outputting strings as keyboard definitions when
+    operating with a network communications path (without this fix, function
+    keys might have to be struck twice, etc).
+16. Correct operation of ESC [ Pn d in text emulator.
+17. Use different video mode for Orchid Designer Professional VGA board when
+    switching to 132 columns.  Substitutes new hexadecimal value of the video
+    mode for the 23h used with the orignial Orchid Designer board.  These two
+    boards yield the same presence signature to Kermit but require different
+    video modes. THIS IS NOT A PERMANENT FIX in version 3.01; a fresh Patch
+    file will be required for version 3.01.
+18. Corrections to character set translation tables.
+19. Removal of special treatment for IBM EBIOS (but see below).
+20. Allow server to exit via BYE and LOGOUT.
+21. Server: default to block check from I packet.  The server would bid to
+    send files with the block check value set by the server's owner rather
+    than that negotiated by the client in an initial session startup.  This
+    patch allows the block check value to be increased during a session above
+    the server's startup value if the client says SET BLOCK 2 or 3.
+    Subtle, and usually of no consequence in normal operations.  Sounds like
+    a game of Bridge, and it is very similar.
+22. Allow single character definitions for DEFINE macro string.
+23. Allow files to be written to Novell file server disks, and stop unwanted
+    access of drive A:.  The problem was the standard way of asking DOS
+    about space on the destination drive always yielded drive A: if the
+    real drive was a Novell file server.  This caused drive A: to power up
+    and yield an incorrect value for the disk space (none if nothing is in
+    drive A:). AT&T STARLAN has no such problems.  If the problem occurs on
+    your system the immediate workaround is to say SET ATTRIBUTE LENGTH OFF.
+24. Correct screen rollback allocation if machine has more than 508KB of
+    memory free after Kermit loads its main body.  Yes, it has happened!
+25. Correct erasure of double width lines and ignore command to restore VT340
+    color palette settings.
+
+OTHER CHANGES FROM 3.00 to 3.01:
+1. New behavior of SET TRANSLATION INPUT \xxx \yyy.  \xxx is now a PC code
+   page value, rather than the raw value received from the communication line.
+2. Modify CONNECT command to send Shift-In/Shift-Out characters when:
+    (a) a special (8-bit character) has been typed, and
+    (b) parity is other than NONE.
+   Under these conditions characters in the C1 range (80h-9fh) are transmitted
+   as ESC followed by the character value minus 40h.  Characters in the GR
+   range (A0h-FFh) are sent as ESC N followed by the character without the
+   high bit.  ESC N is the ISO 2022 standard Single-Shift-2 command.
+3. Support for split-speed 75/1200 bps communication.  Thanks to Danne Norstedt
+   for his code.
+4. The ESC h sequence (draw bold intensity line) is now recognized during
+   Tektronix emulation.
+5. Better handling of Wyse big screens in Tektronix mode.
+6. Hercules and other monochrome systems can now write opaquely in Tektronix
+   mode.
+7. The VT340 color palette is now restored upon command from the host.
+8. The "LEDs" in the mode line are now displayed during VT320 emulation.
+9. Improved handling of ", STAY" on the Kermit command line.
+10. Improved (i.e. working) support for IBM EBIOS with LAN Async Server. Thanks
+    to Steve Knudson of IBM and Susan Bramhall of Yale University for their
+    help on this topic.  EBIOS communications is now available via the new
+    command SET PORT EBIOS <port value of 1..4>.
+11. LATIN-1 is now spelled LATIN1.
+12. Invoke message "Resume or New" when selecting a DECnet node while a DECnet
+    connection is still active. 
+13. Preserve Tektronix pixel operation code around display of text.
+14. Correct failure to turn on bypass mode by Control-X in the Tek emulator.
+15. Add 20 msec delay between sending XOFF to host and shutting down the port
+    when performing a RUN or PUSH command, to allow the character enough time
+    to exit the port.
+16. Correct scrolling action of ESC [ Pn E in text emulator.
+17. Make timeout when expecting packet EOL character a forgivable error.  
+18. Set single file skip flag ('X') when rejecting a file because of attribute
+    packet reasons, to block further file transfer packets from hosts which
+    fail to obey the protocol on attributes packet file rejection indicators.
+19. Increase the number of VT340 color palettes to 256 (only the first 16 are
+    reportable) to accomdate DEC's RETOS package.
+20. Let Horizontal Tab in Tek emulator space at 8 column increments.  This
+    assists WordPerfect and other programs overwriting text on the graphics
+    screen in a formatted fashion.
+21. Allow files to be written to Novell file server disks, and stop unwanted
+    access of drive A:.  The problem was the standard way of asking DOS
+    about space on the destination drive always yielded drive A: if the
+    real drive was a Novell file server.  This caused drive A: to power up
+    and yield an incorrect value for the disk space (none if nothing is in
+    drive A:). AT&T STARLAN has no such problems.  If you see this problem 
+    the workaround is: SET ATTRIBUTE LENGTH OFF.
+22. Correct screen rollback allocation if machine has more than 508KB of
+    memory free after Kermit loads its main body.
+23. Correct line erasure problem with double width lines.
+24. Correctly parse DOS command line word "stay" to remain in Kermit.
+25. Ensure user specified value for SET RECEIVE TIMEOUT always applies.
+26. Clear DOS keyboard buffer when exiting Connect mode via Control-].  Some
+    systems may retain a Control-Break (^C) in the buffer from Connect mode
+    operations.
+27. Numerous corrections to the character set translation tables.  Thanks to
+    many correspondents for their sharp powers of observation.
+28. Correct problem of losing the last two command characters of
+    REMOTE HOST command>filespec  when the ">filespec" redirection is used.
+
+End of KERMIT.UPD

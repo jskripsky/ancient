@@ -1,0 +1,21 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Kreisgl. Imp. -> Expl.
+----------------------
+Axx+Ayy+Bx+Cy+D = 0
+SQ(x-u)+SQ(y-v)=SQ(R)
+
+Eingabe: A B C D
+Ausgabe: MX MY R"
+DISPHELP
+
+   \-> A B C D
+   \<<
+      '-B/2/A' EVAL
+      "X" \->TAG
+      '-C/2/A' EVAL
+      "Y" \->TAG
+      '\v/((SQ(B/2)+SQ(C/2))/SQ(A)-D/A)' EVAL
+      "R" \->TAG
+   \>>
+\>>

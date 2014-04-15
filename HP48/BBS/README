@@ -1,0 +1,65 @@
+
+                     The HP 48 Programmer's ToolKit
+
+                             James Donnelly
+
+                   Copyright (c) James Donnelly 1990
+
+                     Software Product of the USA
+
+                     Armstrong Publishing Company
+                        3135 NW Ashwood Drive
+                       Corvallis, OR 97330 USA
+
+        The original purchaser of this software is granted a one-
+        user, non-commercial license to use the software, and may
+        not copy, distribute, or transfer the software under any
+        circumstances without specific prior written permission of
+        the author.  Commercial software developers may apply for
+        licensing.
+
+  IDENTIFICATION:
+
+        This disk contains version A of The HP 48 Programmer's
+        ToolKit.
+
+  FILES:
+
+        Library Objects (binary download, install as libraries):
+
+                FCLIB        - The Flag Catalog
+                DBLIB        - The Data Browser
+                TBLIB        - The Title Browser
+                TLLIB        - The Tool Library
+
+
+        System Programs (binary download, store in variables):
+
+                CSCAT        - The Character Set Catalog
+                LBLD         - The Menu Label Builder
+
+
+        Examples (ASCII download, store in variables):
+
+                ELEC         - The menu example on page 7
+                UFLAGS       - The Equation Library flags on page 12
+                NAMES        - The NAMES program on page 19 *
+                LUNCH        - The LUNCH program on page 21 *
+                PLANETS      - The PLANETS program on page 25 *
+                ESCAN        - The ESCAN program on page 33 *
+        
+        * The ASCII examples which use Browser or Tool Library
+          commands should be downloaded <after> the libraries!
+
+  MANUAL NOTES:
+
+        1) The ELEC example on page 7 has the size 233.5 when
+           stored in a variable, and size 225 as a list on the stack.
+
+	2) The strings EDITKEY, VIEWKEY, and FINDKEY may be supplied
+	   as menu label objects to the Data Browser.  They will
+	   present the labels EDIT, VIEW, and FIND, and the edit,
+	   view, and alpha-search operations will be bound to the
+	   respective menu key.  This allows a menu key to be labeled
+	   "EDIT" and perform the same function as the left-shift
+	   [EDIT] hard key.

@@ -1,0 +1,21 @@
+#include "Module.H"
+
+#define MAX_NUMBER_OF_MODULES	8
+
+class TModule;
+
+class TBoard
+{
+	TBoard();
+
+	void adoptModule( TModule * );
+
+	byte getData( TModule& );
+	void setData( TModule& );
+
+protected:
+	int moduleCount;
+
+	TModule *modules[MAX_NUMBER_OF_MODULES];
+
+};

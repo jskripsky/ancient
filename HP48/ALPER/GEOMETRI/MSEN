@@ -1,0 +1,34 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"MITTELSENKRECHTE
+
+INPUT: XA YA XB YB
+
+OUTPUT:STEIGUNG M
+   Y-ACHSENABSCHNITT"
+DISPHELP \-> XA YA XB
+YB
+  \<<
+    CASE 'XA==XB'
+      THEN "\|^"
+      END 'YA==YB'
+      THEN 0
+      END '(XA-XB)/
+(YB-YA)' EVAL
+    END \-> M
+    \<< M TYPE \-> T
+      \<<
+        IF 'T==2'
+        THEN XA
+        ELSE '(YA+
+YB)/2-M*(XA+XB)/2'
+EVAL
+        END \-> Q
+        \<< M DTAG
+"M" \->TAG Q DTAG "Q"
+\->TAG
+        \>>
+      \>>
+    \>>
+  \>>
+\>>

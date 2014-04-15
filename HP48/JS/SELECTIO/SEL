@@ -1,0 +1,96 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Select 1.0
+=========
+Eingabe:
+{ { GROB...GROB } }
+[ 1 1 1 ]
+Ausgabe: [X Y Z]"
+   DISPHELP
+   
+   
+   DROP
+   OBJ\-> DROP
+
+   3 'ROWS' STO
+   3 'COLS' STO
+   
+   1 ROWS
+   FOR ROW
+      OBJ\-> DROP
+      1 COLS
+      FOR COL
+         BUTTON
+         ROW COL
+         PAINT
+
+         ROW COL
+         PAINT
+      NEXT
+      
+      MARK
+      ROW 1
+      PAINT
+   NEXT
+   { #0 #0 } PVIEW
+
+   { 1 1 } 'CURPOS' STO
+   { 1 1 1 } 'SELS' STO
+
+   CURSOR
+   1 1
+   PAINT
+
+   DO
+      -1 WAIT
+      DUP
+      \-> KEYCODE
+      \<<
+         IF
+            'KEYCODE==25.1'
+            'KEYCODE==35.1'
+            'KEYCODE==34.1'
+            'KEYCODE==36.1'
+            OR OR OR
+         THEN
+            CURSOR
+            CURPOS
+            OBJ\-> DROP
+            PAINT
+            
+            IF
+               'KEYCODE==25.1'
+               'KEYCODE==35.1'
+               OR
+            THEN
+               ROWS
+               CURPOS
+               1 GET
+
+               IF 'KEYCODE==25.1'
+               THEN -1
+               ELSE 1
+               END
+
+               RINGSTEP CHROW
+            ELSE
+               COLS   
+               CURPOS
+               2 GET
+                                 
+               IF 'KEYCODE==34.1'
+               THEN -1
+               ELSE 1
+               END
+
+               RINGSTEP CHCOL
+            END
+         END
+      \>>
+   UNTIL
+         51.1 ==
+   END
+
+   TEXT
+   SELS
+\>>

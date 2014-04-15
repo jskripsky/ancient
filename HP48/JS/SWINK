@@ -1,0 +1,49 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Schnittwinkel
+-------------
+y = M1x + Q1
+y = M2x + Q2
+
+Eingabe: M1 M2
+Ausgabe: \Ga"
+
+   DISPHELP
+   \-> M1 M2
+   \<<
+      IF 'M1==M2'
+      THEN
+         M1 M2
+         "Geraden sind Parallel!" DOERR
+      END
+
+      -17 FS?C
+      \-> RADIANTS
+      \<<
+         IF
+            M1 "\|^" ==
+            M2 "\|^" ==
+            OR
+         THEN
+            IF
+               M1 "\|^" ==
+            THEN
+               '90-ATAN(M2)' EVAL
+            ELSE
+               '90-ATAN(M1)' EVAL
+            END
+         ELSE
+            IF 'M1*M2+1==0' THEN
+               90
+            ELSE
+               'ATAN((M2-M1)/(1+M1*M2))' EVAL
+            END
+         END
+         
+         IF RADIANTS
+         THEN 
+            -17 SF
+         END
+      \>>
+   \>>
+\>>

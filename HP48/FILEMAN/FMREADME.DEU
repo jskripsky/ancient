@@ -1,0 +1,35 @@
+                              FMREADME.DEU
+
+                         Der HP 48 Dateimanager
+
+                             James Donnelly
+
+                   Copyright (c) James Donnelly 1991
+
+                     Software Product of the USA
+
+                     Armstrong Publishing Company
+                        3135 NW Ashwood Drive
+                       Corvallis, OR 97330 USA
+
+        Dem EigentÅmer dieser Software ist ein Einzelnutzungsrecht fÅr nicht-
+        kommerzielle Anwendung der beiliegenden Software eingerÑumt. Er darf
+        die Software nicht kopieren, weiterverbreiten oder Åbertragen, ohne
+        vorherige schriftliche Zustimmung des Autors James Donnelly. 
+        Kommerzielle Software-Entwickler kînnen eine Lizenz beantragen.
+
+
+  KENNZEICHNUNG:
+
+        Diese Diskette enthÑlt den HP 48 Dateimanager, Version B.1.
+
+
+  HINWEISE:
+
+           Der DIR-Befehl in DOS 5.0 kann Åber die Umgebungsvariable
+           DIRCMD benutzerspezifisch angepa·t werden. Dies fÅhrt zu
+           Komplikationen fÅr Kermit in der Weise, da· der Dateimanager
+           nicht fehlerfrei arbeitet, da die normalerweise vom PC an den
+           HP 48 zurÅckgegebene Verzeichnisinformation nicht mehr das
+           erwartete Format besitzt. Um dies zu umgehen, setzen Sie 
+           einfach DIRCMD zurÅck, wÑhrend der Dateimanager gestartet ist.

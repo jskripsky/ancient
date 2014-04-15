@@ -1,0 +1,62 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> SEL DATA OLDTYPE NEWTYPE PROG PACK UNPACK RESULTS PRESERVE
+   \<<
+      SEL OLDTYPE 2 FIND
+      IF
+      THEN
+         \-> I1 I2
+         \<<
+            DATA I1 GET
+            UNPACK EVAL
+
+            DATA I2 GET
+            UNPACK EVAL
+
+            PROG EVAL
+            
+            1 RESULTS
+            START
+               PACK EVAL
+               DATA
+               SWAP
+               
+               1 \->LIST
+               +
+               'DATA' STO
+
+               SEL
+               NEWTYPE
+               +
+               'SEL' STO
+            NEXT
+
+            SEL
+            I2
+            REM
+            DATA
+            I2
+            REM
+
+            IF
+               PRESERVE NOT
+            THEN
+               I1
+               REM
+               
+               SWAP
+               I1
+               REM
+
+               SWAP
+            END
+         \>>
+
+         1
+      ELSE
+         SEL
+         DATA
+         0
+      END
+   \>>
+\>>

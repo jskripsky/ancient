@@ -1,0 +1,15 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"ENTFERNUNG ZWEIER
+PUNKTE A UND B
+
+INPUT: AX AY
+       BX BY
+OUTPUT: ABSTAND D"
+DISPHELP \-> AX AY BX
+BY
+  \<< '(BX-AX)^2+(BY-
+AY)^2' \v/ EVAL 'D'
+\->TAG
+  \>>
+\>>

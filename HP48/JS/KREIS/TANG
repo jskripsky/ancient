@@ -1,0 +1,25 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Tangenten
+---------
+SQ(x-u)+SQ(y-v)=SQ(R)
+P(X0/Y0)
+
+Eingabe: U V R X0 Y0
+Ausgabe: M1 Q1 M2 Q2"
+DISPHELP
+   
+   \-> U V R X0 Y0
+   \<<
+      U V R
+      U V R X0 Y0 POLARE
+      SKG
+      X0 Y0 GRGL
+      SWAP EVAL "M1" \->TAG
+      SWAP EVAL "Q1" \->TAG
+      4 ROLL 4 ROLL
+      X0 Y0 GRGL
+      SWAP EVAL "M2" \->TAG
+      SWAP EVAL "Q2" \->TAG
+   \>>
+\>>

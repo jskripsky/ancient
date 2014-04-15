@@ -1,0 +1,26 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Parallel versch. Grgl.
+----------------------
+y = Mx + Q
+P(X / Y)       
+
+Eingabe: M X Y
+Ausgabe: M Q"
+DISPHELP
+
+   \-> M X Y
+   \<<
+      M EVAL "M" \->TAG
+      IF
+         M
+         "\|^"
+         ==
+      THEN
+         X EVAL
+      ELSE
+         'Y-M*X' EVAL
+      END
+   \>>
+   "Q" \->TAG
+\>>

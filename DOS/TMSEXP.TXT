@@ -1,0 +1,55 @@
+DateiKopf
+=========
+CHAR	IdMarke[30] =		"TMS Exportfile, JS Format";
+BYTE	GrVersion =		1;
+BYTE	KlVersion =		0;
+
+WORD	Jahr =			1992;
+BYTE	Monat =			1;
+BYTE	AnzTage =		31;
+
+WORD	AnzPersonen =		100;
+BOOL	Kontrolliert =		TRUE;
+
+
+PersonenKopf
+============
+BYTE	Laenge =		xxxx;
+
+WORD	Laenge =		xxxx;		
+DWORD	Personalnummer =	xxxxxxxxx;
+
+BYTE	LaengeName =		0;
+CHAR	Name[] =		"XXXXX XXXXX";
+
+WORD	JahrAnstellung =	1990;
+BYTE	MonatAnstellung =	1;
+BYTE	TagAnstellung =		1;
+
+WORD	JahrAustritt =		1990;
+BYTE	MonatAustritt =		1;
+BYTE	TagAustritt =		1;
+
+BYTE	Beschaeftigungsgrad =	100;
+
+BYTE	LaengeFunktion =	0;
+CHAR	Funktion[] =		"XXXXX";
+
+	{
+CHAR	Felder[7][5] =		{ "XX .... XX" };
+
+
+Tag
+===
+BYTE	Length =		xx;
+
+[RLE Compressed:]
+STPL	Stempelungen[20] =	{ Eingang, xxxx };
+	(WORD Bitfield: 1 Ein/Ausgang, 15 Zeit)
+
+BEGRD	Begruendungen[21] =	{ 1, 1, xxx, xxxx };
+	(WORD Bitfield: 2 Typ, 3 Herkunft, 11 Code)
+	(WORD Zeit)
+
+SWORD	Zeitkonti[20] =		+xxxx;
+

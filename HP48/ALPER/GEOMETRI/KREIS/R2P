@@ -1,0 +1,23 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"KREIS AUS RADIUS UND
+ZWEI PUNKTEN
+EINGABE: X1 Y1 X2 Y2 
+         R
+AUSGABE: U1 V1 U2 
+         V2"
+DISPHELP \-> X1 Y1 X2
+Y2 R
+  \<< X1 Y1 R MR\->GL
+X1 Y1 X2 Y2 MSEN
+EX\->IM KRGE \-> U1 V1
+U2 V2
+    \<< U1 DTAG "U1"
+\->TAG V1 DTAG "V1"
+\->TAG U2 DTAG "U2"
+\->TAG V2 DTAG "V2"
+\->TAG R DTAG "R"
+\->TAG
+    \>>
+  \>>
+\>>

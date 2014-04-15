@@ -1,0 +1,51 @@
+%%HP: T(3)A(D)F(.);
+\<< { {
+"Cheeseburger"
+"Steak" "Chicken"
+"Hot Dog" } {
+"Fries" "Salad"
+"Baked Beans"
+"Corn" } { "Orange"
+"Apple" "Banana"
+"Pear" } {
+"Ice Cream"
+"Yogurt" "Cookies"
+} { "Cola" "Coffee"
+"Milk" "Water" } }
+{ "Course1: "
+"Course2: "
+"Fruit  : "
+"Dessert: "
+"Drink  : " } OVER
+LIST\-> 1 EXTRACT
+\->LIST 1 \-> Choices
+Labels Lunch
+Running
+  \<< { 2 1 1 0
+"Select Your Lunch:"
+}
+    WHILE Running
+    REPEAT Labels
+Lunch { "PREV"
+"NEXT" "NULLKEY"
+"NULLKEY" "NULLKEY"
+"QUIT" } 4 ROLL DBR
+      IF DUP -6
+SAME OVER 0 \>= OR
+      THEN 3 DROPN
+Lunch 0 'Running'
+STO
+      ELSE Lunch 3
+PICK GET Choices 4
+ROLL GET OVER 4
+ROLL
+        IF -1 SAME
+        THEN PRVOB
+        ELSE NXTOB
+        END Lunch 3
+ROLLD REPLACE
+'Lunch' STO
+      END
+    END
+  \>>
+\>>

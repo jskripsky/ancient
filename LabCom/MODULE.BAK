@@ -1,0 +1,17 @@
+
+typedef unsigned char byte;
+
+enum eModuleType { Input, Output };
+
+
+class TBoard;
+
+class TModule
+{
+	TModule( TBoard * );
+
+	virtual eModuleType getType() = 0;
+
+protected:
+	TBoard *board;
+};

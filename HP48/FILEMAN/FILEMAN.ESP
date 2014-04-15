@@ -1,0 +1,342 @@
+
+                                FILEMAN.ESP
+
+                    El Gestor de Ficheros de la HP 48
+                              James Donnelly
+
+              Copyright (c) Armstrong Publishing Company 1991
+
+
+Aviso sobre los Derechos y la Garant¡a
+--------------------------------------
+
+Todos los derechos reservados. Queda prohibida la reproducci¢n, transmisi¢n 
+o almacenamiento de este software en un sistema de recuperaci¢n de cualquier
+forma o mediante cualquier proceso, electr¢nico, mec nico, de fotocopia o
+mediante sistemas todav¡a no inventados, sin el previo consentimiento
+espec¡fico por escrito del autor, James Donnelly.
+
+Este software y esta documentaci¢n se proporcionan "como est n" y est n 
+sujetos a cambios sin previo aviso. Ni James Donnelly ni Hewlett-Packard 
+Company ofrecen ning£n tipo de garant¡a con respecto a este software o 
+manual, incluyendo, pero no limit ndose, a las garant¡as impl¡citas de 
+comercializaci¢n y adecuaci¢n a un prop¢sito determinado. Ni James Donnelly 
+ni Hewlett-Packard Company se responsabilizan de los errores o da¤os 
+accidentales o derivados relacionados con el suministro, rendimiento o 
+utilizaci¢n de este software, documentaci¢n o ejemplos presentados.
+
+El propietario de este software tiene garantizada la licencia no comercial
+de un usuario para utilizar el software adjunto, y no puede copiar, 
+distribuir o transferir el software en ninguna circunstancia sin el previo
+consentimiento espec¡fico por escrito del autor James Donnelly. Los
+encargados del desarrollo del software puede solicitar la licencia.
+
+"Kermit" est  protegido por el Copyright (c) de Trustees of Columbia 
+University de la Ciudad de New York de 1990. Se otorga el permiso a cada 
+instituci¢n para que utilice, copie o redistribuya el software Kermit, 
+siempre y cuando no se venda para obtener beneficios, siempre que tenga 
+este aviso de Copyright.
+
+MS-DOS es una marca registrada de Microsoft Corporation.
+
+===============================================================================
+Nota:
+
+Todo el texto siguiente es una versi¢n abreviada del texto original en 
+ingl‚s que proporciona todas las instrucciones del usuario. El texto completo 
+se facilita en el fichero .ENG.
+===============================================================================
+
+Preparativos Iniciales
+----------------------
+
+El Gestor de Ficheros de la HP 48 es un programa de la HP 48 que se ha
+dise¤ado para simplificar la visualizaci¢n de los datos dentro de la HP 48,
+as¡ como simplificar la transferencia desde o hacia un servidor Kermit en
+un ordenador compatible MS-DOS.
+
+Los dem s ficheros relacionados con esta aplicaci¢n se explican en 
+el fichero FILELIST.ESP.
+
+
+C¢mo Instalar el Gestor de Ficheros
+-----------------------------------
+
+1.  Conecte la HP 48 y el ordenador personal (se asume que se utiliza el
+    puerto COM1 del ordenador personal; en su lugar puede utilizarse COM2).
+
+2.  En el ordenador personal, inicie el programa Kermit escribiendo:
+          KERMIT  [ENTER]
+    Cuando aparezca el indicador:    KERMIT>
+    Escriba:
+
+          SET PORT COM1                 para especificar el puerto serie
+    A continuaci¢n:
+          SET BAUD 9600                 (9600 es el valor por defecto en 
+                                        la HP 48)
+
+    ------------------------------------------------------------------------
+    Nota: Para acelerar este paso en el futuro, cree en el directorio
+          FILEMAN un fichero denominado MSKERMIT.INI que contenga s¢lo
+          estas 2 l¡neas:
+               SET PORT COM1
+               SET BAUD 9600
+    ------------------------------------------------------------------------
+
+3.  En la HP 48 pulse:
+
+          [LS]-[I/O] |SETUPESP|         para verificar los valores de
+                                        comunicaci¢n y cambiarlos si 
+                                        fuera preciso.
+    Los valores por defecto son trasferencia de cable, 9600 baudios,
+    sin paridad y tipo de suma de comprobaci¢n 3.
+
+    ------------------------------------------------------------------------
+    Advertencia: si en el disco de su ordenador desea almacenar algunos 
+    de los datos de la HP 48 que contienen caracteres acentuados como 
+    , ¤, , ‡, aseg£rese de que tiene 
+     TRANSLATE CODE = 3
+    ------------------------------------------------------------------------
+
+4.  En la HP 48, pulse:
+
+      [LS]-[I/O] |RECV|
+
+5.  En el ordenador, escriba:
+
+      SEND FM.LIB [ENTER]
+
+    Kermit transmitir  ahora la librer¡a del Gestor de Ficheros a la HP 48.
+    Si esto no funciona, compruebe si ha especificado el puerto correcto
+    (COM1 o COM2) en el ordenador y si los valores de comunicaci¢n coinciden.
+
+6.  Ahora en la HP 48:
+
+    [VAR] ['] |FMLIB| [RS]-[RCL]  Recupera la librer¡a en el nivel 1 de la pila
+
+    ['] |FMLIB| [PURGE]           Depura la variable
+
+    0 [STO]                       Almacena la librer¡a en el puerto 0 
+                                  (1 ¢ 2 para la tarjeta RAM de la HP 48SX)
+
+    [RS]-[OFF]   y  [ON]          El Gestor de Ficheros se acopla 
+                                  autom ticamente al directorio HOME.
+
+Antes de ejecutar el Gestor de Ficheros, verifique los valores de los
+indicadores del sistema de la HP 48 -36, que cuando est  establecido activa 
+la sobreescritura de recepci¢n, y el -39, que cuando est  establecido
+suprime los mensajes del Kermit en la pantalla de la HP 48.
+
+C¢mo Borrar el Gestor de Ficheros
+---------------------------------
+
+Si necesita borrar la librer¡a, entre en el directorio HOME y pulse
+     :0:874 [ENTER] [ENTER]     (IF 0 es el n£mero de puerto de FMGR)
+     [RS]-[MEMORY] |DETACH|
+     [RS]-[PURGE]
+
+
+C¢mo Utilizar el Gestor de Ficheros
+-----------------------------------
+
+El Gestor de Ficheros asume que establece la comunicaci¢n con un servidor
+Kermit remoto que se ejecuta en una plataforma de MS-DOS. El programa
+KERMIT.EXE suministrado en el disco funcionar  en la mayor¡a de los sistemas
+compatibles de ordenadores personales MS-DOS.
+
+Conecte la HP 48 y el ordenador como se ha indicado.
+
+En el ordenador, inicie KERMIT; si fuera necesario, detr s del indicador 
+KERMIT>, escriba:
+     SET PORT COM1   y     SET BAUD 9600      como en el punto 2) anterior.
+
+Si desea acceder a los ficheros de otros disco del ordenador, cambie ahora;
+por ejemplo: 
+     CD A:     permitir  que acceda a la unidad a: desde la HP 48.
+
+escriba:
+     SERVER                  para iniciar a ejecutar el servidor.
+                    El servidor puede interrumpirse pulsando [Ctrl]-C.
+
+En la HP 48, pulse:
+     [LS]-[LIBRARY] |FMGR|  activa la librer¡a
+ (   |VER|                  visualiza la versi¢n del software  )
+     |FMGR|                 inicia el Gestor de Ficheros.
+
+Se visualiza primero el directorio actual de la HP 48.
+
+Las teclas del men£ de la parte inferior de la pantalla, junto a las dem s
+teclas, controlan las acciones del Gestor de Ficheros.
+
+
+C¢mo Ver los Directorios
+------------------------
+
+La ruta del directorio actual se indica en la parte superior de la pantalla.
+Los objetos almacenados en ese directorio aparecen en la parte principal 
+de la pantalla. Si en el directorio actual existen m s objetos de los que 
+caben en pantalla, a la izquierda de la ruta se ver n unas flechas peque¤as
+que indican que existen otros objetos.
+
+
+C¢mo Cambiar los Directorios
+----------------------------
+
+               Un prefijo ( {v} ) indica que el directorio contiene un objeto;
+[ENTER]        entra en el directorio.
+
+[LS]-[UP]      pasa a un directorio de nivel superior,
+
+[RS]-[HOME]    pasa a HOME.
+
+
+C¢mo Seleccionar los Objetos
+----------------------------
+
+[abajo] [arriba] [izquierda] [derecha] ) desplaza el  rea resaltada de objeto
+                                a otro.
+[LS]-[arriba] y [LS]-[abajo] )  desplaza cada vez una p gina.
+[RS]-[arriba] y [RS]-[abajo] )  desplaza a la parte superior o inferior del
+                                directorio.
+
+|MARK|       Selecciona el fichero o ficheros a transferir o borrar.
+             { |> }  indica que se ha marcado un fichero. Si no se marca
+                     ning£n fichero, se asume el fichero actualmente resaltado.
+
+[LS]-[PURGE]  borra los objetos marcados (o el £nico objeto resaltado).
+
+        ----------------------------------------------------------------------
+        ADVERTENCIA: Si el objeto a depurar se encuentra en el directorio de
+        la HP 48, el Gestor de Ficheros emitir  un pitido de advertencia. 
+        Pulsando |YES| se depura el directorio y los objetos contenidos en el
+        mismo, incluidos los subdirectorios(*).
+        ----------------------------------------------------------------------
+
+
+Comandos de las Teclas del Men£
+-------------------------------
+
+La pantalla de la HP 48 muestra los datos y las teclas del men£ relativas
+al disco (remoto) DOS, o bien los datos y las teclas del men£ relativas a
+la misma calculadora HP 48 (local).
+
+Los comandos que a continuaci¢n aparecen con el signo (*) pueden anularse
+pulsando [ATTN].
+
+
+Men£ Local 
+----------
+
+|SEND|    Env¡a el objeto resaltado (o los objetos marcados) de la HP 48
+          al sistema remoto. (*)
+
+          El Gestor de Ficheros presentar  una opci¢n de transferencia de
+          fichero ASCII o binario para todo el grupo de objetos a enviar.
+          Si un objeto se env¡a en ASCII, aseg£rese de que el c¢digo de
+          traducci¢n de la HP 48 ha sido establecido con el valor deseado.
+          Algunos tipos de objetos, como las librer¡as, se env¡an en modo
+          binario, independientemente de la opci¢n seleccionada en este men£.
+
+|CRDIR|   Crea un directorio nuevo en el directorio actual de la HP 48. (*)
+
+|INFO|    Muestra el nombre, el tipo y el tama¤o del objeto actualmente 
+          resaltado.
+
+|MARK|    Marca el objeto resaltado para un futuro comando de SEND o PURGE.
+[LS]-|MARK|    marca todos los objetos,
+[RS]-|MARK|    borra todas las marcas.
+
+|DISK|    Lee y visualiza el directorio remoto. Visualiza tambi‚n el men£
+          remoto. Vea m s abajo.
+
+|QUIT|    Finaliza la ejecuci¢n del Gestor de Ficheros y pregunta si el 
+          ordenador remoto ha de salir del modo de servidor.
+
+----  [NXT] ----
+
+|MEM|     Visualiza la memoria disponible en la HP 48.
+
+|NAME|    Asigna otro nombre al objeto resaltado. (*)
+
+|ARCHI|   Realiza una copia de seguridad de la HP 48 en el sistema remoto
+          (vea el manual del usuario de la HP 48).
+          -------------------------------------------------------------------
+          Nota:  El comando ARCHIVE de la HP 48 no graba ni el contenido de
+                 la memoria independiente ni los estados del usuario y los
+                 indicadores del sistema.
+          -------------------------------------------------------------------
+
+
+Men£ Remoto
+-----------
+
+|GET|     Copia el fichero resaltado (o ficheros marcados) del sistema
+          remoto a la HP 48.
+
+          El tipo de trasferencia (ASCII o binaria) se determina 
+          autom ticamente a trav‚s de los primeros bytes del fichero remoto.
+
+|CRDIR|   Crea un directorio en el sistema remoto.
+
+|INFO|    Visualiza el nombre y el tama¤o del fichero resaltado.
+
+|MARK|      Marca el fichero resaltado para los futuros comandos de GET 
+            o PURGE.
+[LS]-|MARK| marca todos los ficheros,
+[RS]-|MARK| borra todas las marcas.
+
+|HP48|    Lee y visualiza el directorio actual de la HP 48. Visualiza
+          tambi‚n el men£ local.
+
+|QUIT|    Finaliza la ejecuci¢n del Gestor de Ficheros.
+
+          [NXT]
+
+|FREE|    Visualiza el espacio libre del disco remoto.
+
+|NAME|    Asigna un nuevo nombre a un fichero.
+
+|DIR|     Vuelve a leer el directorio del sistema remoto.
+
+
+Convenios sobre la Asignaci¢n de Nombres a los Ficheros
+-------------------------------------------------------
+
+Los nombres de los ficheros de MS-DOS y los nombres de las variables de la
+calculadora HP 48 admiten distintos tipos de caracteres en sus nombres de 
+fichero. Esto puede crear algunos problemas cuando los ficheros se
+transfieren entre los dos sistemas.
+
+
+Nombres de Variables de la HP 48:
+
+Los nombres de las variables pueden contener letras, n£meros y la mayor¡a
+de caracteres. Los nombres no pueden:
+
+ o Comenzar con un n£mero
+
+ o Contener delimitadores de objeto o los caracteres + - * / ^ {integral} 
+   = < > {menos que o igual a} {mayor que o igual a} {distinto a}
+   {derivada} ! , @ o un espacio.
+
+ o Duplicar el nombre de un comando incorporado o una palabra reservada.
+
+
+Nombres de Ficheros de MS-DOS 
+
+Los nombres de los ficheros pueden contener ocho caracteres, seguidos
+de un punto y una extensi¢n de tres caracteres opcionales. Los nombres
+no deben:
+
+ o Utilizar un punto si no es para separar la extensi¢n
+
+ o Superar los ocho caracteres en el nombre y tres en la extensi¢n
+
+ o Contener los caracteres . " / \  < > + , : = ;  o un espacio
+
+ o Contener las extensiones .EXE o .COM, que est n reservadas para los 
+   ficheros DOS ejecutables
+
+No est  permitida la utilizaci¢n de los comodines * o ? cuando se realizan
+operaciones con los ficheros.
+

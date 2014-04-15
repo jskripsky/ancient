@@ -1,0 +1,38 @@
+                       Compressing Library
+
+     This library (1263) will compress objects with the same
+Redundancy Fighter posted earlier.  This library contains four
+new functions:  ->COM, COM->, COMPALL, and UNCOMPALL.
+
+->COM will take any argument.  It will compress the object with
+the RFP and put the appropriate extension after the compressed
+string.  A program or machine code will get RFU EVAL any other
+object type will get RFU.  If flag 60 is set the RFU will be the
+global name 'RFU' not the XLIB name.  This function will allow
+any compressed object to run just like the original.
+
+COM-> requires a program.  It will un-compress a compressed
+object.  It checks to see if the first object in the program has
+"RF" as its first characters and if it does it RFU's it.
+
+COMPALL requires a list of global names.  The global names are
+all ->COMed and then you are asked if you want to restore the
+directory order.  If the order is nor important (saves time)
+press any key but [ENTER].
+
+UNCOMPALL requires a list of global names.  The global names are
+all COM->ed.  You are also asked to restore the directory order.
+
+     RFU and RFP are the same teriffic programs posted several
+months back by Lutz Vieweg.  This program does not much more than
+automatically check the object type to put on the appropriate program
+extension.  But, it is easier to use.
+
+     I express no warranty for the programs posted here.  Always
+backup your calculator before using them.
+
+                                                        David Bal
+                                               514 SW 34th St #17
+                                            Gainesville, FL 32607
+
+Email yoda@ufcc.ufl.edu or akcs.obiwon@hpcvbbs.cv.hp.com

@@ -1,0 +1,205 @@
+%%HP: T(3)A(R)F(.);
+@ Reversi (Othello), program by Paul Dale
+@ Game invented by Martin Gardner
+DIR
+  PLAY
+    \<< SETUP "You first?" 4 DISS
+      WHILE GETK DUP 13 <
+      REPEAT DROP
+      END
+      IF 13 ==
+      THEN SWAPC
+      END
+      WHILE 1 FC?C
+      REPEAT BD 5 R\->S GETN SWAP DROP 1 == 'PMOV' 'CMOV' IFTE SCOR
+        IF 8 FS?C
+        THEN
+          IF 2 FS?
+          THEN 1 SF
+          ELSE 2 SF
+          END
+        ELSE 2 CF
+          IF CCT PCT + 64 ==
+          THEN 1 SF
+          END
+        END
+      END
+      IF 3 FC?
+      THEN PCT CCT -
+        IF DUP 0 <
+        THEN "I win"
+        ELSE
+          IF DUP 0 >
+          THEN "You win"
+          ELSE "Draw"
+          END
+        END 1 DISS ABS "by " SWAP \->STR + " disks" + 4 DISS
+      END CLEAN
+    \>>
+  CLEAN
+    \<< { PCT CCT BD OLDP } PURGE STOF 7 FREEZE
+    \>>
+  SETUP
+    \<< RCLF 1 9
+      FOR j j CF
+      NEXT 2 DUP 'PCT' STO 'CCT' STO INITP NEWOB 'BD' STO { } 'OLDP' STO PICT
+        PURGE { # 0h # 0h } PVIEW 1 8
+      FOR j PICT # 60h j 6 * R\->B 2 \->LIST j 1 \->GROB GOR
+      NEXT PICT { # 64h # 0h } "12345678" 1 \->GROB GOR 4 4 1 DRWP 4 5 -1 DRWP
+        5 4 -1 DRWP 5 5 1 DRWP
+    \>>
+  SCOR
+    \<< "  My total " CCT \->STR + 2 DISS "Your total " PCT \->STR + 3 DISS
+    \>>
+  INITP @ Code in ASC format
+"C2A205E00066000F0000088888888880000000080000000080000000080001F0
+008000F1000800000000800000000800000000888888888851C145B571A172E2
+24946595819103739304758512221363A3F3E4F4023282D23484D40561B1E152
+B42555A592C24474A2B22353B3E35464F142C41500FA22"
+  SWAPC
+    \<< 5 R\->S BD OVER GETN NEG ROT SWAP PUTN DROP
+    \>>
+  FLIPS
+    \<< \-> x y
+      \<< PICT x 4 * # 60h + y 6 * R\->B 2 \->LIST GROB 4 6 707020500000 GXOR
+      \>>
+    \>>
+  DRWP
+    \<< \-> x y c
+      \<< PICT x 4 * # 60h + y 6 * R\->B 2 \->LIST c 1 ==
+        GROB 4 6 705050700000 GROB 4 6 002070200000 IFTE REPL
+      \>>
+    \>>
+  MKMOV
+    \<< BD 5 R\->S GETN \-> x y j c
+      \<< BD x y XY\->S c PUTN x y c DRWP 1
+        IF c -1 ==
+        THEN 'CCT'
+        ELSE 'PCT'
+        END STO+ -1 1
+        FOR a -1 1
+          FOR b 1 'j' STO
+            WHILE x a j * + y b j * + XY\->S GETN c NEG ==
+            REPEAT 1 j + 'j' STO
+            END
+            IF x a j * + y b j * + XY\->S GETN c ==
+            THEN
+              DO j 1 - 'j' STO
+                IF x a j * + y b j * + XY\->S SWAP OVER GETN c NEG ==
+                THEN SWAP c PUTN x a j * + y b j * + FLIPS 'PCT' 'CCT'
+                  IF c -1 ==
+                  THEN SWAP
+                  END -1 STO+ 1 STO+
+                ELSE SWAP DROP 7 SF
+                END
+              UNTIL 7 FS?C
+              END
+            END
+          NEXT
+        NEXT DROP
+      \>> SWAPC
+    \>>
+  PUTN @ Code in ASC format
+"CCD2065000147108174E78F1466013706135147C2135179110349C2A28A29030
+F660030115D007135142164808C6DE5"
+  GETN @ Code in ASC format
+"CCD2056000137061358F14660147C2135179D015B030F902D2D6C4C4C2C4C4CA
+344B2A2CA07135141CF142164808CD0808212D69DF1A9E"
+  CMOV
+    \<< "Thinking..." 4 DISS BD NEWOB DUP NEWOB MVGEN S\->XY
+      IF DUP 0 <
+      THEN DROP2 "I pass" 1 DISS SWAPC 8 SF
+      ELSE DUP2 R\->C \->STR "My move " SWAP + 1 DISS MKMOV
+      END
+    \>>
+  DISS
+    \<< PICT SWAP # Ah * # 10h + # 0h SWAP 2 \->LIST ROT # 60h # Ah BLANK
+      { # 0h # 0h } ROT 2 \->GROB GOR REPL
+    \>>
+  PMOV
+    \<< 0 DUP \-> c1 c2
+      \<< "Your move" 4 DISS
+        WHILE 4 FC?C
+        REPEAT GETK 'c1' STO
+          IF c1
+          THEN
+            IF c1 8 >
+            THEN 5 SF { OFF
+              \<<
+                IF BD 0 R\->S CKMOV
+                THEN 4 SF 8 SF
+                SWAPC
+                ELSE 5 CF
+                END
+              \>>
+              \<< 1 3 4 6 SF SF SF SF
+              \>>
+              \<<
+                OLDP SIZE 4 ==
+                \<< OLDP LIST\-> DROP PICT { # 0h # 0h } ROT REPL 'BD' STO
+                  'PCT' STO 'CCT' STO { } 'OLDP' STO
+                \>>
+                \<< 5 CF
+                \>> IFTE
+              \>>
+              \<< 5 CF
+              \>>
+              \<< 5 CF
+              \>> } c1 8 - GET EVAL
+            ELSE c1 \->STR 1 DISS GETK 'c2' STO c1 \->STR c2 \->STR + 1 DISS
+              IF BD c1 c2 XY\->S CKMOV
+              THEN 4 SF CCT PCT BD NEWOB PICT RCL 4 \->LIST 'OLDP' STO
+                c1 c2 MKMOV
+              END
+            END
+          END
+          IF 4 FC? 5 FC?C AND
+          THEN "Illegal" 1 DISS ERRBELL
+          END
+        END
+      \>>
+    \>>
+  S\->XY
+    \<< S\->R 11 - DUP 9 MOD SWAP 9 / IP
+    \>>
+  XY\->S
+    \<< 9 * + 11 + R\->S
+    \>>
+  GETK
+    \<< TICKS \-> sttme
+      \<<
+        DO
+          IF TICKS sttme - B\->R 491520 >
+          THEN OFF TICKS 'sttme' STO
+          END
+        UNTIL KEY
+        END
+      \>> KMAP SWAP POS
+    \>>
+  KMAP { 82 83 84 72 73 74 62 63 33 34 35 43 52 32 }
+  R\->S
+    \<< # 18CEAh SYSEVAL
+    \>>
+  S\->R
+    \<< # 18DBFh SYSEVAL
+    \>>
+  CKMOV @ Code in ASC format
+"CCD20451008F146608FB9760D20B0614713517EC213416915F0B0690A508528A
+C0316A169D23184D715E090EB07150871D2160CF8AF6E651015E090E61713086
+1D0349C2A26A00344B2A2DA8F2D760141070A142164808CD2CE7040D23087730
+D23097E20D230A7520D2E67D10348FFFF7210347FFFF7700346FFFFD5132130C
+013115F0862B0E690AB001CE90E00C013115F090A0080820890200133862F0E6
+90AADCE6C00CE90ADCE6851013B92"
+  MVGEN @ Code in ASC format
+"CCD20A5200179E7E78FB97601C9D20B067090070A8F73560142164808CD51321
+30C013115F0862B0E690AB001CE90E00C013115F090A0080820890200133862F
+0E690AADCE6C00CE90ADCE6851F9C013115B09080015D01336AEF13713513417
+414213016913610B14313117913710A74408AAB27E21AF41011321007B208AA9
+175111119F8DE6EDFD21080111011BFACA1000111A13411B1351567D72580820
+F902508522687B2125B8A2034660002D155716F17F152715170D880DE11BCBE7
+E7134D014A968B611BCA130156090EBD841D2CE7F8ED2308768ED23097D7ED23
+0A747ED2E67C6E348FFFF716E347FFFF765E346FFFF7B4E861786900D2641030
+F8625030115C0DB1121311450111313117A179D23184D73104AF1D515B030F90
+601E5170CF8AFAE01301906EECD69EF1614"
+END
+

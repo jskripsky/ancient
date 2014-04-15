@@ -1,0 +1,7 @@
+#define Uses_fpstream
+#define Uses_MsgBox
+#define Uses_TDeskTop
+#define Uses_TInputLine
+#define Uses_TDialog
+#define Uses_TButton
+#define Uses_TProgram

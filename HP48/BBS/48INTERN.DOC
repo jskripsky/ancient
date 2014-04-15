@@ -1,0 +1,179 @@
+
+00100 [DON Ofs2 Ofs1 Ofs0] Disp On, Bit Offset
+00101 [Con3 Con2 Con1 Con0] Contrast
+00102 [VDIG LID TRIM Con4] Disp Test (VDIG, LID, TRIM should be 0) & Contrast
+00104 16 bit hardware CRC
+00138 hardware timer
+02248 move #100,c.a / config
+028FC Enter Machine Code (for RPL Objects)
+02911 System Binary
+02933 Real Number
+02955 Long Real
+02977 Complex Number
+0299D Long Complex
+029BF Character
+029E8 Array
+02A0A Linked Array
+02A2C String
+02A4E Binary Integer
+02A74 List
+02A96 Directory
+02AB8 Algebraic
+02ADA Unit
+02AFC Tagged
+02B1E Graphic
+02B40 Library
+02B62 Backup
+02B88 Library Data
+02D9D Program
+02DCC Code
+02E48 Global Name
+02E6D Local Name
+02E92 XLIB Name
+03019 MC: skip next token
+0312B End Marker
+03130 RPL RETURN
+03416 MC: garbage collect need 1 stack element
+0341D MC: garbage collect need C.A stack elements
+0357C MC: push A as new System Binary and continue RPL
+03672 MC: restore registers, push A and continue RPL
+03B06 MC: push False and continue RPL
+03B1A MC: push True and continue RPL
+03F5D MC: pop TOS-1 and TOS (System Binary) -> A.A and C.A
+
+041A7 Internal OFF
+
+04FBB MC: Error: Insufficient Memory
+0501E MC: invoke error code in C
+05023 MC: invoke error code in A.A
+05143 MC: Restore D,B,D1,D0 (C=D0), Clear Carry and continue RPL
+
+0554C GC & load D,B,D1,D0 (C=D0) / CC
+
+05B79 MC: allocate string
+
+05F0F GC Need 5 Nibbles
+
+0613E Garbage Collect & set D
+06537 MC: push R0 as new System Binary
+06641 MC: pop TOS (System Binary) -> A.A
+0670C MC: block copy
+0679B MC: save D0,D1,B,D (uses C,D0), clear carry
+067D2 MC: restore D,B,D1,D0 (C=D0), clear carry
+06806 Let C = Space B/W RSTK & TOS
+06A8E Let C.A = C.A / 5
+06AD8 A=malloc(C Nibbles) ???
+06AE3 A=malloc(C Nibbles)
+06B00 A=malloc(B Nibbles) (C.A=free nibbles)
+06FBC MC: iterate loop
+06FD6 MC: return and execute the next token in this stream
+07152 MC: skip next token and continue RPL
+07161 MC: skip next two tokens and continue RPL
+07170 MC: set return to self and continue RPL
+0717B MC: set return to A and continue RPL
+071B0 MC: exit loop
+071BE MC: continue RPL
+071CD MC: if pop TOS = False, then exit loop, else iterate loop
+07211 MC: skip next two tokens and iterate
+072D7 A=orig D0, C=ptr to loop info, D0=ptr to loop counter
+
+0CBDE MC: Error: Nonexistent Alarm
+10F79 MC: Error: No Current Equation
+1103B MC: Error: Non-Empty Directory
+
+114B3 Push @C.A as new System Binary
+12FB2 XFER: Save D,B,D1,D0 (uses C)
+13161 XFER: Restore D,B,D1,D0 (C=D0) / Clear Carry
+
+18A27 MC: save stack size, clear @706FD.S and continue RPL
+
+18A6D MC: verify DEPTH >= 3 and continue RPL
+18A75 MC: verify DEPTH >= 3
+
+18A92 MC: verify DEPTH >= 2 and continue RPL
+18A9A MC: verify DEPTH >= 2
+
+18AB7 MC: verify DEPTH >= 1 and continue RPL
+18ABF MC: verify DEPTH >= 1
+18AC6 MC: verify DEPTH >= C.S, expect P = 2*C.S - 1
+
+18B7F MC: verify DEPTH >= 5 and continue RPL
+18B87 MC: verify DEPTH >= 5
+
+18BA4 MC: verify DEPTH >= 4 and continue RPL
+18BAC MC: verify DEPTH >= 4
+
+18C77 MC: save last RPL token
+
+18C97 MC: Error: Undefined Name
+18CA7 MC: Error: Bad Argument Value
+18CB7 MC: Error: Bad Argument Type
+18CC7 MC: Error: Too Few Arguments
+
+18FB7 MC: check arguments for type
+
+6199F MC XFER: return and execute the next token in this stream
+6205B MC: TYPE(pop TOS) = C -> True/False
+620B9 MC: restore regs and push True
+620D2 MC: restore regs and push False
+6249E MC XFER: pop TOS (System Binary) -> A.A
+624B3 XFER: save regs D,B,D1,D0 (uses C)
+
+62636 MC: add C.A to TOS and continue RPL (1:System Binary)
+
+62829 XFER: pop 2 System Binary -> A.A,C.A
+
+
+70200 Time Init
+704EA key buffer
+70551 pointer to menu display
+7055B pointer to stack display
+70565 pointer to PICT
+7056F heap pointer
+70574 saved B (return stack pointer)
+70579 saved D1 (RPL stack pointer)
+7057E bottom (start) of stack (grows down)
+70583 local var ptr addr
+70588 pointer to current loop information
+7058D ?? menu keys ??
+70592 begin HOME dir
+70597 end HOME directory (points to 00000 prob for ATTACH)
+7059C pointer to current dir
+705AB pointer to alarm list
+705B0 saved D0 (RPL thread pointer)
+705B5 temp save A.A
+705BA save arg ptrs (15 Nibbles)
+705D9 ROM: ML Version Output
+7065A Last RPL Token
+7066E saved D (free stack space)
+70673 Last Error Code
+7069F stack size
+706A4 Random Seed
+706C5 RPL System Flags
+706D5 RPL User Flags
+706FD # arg ptrs @ 705BA???
+706FF Save Last Err#
+70713 GROB for displaying lines of stack. Enough mem for 19 char bitmap
+70844 GROB for menu display: 8 by 131
+70968 GROB for the rest of the screen: 56 by 131
+710EC GROB for plot display: variable size
+71AD8 ASCIC: Version
+71AF6 ASCIC: Copyright
+72000 Message table for library 000 (XLIB 0)
+72281 Message table for library 00A (XLIB 10)
+7232C Message table for library 00C (XLIB 12)
+7260A Message table for library 00D (XLIB 13)
+726A5 Message table for library 00B (XLIB 11)
+72704 Message table for library 001 (XLIB 1)
+72DCF Message table for library 002 (XLIB 2)
+72F1E Message table for library 003 (XLIB 3)
+72FE6 Message table for library 006 (XLIB 6)
+736F9 Message table for library 005 (XLIB 5)
+7427C Hash table for library 700 (XLIB 1792)
+7448A Hash table for library 002 (XLIB 2)
+7F9B5 'HOMEDIR' (Global Name)
+7FED7 ''A' (Local Name)
+
+Download for hp48.ca succeeded.
+
+

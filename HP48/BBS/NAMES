@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<< { "Mbr#: "
+"Name: " "Addr: "
+"City: " "St. : "
+"Zip : " "Ph# : "
+"Date: " } { 47
+"JOE SMITH"
+"123 ANYSTREET"
+"CORVALLIS" "OR"
+97330
+"503-555-1212"
+11.241989 } { "ADD"
+"DEL" "" "" ""
+"QUIT" } { 2 2 3 1
+"    ADDRESS LIST"
+} STD DBR
+\>>

@@ -1,0 +1,349 @@
+***************************
+* Asm Flash Documentation *
+*    1/10/91 By HPNinja   *
+*     ( Phong NGUYEN )    *
+***************************
+|
+| Translated and Updated for the current version (v6.1)
+| May 1993
+| By: Douglas R. Cannon
+|
+
+
+Contents
+--------
+
+Asm Flash has library ID #1217
+It has 5 basic functions:
+* ->ASM   the actual assembler
+* ASM->   the disassembler
+* KASM    to convert disassembled code into a re-assemblable source
+* ED      the error editor
+* OPT     the options menu
+* ABOUT   information about Asm Flash
+
+1. Syntax
+---------
+  Asm Flash uses the HP mnemonics, which are the same mnemonics used by
+the book _Voyage au Centre de la HP48SX_, with a few exceptions.
+To simplify the syntax, for the instructions D0= D1= LCHEX and LAHEX I
+use the following:
+ D0= 12345   instead of D0=(5) 12345
+ D0= 12      instead of D0=(2) 12
+ LCHEX 12345 instead of LCHEX(5) 12345
+ or, for an even shorter notation, LC 12345.
+
+  For labels, you use an asterisk before the name.
+Example: *LABEL (with no space after the asterisk)
+The assembler will ignore spaces before or after labels.
+
+  You can separate the fields as far as you want.  You can write:
+A=DAT0 A
+       A=DAT0           A
+(it's all the same)
+
+  You may also include one-line comments, using a percent sign:
+A=DAT0    A    % Asm Flash is super!
+or a comment by itself with no instruction:
+% I destroyed a Casio today
+
+Notice:  All source code must finish with a Carriage Return and an @ sign!
+(no characters afterwards)  If you don't fully understand, disassemble
+some Code and look at the syntax.
+
+2. The Assembler
+----------------
+
+  Enter a string of characters, which is your source code.  Each instruction
+must be separated by a Carriage Return.  Put the string on the stack and 
+execute ->ASM.
+
+Example:
+"
+A=DAT0 A
+D0=D0+ 5
+PC=(A)
+@"
+
+The Options menu:
+When you press OPT, you will see a new menu bar:
+- Code or Hexa
+  The assembler can return a Code object or a string of hexadecimal digits.
+  Using the example above, setting HEXA would return "142164808C" instead
+  of a Code object.
+- 0-15 or 1-16
+  If this option is set to 0-15, then nibbles are counted from 0 to 15.
+  This affects the instructions P=, CPEX, C=P, P=C, ABIT=0, ABIT=1, CBIT=0, 
+  CBIT=1, ?ABIT=0, ?ABIT=1, ?CBIT=0, ?CBIT=1, ?P=, ?P<>, HS=0, ?HS=0.
+  If set to 1-16, the nibbles are counted from 1 to 16 like the original
+  HP syntax.  This is not very logical, because the P field, for example
+  has only 1 nibble, thus it's value can be from 0-15, but HP has always
+  liked being unique, and loves to display insane originality, like the
+  instructions A=R0 A where they preferred to write A=R0.F A (the 
+  advantage must be very subtle, because I've never understood it) or
+  even better, A=A+CON A 5 instead of A=A+5 A (again, the benefit is
+  arguable.)
+
+- HP or PC
+  If this option is set to HP, the comparison characters will be those
+  possible on the HP48SX where >= and <= are done with 1 character.
+  If this option is set to PC, then they will be restricted to the
+  regular ASCII characters:
+  * >= for greater than or equal to
+  * <= for less than or equal to
+  * #  for not equal to, and not <>, this is the HP syntax.
+  This is useful when you are sometimes writing source code on the HP,
+  and sometimes writing it on a PC.
+
+- JMP or UNJ
+  If this options is set to JMP, all jumps are calculated, as would be  
+  expected.
+  If set to UNJ, the jumps to labels are not verified nor calculated, and
+  the assembler will return a System Binary indicating the length of the
+  program in nibbles.  This is useful if you would like to know the size
+  of a part of a program in advance.  This is useful for protections, for
+  example.
+
+Example: I have a huge program where part of it is:
+  SHUTDN
+  GOTO SmallLabel
+  A=DAT0 A
+  GOTO BigLabel
+
+  As you can see, in this portion, the labels SmallLabel and BigLabel
+  haven't been declared, so if I set JMP, there will be an error.  With
+  UNJ, the program will be assembled and the nibble size will be returned.
+
+- ON or OFF
+  If you find that the assembler is taking too long you can set this
+  option to OFF, and the screen will be turned off during the assembly.
+  This will speed up the process slightly.
+
+- EXIT
+  Exit the options menu
+
+
+3. Directives
+-------------
+
+  Each of the options can be set with a directive, for example, !HP, !PC,
+!0-15, !1-16, !ON, !OFF, etc.  These force certain options to be set in
+a particular way regardless what is actually set in the options menu.
+You can place these directives anywhere in the source code, which allows
+you to mix options.  For example, the first half of your code can use
+PC characters (declared by a !PC) and the last half can use HP characters
+(declared by a !HP).
+
+4. The Linker
+-------------
+
+  This is one of the more powerful tools in Asm Flash.  This is equivalent
+to the linker in Turbo C which can be used to make many project modules.
+The goal of the linker is to allow you to subdivide your source into many
+separate files (variables).
+Example: 
+	 "
+	 'INITIALISATION
+	 'MAIN_LOOP
+	 'END_PROG
+	 @"
+
+If I compile this source, Asm Flash will compile the file INITIALISATION,
+then MAIN_LOOP and finally END_PROG.  The file links can then link in
+other files since the linker is recursive, with a depth limit of
+25 files, which is plenty, believe me.  This is a true linker, and not
+one like Light Speed.  For example, Asm Flash will RCL the file itself, 
+and move from file to file without taking up extra memory, whereas
+Light Speed concatenates all the possible links consuming lots of memory,
+and would thus lose all links with an eventual error.  (If there was
+an error in a link file, you would not know where it is, in Asm Flash you
+will.)
+
+I counsel you to use the linker as frequently as possible, because the
+more you subdivide a program, the more readable it is.  Also, if you
+work on a computer, you will not need to send a ton of files, since
+you would generally be repairing only one error at a time, and thus
+be working with only one module.  If your program is subdivided, then
+you only need to send a small file instead of a big one.
+
+5. Macros
+---------
+
+  When using data in a program, it is best to view it independantly to the  
+source code.  This is what macros allow us to do.  They work very well
+for the famous SAVE_REG (SAVPTR) and LOAD_REG (GETPTR) routines.  
+These have a known code, so they can be separated from the source.
+
+  To use a macro, you must have a Macro directory, It must be called Macro,
+as is indicated in the error message.  In this directory, you place the
+strings of ascii characters.
+
+Example: I place 8FB9760 H->S in SAVPTR (using Tools.lib)
+	 each variable is a Macro, but beware, each must be in ASCII,
+	 not HEX, thus H->S.  [or use UTILS.LIB packaged with Asm
+	 Flash -drc]
+Then, in my program, I place /SAVPTR to call SAVPTR.  Basically, the
+contents of the Macro is inserted into the Code, so the Macros are
+pre-assembled, contrary to those used by the Linker.  Also, using the
+ASCII format takes less memory.  Macros are also very useful when you
+use GROBS in an assembly program.
+
+6. The Error Editor
+-------------------
+
+  This editor (ED) helps you to correct little errors, especially syntax
+errors.  It is very useful for correcting little typos.
+Example:
+	A=DAT0 A
+	D0=D0+ 19
+	PC=(A)
+	@
+
+Here, I typed D0=D0+ 19 when 19 is not possible in this field.  I would
+then get a Nibble Expected error.  I can then execute ED, and the string
+"D0=D0+ 19" will be showing.  I can edit this to be "D0=D0+ 5", and
+that's all there is to it.
+
+After an error the stack contains the following:
+
+5 : Original Source (string)
+4 : [Name of Link file, if the error was in a link file]
+3 : [Source code of Link file, if the error was in a link file]
+2 : System Binary : the number of characters that were assembled.
+1 : Instruction with the error (string)
+
+After you execute ED, and fix the error, you will see on the stack:
+If no Link, 1 : Modified Source code
+ otherwise, 3 : Original Source (string)
+	    2 : Name of the link with the error
+	    1 : Modified link source (string)
+If you want to save your changes to the link file, all you need to do
+is SWAP STO, then execute ->ASM, since the original source code is on
+the stack.
+
+7. Error Messages
+-----------------
+
+Unknown Instruction     : The instruction is not in the set.
+CR Or @ Missing         : Every file must end with a CR and an @.
+Field Expected          : like A=A+B A (A=A+B R would return this error).
+Hexa Expected           : like LC 123456 (LC R would return this error).
+0-15 Nibble Expected    : like P= 15 (P= R would return this error).
+1-16 Nibble Expected    : like P= 16 (P= RR would return this error).
+Bad Size                : Bad instruction size
+Label Already Declared  : This label was declared elswhere
+Nonexistent Label       : This label was not declared
+Jump Too Big            : 
+Nonexistent Macro Dir   : Asm Flash can't find the Macro directory
+Invalid Macro           :
+Nonexistent Macro       :
+Invalid Link            :
+Too Much Recursion      : A depth of more than 25 links.
+
+8. Special Functions
+--------------------
+
+  Sometimes it is useful to include hexadecimal constants in a program,
+and if you don't want to use a macro, you can use $.
+
+Example: $123
+	 will include 123.
+Caution: these are hexadecimal digits, not like those used with Macros.
+
+  
+  You can include ASCII characters with the cents sign (this symbol is not
+available here, I'll use a lower case 'c' instead.  In alpha mode, press
+Right-shift 4 to get the cents sign on your HP48.)
+
+Example: cABC
+	 will include 142434
+
+    and: c123
+	 will include 132333   (each byte is reversed)
+  
+  
+  If you would like to calculate the distance to a label, there are the
+instructions GOINA and GOINC, which are special LA and LC instructions.
+These instructions must be followed by a label, for example:
+
+	A=PC
+	GOINC LABEL
+	A=A+C A     % place the absolute address of LABEL into A
+
+or      C=PC
+	GOINA LABEL
+	A=A+C A
+
+  If you assembled, then disassembled the following example:
+
+	GOINC *END
+	NOP3
+	*END
+	@
+
+  You would get:
+
+	LC    0000A
+	NOP3
+	@
+
+
+  You may also use the functions GOIN3, GOIN4, and GOIN5, which simply
+place the number of nibbles (without an LA or LC).
+
+  You can set the ASMPAR parameter by storing a binary integer into a
+variable named 'ASMPAR' in your HOME directory.  Asm Flash will check
+this variable to be sure that the final size (in nibbles) of your
+assembled code does not exceed it.  Note that if your are assembling to
+a Code object, it is the final size of the assembled code, not including
+the Code prolog (5 nibbles) and the length (5 nibbles).
+  The default ASMPAR value is half memory.  [ This probably means half
+of free RAM, although I'm not sure. -drc ]
+
+Example:  HOME #10h 'ASMPAR' STO
+
+Now your code must be less than 16 nibbles or you will get an 'Insufficient
+Memory' error when you try to assemble.
+
+  If you think that certain functions are not necessary, you are mistaken,
+because all are used in the source code for Asm Flash, especially the
+Linker and the Macros.
+
+9. The disassembler
+-------------------
+
+  There is very little to tell.  It accepts 2 types of arguments:
+
+- 2 binary integers, in level 2 : #Beginning address
+			      1 : #Ending address
+
+- 1 Code
+
+It returns a String which contains the disassembled source with the
+address at the left, and then the instruction.  It is automatically
+placed in mode !PC, and !1-16.  Thus #0 #20 ASM-> gives:
+
+00000 P=       4
+00002 GOTO     001BC
+00006 CLRST
+00008 A=C      A
+0000A CDEX     A
+0000C R0=A
+0000F ST=1     15
+00012 GOC      00029
+00015 ?ST=1    16
+00018 GOYES    0001C
+0001A RTNCC
+0001C RSTK=C
+0001E C=ID
+
+  
+  If you want to disassemble a code object into something that can then
+be reassembled using ->ASM, place the code object on the stack, execute
+ASM->, then KASM.
+
+[ I personally don't like the fact that it automatically disassembles code
+using the !1-16 option.  The program DBUG on Goodies disk #7 will dis-
+assemble code into re-assemblable source, and it will be in the !0-15
+mode.  HOWEVER, it takes 2 minutes to do what AsmFlash can do in a few 
+seconds! -drc ]

@@ -1,0 +1,10 @@
+
+keybgr
+echo off
+cls
+time
+date
+cls
+psp 5
+limmat
+

@@ -1,0 +1,4 @@
+#include "DataBase\Record.Use"
+
+#define Uses_TObject
+#define Uses_TStreamable

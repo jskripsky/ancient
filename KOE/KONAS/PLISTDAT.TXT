@@ -1,0 +1,113 @@
+PLIST.DAT Beschreibung
+======================
+
+PLIST.DAT besteht aus einer Folge von Patient-DatensÑtzen, bis EOF.
+
+Alle EintrÑge der Datei PLIST.DAT besitzen eine feste LÑnge. Strings werden
+mit einem Null-Character abgeschlossen und mit weiteren Nulls aufgefÅllt.
+Ein String mit MaximallÑnge x belegt in der Datei immer (x + 1) Bytes.
+
+
+Feldtypen:
+----------
+
+- Textfeld (n Zeichen)
+	Belegt n + 1 Bytes. Letztes Byte ist immer Null.
+
+- Radiofeld
+	Belegt 2 Bytes (short in x86-Order gespeichert). EnthÑlt die Nummer
+	des AusgewÑhlten Punktes. (z.B. Geschlecht: MÑnnlich / Weiblich.
+	MÑnnlich = 0, Weiblich = 1)
+
+- Listfeld (Datei xyz)
+	Belegt 41 Bytes. Gespeichert wird ausgewÑhlte String. Die Liste aller
+	mîglichen Strings befinden sich in der Datei xyz.
+	(Zur Datei xyz:
+	Auf der linken Seite befinden sich die Strings, die
+	am Bildschirm erscheinen und in PLIST.DAT - auf 40 Zeichen gekÅrzt -
+	gespeichert werden. Rechts steht jeweils der entsprechende String,
+	der an den Drucker oder in die Exportdatei geht.)
+
+
+
+Patient
+=======
+
+- inUse Flag (1 Byte)
+	Werte:
+		0 = folgender Patient wurde gelîscht (Daten folgen trotzdem).
+		1 = folgender Patient gehîrt zur Patientenliste.
+
+- status Byte (1 Byte)
+	Werte:
+		0 (reserved)
+
+
+- Textfeld Name (30 Zeichen)
+- Textfeld Vorname (15 Zeichen)
+
+- Textfeld Geburtsdatum (10 Zeichen)
+
+- Radiofeld Geschlecht (MÑnnlich / Weiblich)
+	Drucker: "M" / "W"
+	Export: "M" / "W"
+
+- Textfeld AufnahmeNr. (8 Zeichen)
+
+- Textfeld Datum (8 Zeichen)
+- Textfeld Zeit (5 Zeichen)
+
+- Textfeld Strasse (30 Zeichen)
+- Textfeld PLZ (8 Zeichen)
+- Textfeld Ort (20 Zeichen)
+- Textfeld Kassennr. (7 Zeichen)
+- Textfeld Kassenname (28 Zeichen)
+- Textfeld VersicherungNr. (12 Zeichen)
+- Textfeld VersicherungNr. (7 Zeichen)
+
+- Radiofeld Allgemein/Privat ( - / Allgemein / Privat)
+	Drucker: - / "Akut     2" / "Akut ML  1"
+
+
+- Listfeld KostentrÑger (Datei "KOSTENTR.LST)
+
+- 3 Textfelder Zustatzinfo (3 * 38 Zeichen)
+
+- Listfeld Station (Datei STATION.LST)
+
+- Radiofeld Eingelieferer (Selbst / Rettungswagen / Notarztwagen / Hubschrauber)
+	Drucker: "Selbst" / "Rettungswagen" / "Notarztwagen" / "Hubschrauber"
+	Export: "Selbst" / "Rettungswagen" / "Notarztwagen" / "Hubschrauber"
+
+- 3 Textfelder Arbeitgeber (30, 30 und 28 Zeichen)
+
+- Textfeld Hauptversicherter (30 Zeichen)
+- Textfeld Geburtsdatum (10 Zeichen)
+
+- Radiofeld Status (HV, FAM, REN)
+	Drucker: "HV" / "FAM" / "REN"
+
+
+- 9 Textfelder Anamnese (9 * 38 Zeichen)
+
+- 16 Textfelder Aufnahmebefund (16 * 38 Zeichen)
+
+- 7 Textfelder Aufnahmediagnose (7 * 38 Zeichen)
+
+- 7 Textfelder Behandlung (7 * 38 Zeichen)
+
+- 5 Textfeldrer Medikamente + Leistungen (38, 38, 38, 38, und 40 Zeichen)
+
+- Textfeld Nachschau Datum (8 Zeichen)
+- Textfeld Nachschau Zeit (5 Zeichen)
+
+- Radiofeld Ambulant/StationÑr (in Behandlung, entlassen, stationÑr,
+	D13 Eigenunfall entl., D13 Eigenunfall stat., D13 entlassen,
+	D13 stationÑr )
+	Drucker: 1 / 2 / 3 / 4 / 5 / 6 / 7
+
+- Textfeld Arzt (30 Zeichen)
+- Textfeld Konsilarzt 1 (30 Zeichen)
+- Textfeld Konsilarzt 2 (30 Zeichen)
+- Textfeld Konsilarzt 3 (30 Zeichen)
+- Textfeld Konsilarzt 4 (30 Zeichen)

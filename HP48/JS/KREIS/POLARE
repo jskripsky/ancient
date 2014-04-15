@@ -1,0 +1,19 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Polare
+------
+(x-u)(x0-u) +
+(y0-v)(y-v) = SQ(R)
+
+Eingabe: U V R X0 Y0
+Ausgabe: M Q"
+DISPHELP
+   
+   \-> U V R X0 Y0
+   \<<
+      'X0-U' EVAL
+      'Y0-V' EVAL
+      'SQ(U)+SQ(V)-SQ(R)-U*X0-V*Y0' EVAL
+      IM\->EX
+   \>>
+\>>

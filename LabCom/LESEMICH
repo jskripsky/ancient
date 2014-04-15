@@ -1,0 +1,29 @@
+LabCom - DOS - Distribution V1.1, Dezember 1992
+Univ. Bern, KL
+--------------------------------------------------------------------------
+
+Folgende Dateien sind selbstauspackend:
+
+LABRS232 COM	 RS232-Treiber (inkl. 8086-Assembler-Source)
+LABPAS	 EXE	 Source-Programme + Timer + Demoemulator in Turbo Pascal
+LABLOGO  COM	 Source-Programme in LOGO (Logowriter)
+LABC	 EXE	 Source-Programme + Timer + Demoemulator in Turbo C
+LABBAS	 COM	 Source-Programme in Turbo Basic
+FIRMWARE.COM	 Source der LabCom-Firmware (Intel 8051-Assembler)
+
+Erstellen Sie je ein Directory, kopieren Sie eine Datei hinein und rufen Sie
+diese auf.
+
+
+FÅr Demo- und Testzwecke wurde der in LABC und LABPASC als Source enthaltene
+Terminal-Emulator kompiliert:
+
+EMUL.EXE	 Terminal-Emulator
+RS232DRV.COM	 Serieller Treiber (auch in LABRS232.COM enthalten)
+EMULDEMO.BAT	 Demontration, wie der Emulator gestartet wird
+
+
+Weitere Software zum LabCom-Interface ist in Entwicklung und wird laufend
+zugestellt.
+
+

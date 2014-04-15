@@ -1,0 +1,6 @@
+main()
+{
+	prints( "" );
+	delay_scr( 200 );
+	exittelix( 100, 1 );
+}

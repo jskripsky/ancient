@@ -1,0 +1,44 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Schnittpunkt
+------------ 
+y = M1x + Q1
+y = M2x + Q2
+
+Eingabe: M1 Q1 M2 Q2
+Ausgabe: SX SY"
+
+   DISPHELP
+   \-> M1 Q1 M2 Q2
+   \<<
+      IF 'M1==M2'
+      THEN
+         M1 Q1 M2 Q2
+         "Geraden sind Parallel!" DOERR
+      END
+
+      IF
+         M1 "\|^" ==
+         M2 "\|^" ==
+         OR
+      THEN
+         IF
+            M1 "\|^" ==
+         THEN
+            Q1 EVAL
+            'Q1*M2+Q2' EVAL
+         ELSE
+            Q2 EVAL
+            'Q2*M1+Q1' EVAL
+         END
+      ELSE
+         '(Q2-Q1)/(M1-M2)' EVAL
+         DUP M1 * Q1 + EVAL
+      END
+
+      2 ROLL
+      "X" \->TAG
+      2 ROLL
+      "Y" \->TAG
+   \>>
+\>>

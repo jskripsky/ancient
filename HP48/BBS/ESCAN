@@ -1,0 +1,18 @@
+%%HP: T(3)A(D)F(.);
+\<< EQNVARS DROP DTAG
+OBJ\->
+  IF DUP
+  THEN MZ2 DUP 1
+SWAP
+    START MDT DUP
+VTYPE
+      IF -1 SAME
+      THEN MAH
+      ELSE MAH2
+      END
+    NEXT MM\->L
+  ELSE DROP { } { }
+  END "Undefined"
+\->TAG SWAP "Defined"
+\->TAG
+\>>

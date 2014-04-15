@@ -1,0 +1,7 @@
+NAME = zTest
+OFILES = $(NAME).Obj
+
+LFILES = $(NAME).Obj
+
+!include "template.mak"
+

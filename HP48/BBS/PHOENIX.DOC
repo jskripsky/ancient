@@ -1,0 +1,89 @@
+BEGIN_DOC Phoenix.doc
+
+
+                          Phoenix Blasting Game
+                        --------------------------
+                                writen by 
+                            Davor Jadrijevich
+                                (c) 1991
+
+	GAME Instructions
+        -----------------
+
+        Phoenix - "Shoot the aliens, before they shoot you"
+                  could be a short decription of this game.
+
+	The Game uses one USER variable with reserved name PHpar
+	with following default contents :
+
+		#842325441504760h
+			 ^^		-	go rigth
+		       ^^		-	shields
+		     ^^			-	go left
+		   ^^			-	fire phaser
+		 ^^			-	fire torpedo
+
+	You can use the following sheme to fit your needs.
+
+        10      'ON'			26      'DEL'
+        20      +			46      'EEX'
+        40      'SPC'			86      '+/-'
+        80      .			17      'ENTER'
+        11      0			27      '1/x'
+        21      '			47      'y^x'
+        41      -			87      'SQRT'
+        81      3			18      'TAN'
+        12      2			28      'COS'
+        22      1			48      'CURSOR_RIGTH'
+        42      A			88      'CURSOR_DOWN'
+        82      'RIGTH_SHIFT'		19      'CURSOR_LEFT'
+        13      *			29      'EVAL'
+        23      6			49      'STO'
+        43      5			89      'NXT'
+        83      4			1A      'CURSOR_UP'
+        14      'MTH'			2A      'VAR'
+        24      'LEFT_SHIFT'		4A      'CST'
+        44      /			8A      'PRG'
+        84      9			1B      F
+        15      8			2B      E
+        25      7			4B      D
+        45      'SIN'			8B      C
+        85      'ALPHA'			1C      B
+        16      'BACKSPACE'
+        
+
+			  Copyrights, etc
+			  ---------------
+
+	This Game is ShareWare.
+
+	If you find this Game entertaining and you want to keep it,
+	send US$ 30 (or DM 40, if you prefer this) to the address
+	shown below. Thus you will become a registered user and you
+	will recieve information about new versions and even about
+	new games as soon as these are available. If you do so,
+	please include an email address	if available. If I have to
+	deal with diskettes, I feel free to charge an extra fee.
+
+	Noncommercial distribution allowed, provided that this
+	copyright message is preserved, and any modified versions
+	are clearly marked as such.
+
+	THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESSED
+	OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	IMPLIED	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+	PARTICULAR PURPOSE.
+
+        Davor Jadrijevic       
+        Lastovska 5            
+        41000 Zagreb           
+        Croatia                
+        tel.                   
+        ++38 41 510 290          
+                               
+        Hrvatski               
+        English            
+
+	e-mail	davj@apoirb.irb.hr    
+                               
+

@@ -1,0 +1,117 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   IF 32 FS?C
+   THEN
+      1
+   ELSE
+      0.2 WAIT
+      KEY
+
+      IF
+         1 ==
+      THEN
+         DROP 
+         1
+      ELSE
+         0
+      END
+   END
+
+   IF
+      0 ==
+   THEN
+      DUP
+      TYPE
+      IF
+         0 ==
+      THEN
+         2 * 1 -
+         DROPN
+      ELSE
+         DROP
+      END
+
+   ELSE
+      DUP TYPE
+      IF 
+         2 ==
+      THEN
+         1
+      ELSE
+         DROP
+      END
+      \-> NP
+      \<<
+         "SNTX"
+         'NP*2' EVAL ROLLD
+
+         IF 'NP<4'
+         THEN
+            1 '4-NP' EVAL
+            START
+               ""
+               ""
+            NEXT
+         END
+
+         8
+         \->LIST
+
+         \-> HPAGES
+         \<<
+            1 4
+            FOR PAGE
+               HPAGES
+               'PAGE*2-1' EVAL GET
+            NEXT
+            "EXEC"
+            "QUIT"
+            6 \->LIST
+            TMENU
+            
+            1 4
+            FOR PAGE
+               HPAGES
+               'PAGE*2' EVAL GET
+            NEXT
+            4 \->LIST
+         \>>
+         
+         \-> HPAGES
+         \<<
+            1
+            DO
+               CLLCD
+               HPAGES
+               SWAP GET
+               1 DISP
+               -1 WAIT
+               IF
+                  DUP
+                  20 \>=
+               THEN
+                  DROP
+                  6
+               ELSE
+                  10 MOD
+                  DUP 1 MOD -
+               END
+            UNTIL
+               DUP DUP
+               5 ==
+               SWAP
+               6 ==
+               OR
+            END
+         \>>
+        
+         0 MENU
+
+         IF
+            5 \=/
+         THEN
+            KILL
+         END
+      \>>
+   END
+\>>

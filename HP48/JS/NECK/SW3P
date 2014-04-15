@@ -1,0 +1,48 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Winkel aus 3 Punkten
+--------------------
+(X1/Y1), (X2/Y2),
+(X3/Y3)  \->  \<)
+
+Eingabe: X1 Y1...X3 Y3
+Ausgabe: Winkel bei P2"
+DISPHELP
+
+   \-> X1 Y1 X2 Y2 X3 Y3
+   \<<
+      -16 FC?C
+      -17 FS?C
+      X1 Y1 \->V2
+      X2 Y2 \->V2
+      X3 Y3 \->V2
+      
+      \-> CARTESIAN RADIANTS P1 P2 P3
+      \<<
+         -16 SF
+         P3 P2 -
+         V\-> SWAP DROP
+         P1 P2 - 
+         V\-> SWAP DROP -
+         \-> W
+         \<<
+            IF 'W<0'
+            THEN
+               W 360 +
+            ELSE
+               W
+            END
+         \>>
+
+         IF CARTESIAN
+         THEN
+            -16 CF
+         END
+
+         IF RADIANTS
+         THEN
+            -17 SF
+         END
+      \>>
+   \>>
+\>>

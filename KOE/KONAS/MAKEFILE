@@ -1,0 +1,45 @@
+NAME = KONAS
+OFILES = \
+        $(NAME).Obj KonasApp.Obj \
+        KonasFrm.Obj FormFrm.Obj \
+        Form.Obj FormWin.Obj \
+        Person.Obj \
+        DataPres.Obj \
+        Time.Obj Date.Obj \
+        Persist.Obj \
+        Storage.Obj \
+        DataObj.Obj \
+        Present.Obj \
+        Window.Obj \
+        Field.Obj \
+        FieldWin.Obj \
+        FldPres.Obj \
+        EntryFld.Obj EFldWin.Obj \
+        DateFld.Obj TimeFld.Obj \
+        ListFld.Obj SelFld.Obj \
+        BogenHau.Obj
+
+
+
+LFILES = $(NAME).Obj+KonasApp.Obj+^
+        KonasFrm+FormFrm.Obj+^
+        Form.Obj+FormWin.Obj+^
+        Person.Obj+^
+        DataPres.Obj+^
+        Time.Obj+Date.Obj+^
+        Persist.Obj+^
+        Storage.Obj+^
+        DataObj.Obj+^
+        Present.Obj+^
+        Window.Obj+^
+        Field.Obj+^
+        FieldWin.Obj+^
+        FldPres.Obj+^
+        EntryFld.Obj+EFldWin.Obj+^
+        DateFld.Obj+TimeFld.Obj+^
+        ListFld.Obj+SelFld.Obj+^
+        BogenHau.Obj
+
+
+!include "template.mak"
+

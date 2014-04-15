@@ -1,0 +1,32 @@
+June 1, 1993
+
+Asm Flash is an assembler that will work right on your HP48.  It is faster
+than my assembler running on a 486, and it is only 14Kb.  It uses HP
+mnemonics (with some simple variations).
+
+Asm Flash will assemble source code to a Code object or to a hexadecimal
+string.  It makes use of Macros, and will also allow you to split up your
+source code into separate files and use the linker to connect them all
+together when you assemble.  It does this, and much more!
+
+The disassembler will disassemble hex strings or code objects, or ROM
+routines.
+
+Asm Flash was written by Phong NGUYEN (HPNinja).  Sorry, but I don't have
+an email address for him as I don't think he has one.
+
+Included in this zip file are some Macros given to me by Lilian Pigallio.
+Most of the routines are from the book _Voyage au Centre de la HP48_.
+Most are supported, however, use at your own risk (especially because
+they are provided here without documentation, sorry.)  If you transfer
+this to your HP48, be sure that the directory is named 'Macro'  Asm Flash
+requires this.
+
+I have also included the UTILS.LIB file so that you have access to the
+S->H and H->S routines needed to create Macros.  These routines are
+available elsewhere as well.  I don't have documentation for the other
+routines in UTILS.LIB, use them at your own risk.
+
+The file 48INTERN.DOC has some neat ROM addresses, etc.
+
+-Doug Cannon

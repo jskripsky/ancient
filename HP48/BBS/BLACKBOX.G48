@@ -1,0 +1,567 @@
+
+Black Box Game for the HP-48SX
+==============================
+
+This program is copyright (C) 1991 Chris Tham.
+Permission is given to copy, use or modify this program, as long as the
+original author is given credit.
+
+Game Description
+----------------
+
+The Black Box is a large square containing grid of squares.  There are 8
+by 8 or 64 squares within the Black Box.  Four of these squares contain
+atoms.  You do not know where the four atoms are located within the
+black box.  Your task, should you decide to accept it, is to find the
+locations of the atoms within the Black Box.
+
+Each square within the Black Box can be labelled by its coordinate
+position, as in Figure 1.
+
+         1 2 3 4 5 6 7 8
+        +-+-+-+-+-+-+-+-+
+       1| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       2| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       3| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       4| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       5| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       6| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       7| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       8| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+
+       Figure 1: Coordinate labelling of squares in the black box
+
+Hence the square on the upper left hand corner of the black box is
+labelled (1,1), the square on the upper right hand corner of the black
+box is labelled (1,8) and so on.
+
+You can determine the location of atoms in the black box by firing rays
+into the black box from its sides.  Rays always enter the black box
+perpendicular to the side from which it is fired from.  Rays normally
+travel in a straight line whilst in the black box.  Depending on the
+location of atoms within the black box, the following may happen to a
+ray:
+1. The ray may pass straight through on the other side of the box.
+   This usually (but not always!) means that the ray did not encounter
+   any atoms within or adjacent to its path.
+
+               Ray leaves box here
+         1 2 3 ^ 5 6 7 8
+        +-+-+-+^+-+-+-+-+
+       1| | | |^| | | | |            Figure 2: Ray passing straight through
+        +-+-+-+^+-+-+-+-+
+       2| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       3| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       4| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       5| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       6| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       7| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       8| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+               ^
+               Ray enters from here
+
+2. The ray may be absorbed.
+   A ray is absorbed if it collides with an atom in its path.
+
+         1 2 3 4 5 6 7 8
+        +-+-+-+-+-+-+-+-+
+       1| | | | | | | | |            Figure 3: Ray absorption
+        +-+-+-+-+-+-+-+-+
+       2| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       3| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       4| | | |X| | | | |
+        +-+-+-+^+-+-+-+-+
+       5| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       6| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       7| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       8| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+               ^
+               Ray enters from here
+
+3. The ray may be reflected back to the side it came from.
+   A ray is reflected if it encounters two atoms in front of it, one to
+   the left and the other to the right.
+
+         1 2 3 4 5 6 7 8
+        +-+-+-+-+-+-+-+-+
+       1| | | | | | | | |            Figure 4: Ray reflection
+        +-+-+-+-+-+-+-+-+
+       2| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       3| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       4| | |X| |X| | | |
+        +-+-+-+^+-+-+-+-+
+       5| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       6| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       7| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       8| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+               ^
+               Ray enters and leaves here
+
+4. The ray may be refracted and emerge on a different side of the black
+   box.
+   A ray is refracted when it encounters an atom in front of it, either
+   to the left or to the right.  Note that refractions are reflexive,
+   i.e. if you fire a ray and it gets refracted, you can fire a ray into
+   the location where the original ray emerged and it will emerge where
+   you had fired the original ray.
+
+         1 2 3 4 5 6 7 8
+        +-+-+-+-+-+-+-+-+
+       1| | | | | | | | |            Figure 5: Ray refraction
+        +-+-+-+-+-+-+-+-+
+       2| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       3| | | | | | | | |
+        +-+-+-+-+-+-+-+-+
+       4| | |X| | | | | |
+        +-+-+-+-+-+-+-+-+
+       5| | | |>>>>>>>>>> Ray emerges here
+        +-+-+-+^+-+-+-+-+
+       6| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       7| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+       8| | | |^| | | | |
+        +-+-+-+^+-+-+-+-+
+               ^
+               Ray enters from here
+
+Of course, a ray may get refracted, then absorbed, and so on.  By firing
+rays at strategic locations into the black box, you should be able to
+deduce the correct locations of the four atoms.
+
+At the start of the game, the program will draw the black box on the
+screen and choose the locations of the four atoms randomly.  The object
+of the game is to be able to guess correctly the location of all four
+atoms within the black box by firing less than or equal to eight rays.
+Each time you fire a ray, the program traces its progress in the black
+box and informs you what happened to the ray (where it emerges or has
+been absorbed).  You may submit a guess of an atom's location at any
+time in the game.  If your guess is correct, the program will plot the
+atom on the black box.  If your guess is wrong, you lose immediately. 
+You win if you manage to guess all four atom locations correctly.  You
+lose if you run out of rays.
+
+How to download the game into the HP-48SX
+-----------------------------------------
+
+Download the file at the end of this document as 'BBOX'.  Enter into the
+directory, press the VAR key to get a list of variables.  Press the soft
+key corresponding 'INIT' to execute the initialization routine.
+[Warning: this will take a while].  After executing INIT, the game will
+be properly set up on the HP-48SX.
+
+How to play the game
+--------------------
+
+Press the soft key corresponding to 'PLAY'.  The HP-48SX screen will
+show a blank black box together with game credits.  The numeral `4' at
+the bottom side of the black box should be inversed.  This is where the
+cursor defaults to at the start of the game.  You can move the cursor by
+using the arrow keys on the keyboard.  The cursor always inverses
+whatever is lying underneath it.  You can move the cursor into the box
+as well as any location on the side of the box except at the corners. 
+
+Pressing the ENTER key when the cursor is at the side of the box will
+fire a ray into the box from the location of the cursor.  Rays are
+labelled from A to H.  The program will trace the movement of the ray
+and label the location where the ray emerges with the same letter.
+
+Pressing the ENTER key when the cursor is within the box will cause the
+program to check whether the square underneath the cursor contains an
+atom.  If it does, the program informs you, draws a cross at the
+location of the atom and lets the game continue. 
+If it doesn't, you lose immediately.
+
+Pressing the <- key (the one next to the DEL key) causes the game to
+exit immediately.
+
+Program description
+-------------------
+
+The program uses two global variables which you can change to customise
+the game.  'NATOMS' contains the number of atoms that the program puts
+into the black box and consequently the number of atoms that you have
+to guess.  The default value of 'NATOMS' is 4.  'MAXRAYS' contains the
+maximum number of rays that you can fire into the black box.  The
+default value of 'MAXRAYS' is 8.  The INIT program generates the cursor
+mask grob (using the program GENMASK) and the cross grob (using the
+program GENCROS) as well as generating the PICT for the playing screen 
+(using the program GENBOX).  It then creates some global variables
+needed by the program and then reorders the variables in the directory.
+Finally, it deletes the initialization programs that are no longer
+needed during game play, including itself, in order to conserve memory.
+
+The main program PLAY calls GENATOMS to generate NATOMS worth of atoms
+on the screen.  The atom locations are stored as complex numbers in a
+list called ATOMS.  GENATOMS does make sure that each atom occupies a
+position in the black box not occupied by any other atom.
+
+PLAY then calls DBOX to put the playing screen PICT (stored in SCREEN) up. 
+Finally, PLAY calls MAIN which actually plays the game.
+
+MAIN initializes two variables called NRAYS (containing the number of
+rays that the user has fired) and NGUESS (containing the number of
+guesses that the user has entered which are correct).  MAIN also does
+keyboard processing.  If the user presses the ENTER key, MAIN calls
+PROCESS which calls TRACERAY if the ENTER key was pressed whilst the
+cursor was on a side rather than within the black box.  If the user
+loses or quits the game, DRAWATOMS draws the locations of all atoms on
+the screen by marking them with crosses.
+
+Helper routines are NRAND, WRITE1, WRITE2, PUTSTR, PUTCROS, GETPOS and
+PUTMASK.
+
+Bugs
+----
+
+If you managed to make one correct atom guess, you can win the game by
+repeatedly guessing at the same location until NATOMS reaches MAXATOMS.
+The program does not check that you have already guessed at that location.
+However, if you did that, you are merely cheating yourself.
+
+Author
+------
+Chris Tham
+30th of March 1991
+
+Author's comments
+-----------------
+BBOX is my first non trivial programming project on the HP-48SX, so
+please excuse me for any stupid coding styles or inefficiencies.  The
+program is extensively commented and should be reasonably easy to read.
+
+--- cut here ---
+%%HP: T(3)A(D)F(.);
+DIR @ Black box program
+    @ Copyright (C) 1991 Chris Tham
+    @ BYTES: 4398 # 16459d
+  PLAY @ Main routine for playing game
+    \<<
+      RCLF 'FLGS' STO             @ Store system and user flags
+      STD DEC                     @ Set standard display mode, decimal base
+      GENATOMS DBOX MAIN          @ Play game
+      FLGS STOF                   @ Restore system and user flags
+      3 FREEZE                    @ Freeze display until key pressed
+    \>>
+  NATOMS 4 @ number of atoms to be generated
+  MAXRAYS 8 @ maximum number of rays user can fire
+  INIT @ Generate things needed for game
+    \<<
+      RCLF 'FLGS' STO             @ Store system and user flags
+      STD DEC                     @ Set standard display mode, decimal base
+      GENMASK                     @ Generate mask for cursor
+      GENCROS                     @ Generate cross for displaying atom
+      GENBOX                      @ Generate playing screen
+      { } 'ATOMS' STO
+      0 'NGUESS' STO
+      0 'NRAYS' STO               @ Initialize variables
+      { PLAY NATOMS MAXRAYS GENATOMS DBOX MAIN PROCESS TRACERAY
+        DRAWATOMS NRAND WRITE1 WRITE2 PUTSTR PUTCROS GETPOS PUTMASK
+        CROS MASK SCREEN ATOMS NGUESS NRAYS FLGS }
+      ORDER                       @ We want the important vars in front }
+      'INIT' PURGE
+      'GENMASK' PURGE
+      'GENCROS' PURGE
+      'GENBOX' PURGE              @ Throw aways things we don't need
+      FLGS STOF                   @ Restore system and user flags
+    \>>
+  GENATOMS @ Generate list of atoms
+    \<<
+      { } 'ATOMS' STO             @ Initialise ATOMS to an empty list
+      0 \-> i                     @ zero number of atoms created
+      \<<
+        DO
+          1 8 NRAND
+          1 8 NRAND
+          R\->C                   @ generate random atom position
+          IF ATOMS OVER POS NOT   @ make sure atom not already in list
+          THEN
+            'ATOMS' STO+          @ add atom to list
+            'i' INCR DROP         @ increment number of atoms generated
+          END
+        UNTIL i NATOMS ==         @ stop when we have generated NATOMS atoms
+        END
+      \>>
+    \>>
+  DBOX
+    \<<
+      SCREEN PICT STO
+      { # 0d # 0d } PVIEW
+    \>>
+  MAIN @ main playing loop
+    \<<
+      (4,9) \-> p                 @ Default starting cursor position
+      \<<
+        0 'NRAYS' STO             @ Initialise number of rays fired
+        0 'NGUESS' STO            @ Initialise number of correct atom guesses
+        DO
+          p PUTMASK               @ Put cursor
+          0 WAIT                  @ Wait for keystroke
+          p PUTMASK               @ Hide cursor
+          CASE
+          DUP 34.1 ==             @ Left arrow
+          p RE 0 \=/ AND          @ Not at left edge
+          p (1,0) \=/ AND         @ Not entering undefined region
+          p (1,9) \=/ AND
+            THEN (-1,0) END       @ Move one position left
+          DUP 36.1 ==             @ Right arrow
+          p RE 9 \=/ AND          @ Not at right edge
+          p (8,0) \=/ AND         @ Not entering undefined region
+          p (8,9) \=/ AND
+            THEN (1,0) END        @ Move one position right
+          DUP 25.1 ==             @ Up arrow
+          p IM 0 \=/ AND          @ Not at top edge
+          p (0,1) \=/ AND         @ Not entering undefined region
+          p (9,1) \=/ AND
+            THEN (0,-1) END       @ Move one position up
+          DUP 35.1 ==             @ Down arrow
+          p IM 9 \=/ AND          @ Not at bottom edge
+          p (0,8) \=/ AND         @ Not entering undefined region
+          p (9,8) \=/ AND
+            THEN (0,1) END        @ Move one position down
+          DUP 51.1 ==             @ ENTER key
+            THEN
+              p PROCESS           @ process ENTER key
+              IF DUP (0,0) \=/    @ if not zero then store as new position
+                THEN 'p' STO (0,0) END
+            END
+            (0,0)                 @ don't move from stored position
+          END
+          'p' STO+                @ changed current position
+        UNTIL 55.1 ==             @ Quit key pressed
+              NRAYS MAXRAYS > OR  @ maximum number of rays fired
+              NGUESS NATOMS == OR @ correct number of atoms guessed
+        END
+        PICT { # 70d # 40d }      @ Position in which to write message
+        CASE
+        NGUESS NATOMS ==          @ User won
+          THEN "You Win" END
+        NRAYS MAXRAYS >           @ User lost
+          THEN
+            DRAWATOMS
+            "You Lose"
+          END
+          DRAWATOMS               @ User quitted
+          "You Quit"
+        END
+        2 \->GROB REPL            @ Write message
+      \>>
+    \>>
+  PROCESS @ Handle processing when ENTER key is pressed
+    \<<
+      PICT { # 70d # 48d } # 60d # 16d BLANK REPL
+      IF DUP RE 0 ==              @ if we are at edge of grid
+         OVER RE 9 == OR
+         OVER IM 0 == OR
+         OVER IM 9 == OR
+      THEN                        @ fire off ray and check results
+        NRAYS 65 + CHR            @ convert ray number into alphabetic character
+        DUP2 SWAP PUTSTR          @ replace current character at edge
+        DUP2 "Ray " SWAP + SWAP \->STR + WRITE1 @ Write Ray N(x,y)
+        SWAP DUP TRACERAY         @ Trace movement of ray
+        CASE
+        DUP (0,0) ==
+          THEN
+            "Absorbed" WRITE2
+            DROP SWAP DROP        @ throw away Ray character and start position
+          END
+        DUP2 ==
+          THEN
+            "Reflected" WRITE2
+            SWAP DROP SWAP DROP   @ throw away Ray character and start position
+          END
+          SWAP DROP "To " OVER \->STR + WRITE2
+          SWAP OVER PUTSTR        @ put Ray character at end of ray
+        END
+        'NRAYS' INCR DROP         @ Increment number of rays fired
+      ELSE
+        "Atom " OVER \->STR + WRITE1 @ write Atom (x,y)
+        IF ATOMS OVER POS         @ is guess correct
+        THEN
+          DUP PUTCROS             @ yes, put a cross at location
+          'NGUESS' INCR DROP      @ increment number of correct guesses
+          "Correct"               @ print this string
+        ELSE
+          MAXRAYS 1 + 'NRAYS' STO           @ finish off the user
+          "Wrong"
+        END WRITE2
+      END
+    \>>
+  TRACERAY @ trace path of ray fired
+    \<<
+      (0,0) \-> r m               @ local variables
+      \<<
+        CASE
+        r RE 0 ==                 @ determine which direction ray goes
+          THEN (1,0) END
+        r RE 9 ==
+          THEN (-1,0) END
+        r IM 0 ==
+          THEN (0,1) END
+        r IM 9 ==
+          THEN (0,-1) END
+          "Illegal ray" DOERR
+        END
+        DO
+          DUP RE (0,1) (1,0) IFTE @ find direction perpendicular to ray
+          'm' STO
+          DUP r + DUP DUP
+          6                       @ Flag 6 is set if ray is deflected
+          IF SWAP m + ATOMS SWAP POS
+          THEN SF
+          ELSE CF
+          END
+          7                       @ Flag 7 is set if ray is deflected
+          IF SWAP m - ATOMS SWAP POS
+          THEN SF
+          ELSE CF
+          END
+          CASE
+          ATOMS SWAP POS          @ if atom in front of ray then absorb ray
+            THEN DROP r NEG END
+          6 FS? 7 FS? AND         @ if both flags set then reflect ray
+            THEN NEG END
+          7 FS?                   @ otherwise deflect ray depending on flag
+            THEN DROP m END
+          6 FS?
+            THEN DROP m NEG END
+          END
+          DUP 'r' STO+            @ get new ray position
+        UNTIL r RE 0 ==           @ until we reach an edge
+              r RE 9 == OR
+              r IM 0 == OR
+              r IM 9 == OR
+        END
+        DROP r                    @ return final position
+      \>>
+    \>>
+  DRAWATOMS @ Draw current location of all atoms
+    \<<
+      1 NATOMS
+      FOR i
+        ATOMS i GET PUTCROS       @ put a cross for every atom
+      NEXT
+    \>>
+  NRAND @ Generate random number from m to n
+    \<<
+      \-> M N
+      \<<
+        N M - 1 + RAND * IP M +
+      \>>
+    \>>
+  WRITE1 @ Write string in Area 1 of display
+    \<<
+      PICT { # 70d # 48d } ROT 2 \->GROB REPL
+    \>>
+  WRITE2 @ Write string in Area 2 of display
+    \<<
+      PICT { # 70d # 56d } ROT 2 \->GROB REPL
+    \>>
+  PUTSTR @ Put string in level 2 at cursor position in level 1
+    \<<
+      GETPOS                      @ get coordinates of cursor position
+      ROT 1 \->GROB               @ convert string to graphics object
+      # 5d # 5d BLANK             @ create a blank clip window
+      { # 1d # 0d } ROT REPL      @ clip string in window
+      REPL                        @ draw string
+    \>>
+  PUTCROS @ Put a cross mark at cursor position
+    \<<
+      GETPOS CROS REPL
+    \>>
+  GETPOS @ get PICT position given cursor position
+    \<<
+      C\->R
+      6 * 1 + R\->B
+      SWAP 6 * 1 + R\->B
+      SWAP 2 \->LIST
+      PICT SWAP
+    \>>
+  PUTMASK @ XOR mask onto PICT
+    \<<
+      GETPOS MASK GXOR
+    \>>
+  GENMASK @ Generate cursor mask
+    \<<
+      # 5d # 5d BLANK PICT STO    @ create 5x5 blank grob
+      0 4
+      FOR i                       @ fill each pixel
+        0 4 FOR j
+          i R\->B
+          j R\->B
+          2 \->LIST PIXON
+        NEXT
+      NEXT
+      PICT { # 0d # 0d } { # 4d # 4d } SUB
+      'MASK' STO                  @ store in variable name
+    \>>
+  GENCROS @ Generate cross mark
+    \<<
+      # 5d # 5d BLANK PICT STO    @ create 5x5 blank grob
+      0 4                         @ draw the cross pixel at a time
+      FOR i
+        i R\->B DUP DUP DUP
+        2 \->LIST PIXON
+        4 SWAP - 2 \->LIST PIXON
+      NEXT
+      PICT { # 0d # 0d } { # 4d # 4d } SUB
+      'CROS' STO                  @ store in variable name
+    \>>
+  GENBOX @ create main playing screen
+    \<<
+      # 131d # 64d BLANK PICT STO
+      1 8
+      FOR i
+        6 i * 1 + R\->B           @ calculate # 6 * i + 1
+        i 1 \->GROB               @ create grob from i in smallest font
+        PICT # 2d 4 PICK 2 \->LIST 3 PICK REPL
+        PICT # 56d 4 PICK 2 \->LIST 3 PICK REPL
+        SWAP 1 + SWAP
+        PICT 3 PICK # 1d 2 \->LIST 3 PICK REPL
+        PICT SWAP ROT # 55d 2 \->LIST SWAP REPL
+      NEXT
+      6 56                        @ Draw lines of grid
+      FOR i
+        i R\->B
+        # 6d OVER 2 \->LIST
+        # 54d 3 PICK 2 \->LIST LINE
+       DUP # 6d 2 \->LIST
+       SWAP # 54d 2 \->LIST LINE
+      6 STEP
+      PICT { # 76d # 0d } "Black Box" 3 \->GROB REPL
+      PICT { # 100d # 10d } "(C) 1990" 1 \->GROB REPL
+      PICT { # 90d # 16d } "Chris Tham" 1 \->GROB REPL
+      PICT RCL 'SCREEN' STO       @ Store in SCREEN variable
+    \>>
+END
+--- cut here ---
+
+

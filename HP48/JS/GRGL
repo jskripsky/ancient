@@ -1,0 +1,27 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Geradengl. aus Pkten
+---------------------
+
+y = Mx + Q
+
+Eingabe: X1 Y1 X2 Y2
+Ausgabe: M Q"
+DISPHELP
+
+   \-> X1 Y1 X2 Y2
+   \<<
+      IF 'X1\=/X2'
+      THEN
+         '(Y2-Y1)/(X2-X1)' EVAL
+         "M" \->TAG
+         DUP X1 * NEG Y1 + EVAL
+         "Q" \->TAG
+      ELSE
+         "\|^"
+         "M" \->TAG
+         X1 EVAL
+         "X" \->TAG
+      END
+   \>>
+\>>

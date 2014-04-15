@@ -1,0 +1,36 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Mittelsenkr. aus 2 Pkt
+----------------------
+P1(X / Y)  P2(X / Y)
+y = Mx + Q
+
+Eingabe: X1 Y1 X2 Y2
+Ausgabe: M Q"
+DISPHELP
+
+   \-> X1 Y1 X2 Y2
+   \<<
+      X1 Y1 X2 Y2
+      GRGL DROP
+      \-> M
+      \<<
+         IF 
+            M
+            "\|^"
+            ==
+         THEN 0
+         ELSE
+            IF 'M==0'
+            THEN
+               "\|^"
+            ELSE
+               M NEG
+               INV EVAL
+            END
+         END
+         '(X1+X2)/2' EVAL
+         '(Y1+Y2)/2' EVAL PVGL
+      \>>
+   \>>
+\>>

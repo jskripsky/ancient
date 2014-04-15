@@ -1,0 +1,116 @@
+000 *** ATTENTION !  Relative Organization, DO NOT CHANGE RECORD LENGH = 80CHR *
+001 FILES\F01-TIMB.DAT                                                         *
+002 FILES\F02-ORAR.DAT                                                         *
+003 FILES\F03-ANAG.DAT                                                         *
+004 FILES\F04-GIUS.DAT                                                         *
+005 FILES\F05-GIUP.DAT                                                         *
+006 FILES\F06-BADG.DAT                                                         *
+007 FILES\F07-CONT.DAT                                                         *
+008 FILES\F08-CALE.DAT                                                         *
+009 FILES\F09-ORSP.DAT                                                         *
+010 FILES\F10-INPU.DAT                                                         *
+011 FILES\F11-GRBD.DAT                                                         *
+012 FILES\F12-SATU.DAT                                                         *
+013 FILES\F13-TERM.DAT                                                         *
+014 FILES\F14-CAMP.DAT                                                         *
+015 FILES\F15-PASS.DAT                                                         *
+016 FILES\F16-MESP.DAT                                                         *
+017 FILES\F17-TRSE.DAT                                                         *
+018 FILES\F18-DIVI.DAT                                                         *
+019 FILES\F19-VACA.DAT                                                         *
+020 FILES\F20-TRAS.DAT                                                         *
+021                                                                            *
+022                                                                            *
+023                                                                            *
+024                                                                            *
+025 FILES\F25-INPX.DAT                                                         *
+026                                                                            *
+027                                                                            *
+028                                                                            *
+029                                                                            *
+030 ITA\MUT.TXT                                                                *
+031 ITA\TMS.PAN                                                                *
+032 FRA\TMS.PAN                                                                *
+033 DEU\TMS.PAN                                                                *
+034                                                                            *
+035                                                                            *
+036                                                                            *
+037                                                                            *
+038                                                                            *
+039                                                                            *
+040                                                                            *
+041 ITA\F90-MESS.DAT                                                           *
+042 FRA\F90-MESS.DAT                                                           *
+043 DEU\F90-MESS.DAT                                                           *
+044                                                                            *
+045                                                                            *
+046                                                                            *
+047                                                                            *
+048                                                                            *
+049                                                                            *
+050 FILES\F50-CUMU.DAT                                                         *
+051 FILES\F51-TRSM.TMP                                                         *
+052 FILES\F52-TTER.DAT                                                         *
+053                                                                            *
+054                                                                            *
+055 \PRESACC\F55-ACCE.DAT                                                      *
+056                                                                            *
+057                                                                            *
+058 FILES\F58-CNFT.TMP                                                         *
+059 FILES\F59-MODM.DAT                                                         *
+060 FILES\F60-SCAR.DAT                                                         *
+061                                                                            *
+062                                                                            *
+063                                                                            *
+064 FILES\F64-GIUH.DAT                                                         *
+065 FILES\F65-RAPP.DAT                                                         *
+066 FILES\F66-RAPP.TMP                                                         *
+067                                                                            *
+068                                                                            *
+069                                                                            *
+070 F70-TEMP.DAT                                                               *
+071 A:\ANAGALFA.AP                                                             *
+072 A:\BADGANAG.AP                                                             *
+073 A:\INIZANAG.AP                                                             *
+074 ANAGALFA.TMP                                                               *
+075 BADGANAG.TMP                                                               *
+076                                                                            *
+077                                                                            *
+078                                                                            *
+079                                                                            *
+080 F80-INPU.TMP                                                               *
+081 C:SPOOLER.PRN                                                              *
+082 FILES\F82-PRNT.DAT                                                         *
+083 LPT1                                                                       *
+084                                                                            *
+085                                                                            *
+086                                                                            *
+087                                                                            *
+088                                                                            *
+089                                                                            *
+090 ITA\F90-MESS.DAT        DUMMY                                              *
+091 X.LST                   DUMMY                                              *
+092 COMANDO.BAT                                                                *
+093 \PRESACC\FCANAACC.DAT                                                      *
+094 \PRESACC\FCBADGES.DAT                                                      *
+095 \PRESACC\FCANAPRE.DAT                                                      *
+096 \PRESACC\FCBADPRE.DAT                                                      *
+097 ITA\F97-PERS.DAT        DUMMY                                              *
+098 FILES\F98-CNFT.DAT                                                         *
+099 FILES\F99-CONF.DAT                                                         *
+100 PS900.EXE                                                                  *
+101 ITA\F97-PERS.DAT                                                           *
+102 FRA\F97-PERS.DAT                                                           *
+103 DEU\F97-PERS.DAT                                                           *
+104                                                                            *
+105                                                                            *
+106                                                                            *
+107                                                                            *
+108                                                                            *
+109                                                                            *
+110 \PRESACC\FA1-CUMU.ASC                                                      *
+111 \PRESACC\FA2-GIUS.ASC                                                      *
+112 \PRESACC\FA3-TERM.ASC                                                      *
+113                                                                            *
+114                                                                            *
+115                                                                            *

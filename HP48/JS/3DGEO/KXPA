@@ -1,0 +1,20 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Koord.gl. \-> Param.gl.
+---------------------
+
+VO = V0 + tVA
+
+Eingabe: MX QX MY QY
+Ausgabe: V0 VA"
+DISPHELP
+   
+   \-> MX QX MY QY
+   \<<
+      QX QY 0 \->V3
+      "V0" \->TAG
+
+      MX MY 1 \->V3
+      "VA" \->TAG
+   \>>
+\>>

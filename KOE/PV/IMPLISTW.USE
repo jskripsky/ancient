@@ -1,0 +1,7 @@
+#include "ListBox.Use"
+#include "FormDlg.Use"
+
+#define Uses_TDialog
+#define Uses_TEvent
+#define Uses_TScrollBar
+

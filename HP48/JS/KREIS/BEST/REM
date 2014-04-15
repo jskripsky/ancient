@@ -1,0 +1,17 @@
+%%HP: T(3)A(D)F(.);
+\<<
+   \-> LST IDX
+   \<<
+      1
+      LST
+      SIZE
+      FOR N
+         IF 'N\=/IDX'
+         THEN LST N GET
+         END
+      NEXT
+
+      LST SIZE 1 -
+      \->LIST
+   \>>
+\>>

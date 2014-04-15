@@ -1,0 +1,20 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Help System 2.0
+===============
+"
+   DISPHELP
+
+   32 SF
+
+"======================
+ Help System 2.0
+ (C) Skribby '93
+======================
+
+Start Program"
+
+   CLLCD 1 DISP
+   1 FREEZE
+   2 FREEZE
+\>>

@@ -1,0 +1,487 @@
+%&#
+#start_blockung
+40,42,53,00
+#ende_blockung
+00,00                           * Kennung fÅr Blockende in hex
+#laenge_blockung
+351,
+00
+*
+*   BLOCKUNG    MCP3000 Klinikum Bamberg 13. September 1993/JS
+*
+*
+* Aufbau:
+* offset,anzahl,spur,position,(spur,position) 
+*							Anz.  Feld
+#blockung               * Bezeichner                    Stel.  Nr.
+1 , 8,1, 1             * Aufnahme Nr.                  8       1
+1 , 8,1, 9             * Aufnahmedatum                 8       2
+1 , 3,1,17             * Station                       3       3
+1 ,30,1,20             * Patientenname                 30      4
+1 , 1,3, 1             * Geschlecht                    1       10
+1 , 8,1,50             * Geburtsdatum                  8       5
+1 , 8,1,58             * Familienstand                 8       6
+1 , 7,1,66             * Religion                      7       7
+1 , 8,1,73             * Staatsangehîrigkeit           8       8
+1 ,30,2, 1             * Stasse                        30      B
+1 ,30,2,31             * PLZ/Ort                       30      C
+1 ,19,1,81             * Beruf                         19      9
+1 ,21,1,100             * Arbeitgeber                   21      A
+1 ,42,3, 2             * KostentrÑger                  42      11
+1 ,32,2,61             * Hauptversicherter             32      D
+1 , 8,2,93             * Geb. Datum Hauptversich.      8       E
+1 ,42,3,44             * Dringende Nachricht           42      12
+1 ,20,2,101            * Einweisender Arzt             20      F
+1 ,20,3,86             * Hausarzt                      20      13
+1 , 3,9,  1            * Endkennung ablegen            3
+00,00                  * Total 345 (ohne Start- und Endkennung)
+
+
+#patientenname
+19,                     * Patientennamenbeginn (Offset vom 1.Z.Sp.1)
+00,                     * Kennung fÅr Ende 'patientenname'
+
+
+#felder
+1 ,  1 ,  1 ,
+1 ,  1 ,  8 ,          * Aufnahme Nr.			1
+1 ,  9 ,  8 ,          * Aufnahmedatum			2
+1 , 17 ,  3 ,          * Station			3
+1 , 20 , 30 ,          * Patientenname			4
+1 , 50 ,  8 ,          * Geb. Datum			5
+1 , 58 ,  8 ,          * Famileinstand  		6
+1 , 66 ,  7 ,          * Religion			7
+1 , 73 ,  8 ,          * Staatsangehîrigkeit		8
+1 , 81 , 19 ,          * Beruf				9
+1 ,100 , 21 ,          * Arbeitgeber			A
+2 ,  1 , 30 ,          * Strasse			B
+2 , 31 , 30 ,          * PLZ/Ort			C
+2 , 61 , 32 ,          * Hauptversicherter		D
+2 , 93 ,  8 ,          * Geb. Datum Hauptversich.	E
+2 ,101 , 20 ,          * Einweisender Arzt		F
+3 ,  1 ,  1 ,          * Geschlecht			10
+3 ,  2 , 42 ,          * KostentrÑger			11
+3 , 44 , 42 ,          * Dringende Nachricht		12
+3 , 86 , 20 ,          * Hausarzt			13
+0 ,  0 ,  0 ,          * Kennung fÅr Ende Feldertabelle
+00
+*
+* Formulardefinitionen
+*
+
+#anzahl_flag
+0,
+00,
+
+
+#geb_tag
+50
+00
+
+#geb_monat
+52
+00
+
+#geb_jahr
+54
+00
+
+#formular_abs
+20,20,20,20,20,20,20,20,f1,0d,0a
+20,20,20,20,20,20,20,20,f2,20,20,20,fc,0d,0a,0c
+00
+
+#bin_string
+0,0,0,0,0,0,0,0,0,91,92,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,254
+
+#formular1					* Leistungsbeleg
+1B,21,f3,                                       *10 cpi
+1b,3a,f3,f3,f3,1b,26,f3,5b,5c,03,09,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,09,03,f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+1b,25,01,
+1b,25,f3
+1b,44,18,34,f3                               * 3 Tab. setzen fÅr Anf.Mark.
+1b,33,19                                        *Zeilenabstand 1/7" (163,29/60)
+1b,25,01                                        *
+09,fb,01,fb,02,fb,03,fb,04,fb,05,         * Beg. Zeile 1 Mark. Datum
+fb,06,fb,07,fb,08,fb,09,fb,0a,fb,0b,fb,0c,      * Mark. Datum
+0a,0d                                           * Ende Zeile 1
+1b,33,1b                                        *Zeilenabstand 1/7" (163,29/60)
+ea,01,01,30,ea,01,01,31,ea,01,01,32,         * Beg. Z2 Aufnahme Nr. 1.Stelle
+ea,01,01,33,ea,01,01,34,ea,01,01,35,ea,01,01,36,*
+ea,01,01,37,ea,01,01,38,ea,01,01,39,            *
+09,fb,1c,fb,1d,fb,1e,fb,1f,fb,20,fb,21,fb,22,   * Mark. Datum Jan.-Juli
+fb,23,fb,24,fb,25,fb,26,fb,27,                  * Mark. Datum Aug.-Dez.
+1b,25,f3
+0a,0d                                           *Ende Zeile 2
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+1b,44,2c,36,f3                               * Tab. setzen
+1b,25,01
+ea,01,02,30,ea,01,02,31,ea,01,02,32,         * Aufnahme Nr. 2. Stelle
+ea,01,02,33,ea,01,02,34,ea,01,02,35,ea,01,02,36,*
+ea,01,02,37,ea,01,02,38,ea,01,02,39,            *
+09,fb,3e,fb,3f,                           * Jahr markieren
+09,e7,01,20,20,e7,0c,20,20,e7,1c,20,20,e7,2a,           * KS:02J,07C,09E,12A
+0a,0d                                           * Ende Zeile 3
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+1b,44,32,f3                                  * Tab. setzen
+ea,01,03,30,ea,01,03,31,ea,01,03,32,         * Aufnahme Nr. 3. Stelle
+ea,01,03,33,ea,01,03,34,ea,01,03,35,ea,01,03,36,*
+ea,01,03,37,ea,01,03,38,ea,01,03,39,            *
+09,20,20,20,20,e7,0f,20,20,e7,1d,20,20,e7,26,   * KS: leer,07D,09F,12B
+0a,0d                                           * Ende Zeile 4
+1b,33,1b                                        *Zeilenabstand 1/7" (163,29/60)
+ea,01,04,30,ea,01,04,31,ea,01,04,32,         * Aufnahme Nr. 4. Stelle
+ea,01,04,33,ea,01,04,34,ea,01,04,35,ea,01,04,36,*
+ea,01,04,37,ea,01,04,38,ea,01,04,39,            *
+09,e7,02,20,20,e7,10,20,20,e7,1e,20,20,e7,2c,   * KS:04A,07E,10A,12C
+0a,0d                                           * Ende Zeile 5
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+ea,01,05,30,ea,01,05,31,ea,01,05,32,         * Aufnahme Nr. 5. Stelle
+ea,01,05,33,ea,01,05,34,ea,01,05,35,ea,01,05,36,*
+ea,01,05,37,ea,01,05,38,ea,01,05,39,            *
+09,e7,03,20,20,e7,11,20,20,e7,1f,20,20,e7,2d    * KS:04B,07F,10B,12D
+0a,0d                                           * Ende Zeile 6
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+1b,44,32,f3                                     * Tab. setzen
+fa,09,e7,04,20,20,e7,12,20,20,e7,20,20,20,e7,2e,* KS:04C,08A,10C,12E
+0a,0d                                           * Ende Zeile 7
+1b,33,1b                                        * Zeilenabstand 1/"
+fa,09,e7,05,20,20,e7,13,20,20,e7,21,20,20,e7,2f,* KS:04D,08B,10D,12F
+0a,0d                                           * Ende Zeile 8
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+fa,09,e7,08,20,20,e7,14,20,20,e7,22,20,20,e7,30,* KS:05C,08C,10E,13A
+0a,0d                                           * Ende Zeile 9
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+1b,44,03,28,f3                                  * Tab. setzen
+09,e7,09,20,20,e7,15,20,20,e7,23,20,20,e7,31   * KS:05D,08D,10F,13B
+0a,0d                                           *
+1b,33,1b                                        *Zeilenabstand 1/7" (163,29/60)
+09,fe,01,20,fe,02,20,ed,ed,                  * 8 Aufn.Nr,Auf.Dat,Stat.
+09,e7,06,20,20,e7,16,20,20,e7,24,20,20,e7,32   * KS:05A,08E,11A,13C
+0a,0d                                           *
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+09,fe,04,20,fe,10,                           * 30+1+1=32 Name, Geschlecht
+09,e7,07,20,20,e7,17,20,20,e7,25,20,20,e7,33   * KS:05B,08F,11B,13D
+0a,0d                                           *
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+09,fe,05,20,fe,06,20,fe,07,20,fe,08,         * 10+1+8+1+7+1+8=36 Geb.Datum
+09,e7,0a,20,20,e7,18,20,20,e7,26,20,20,e7,34   * KS:05J,09A,11C,13E
+0a,0d                                           *
+1b,33,1b                                        *Zeilenabstand 1/7" (163,29/60)
+09,fe,0b,                                    * 30 Strasse
+09,e7,0b,20,20,e7,19,20,20,e7,27,20,20,e7,35   * KS:05O,09B,11D,13F
+0a,0d                                           *
+1b,33,1a,                                       *Zeilenabstand 1/7" (163,29/60)
+09,fe,0c,                                    * 30 Wohnort
+09,e7,0c,20,20,e7,1a,20,20,e7,28,20,20,e7,36* KS:07A,09C,11E,NOT1
+0a,0d                                           *
+1b,33,1a                                        *Zeilenabstand 1/7" (163,29/60)
+09,fe,09,20,fe,0a,                           * 19+1+21=41 Beruf, Arbeitgeb.
+09,e7,0d,20,20,e7,1b,20,20,e7,29,20,20,e7,37   * KS:07B,09D,11F,NOT2
+0a,0d                                           *
+1b,33,1b                                        *Zeilenabstand 1/7" (163,29/60)
+09,fe,11,0a,0d                                  * 42 KostentrÑger
+09,fe,0d,20,fe,0e,0a,0d                         * 32+1+10=43 Hauptvers.,Geb.Dat
+09,fe,12,0a,0d,                                 * 42 dringende Nachricht
+09,fe,13,0a,0d,0c,                              * 20 Hausarzt
+00,00
+
+#formular2
+1B,21,f3,                                         *10 cpi
+1b,3a,f3,f3,f3,1b,26,f3,5b,5c,03,09,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,09,03,f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+f3,55,f3,
+f3,2a,f3,
+1b,25,01,
+1b,25,f3
+1b,25,01
+ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30
+ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30
+ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30 *15x
+1b,25,f3
+0a,0d
+1b,44,1e,f3
+1b,25,01
+09,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30
+ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30
+ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30,ea,01,01,30 *15x
+1b,25,f3
+0a,0d
+0c
+00,00
+
+#formular3                                      *
+1B,50,                                          * Pica 10 cpi
+fe,01,20,fe,02,20,20,20,fe,03,20,0a,0d,          * 8 Aufn. Nr.,Aufn.Dat,Stat.
+fe,04,20,fe,10,0a,0d,                            * 30+1+1=32 Name, Geschlecht
+fe,05,20,fe,06,20,fe,07,20,fe,08,0a,0d,          * 10+1+8+1+7+1+8=36 Geb.Datum
+fe,0b,0a,0d,                                    * 30 Strasse
+fe,0c,20,0a,0d,                                 * 30 Wohnort
+fe,09,20,fe,0a,0a,0d,                           * 19+1+21=41 Beruf, Arbeitgeb.
+fe,11,0a,0d,                                    * 42 KostentrÑger
+fe,0d,20,fe,0e,0a,0d,                           * 32+1+10=43 Hauptvers.,Geb.Dat
+fe,12,0a,0d,                                    * 42 dringende Nachricht
+fe,13,0a,0d,0c,                                 * 20 Hausarzt
+00,00,
+
+#formular4                              *
+1B,4D,                                  *Elite 12 cpi
+1b,6a,51                                * 
+fe,01,0a,0d                             * 8 Aufnahme Nummer
+fe,04,20,fe,10,0a,0d                    * 30+1+1=32 Name, Geschlecht
+fe,fa,05,01,02,2e,fe,fa,05,03,04,2e,fe,fa,05,05,08,20,fe,06,20,
+fe,07,20,fe,08,0a,0d                    * 10+1+8+1+7+1+8=36 Geb.Datum
+fe,0b,0a,0d,                            * 30 Strasse
+fe,0c,20,0a,0d,                         * 30 Wohnort
+fe,09,20,fe,0a,0a,0d,                   * 19+1+21=41 Beruf, Arbeitgeb.
+fe,11,0a,0d,                            * 42 KostentrÑger
+fe,0d,20,fe,0e,0a,0d,                   * 32+1+10=43 Hauptvers.,Geb.Dat
+fe,12,0a,0d,                            * 42 dringende Nachricht
+fe,13,0a,0d,0c,                         * 20 Hausarzt
+00,00,
+
+#formular5                              * MerkblÑtter
+1B,4D,                                  * 
+1b,6a,51,                               *
+fe,04,20,fe,10,0a,0d,                   * 30+1+1=32 Name, Geschlecht
+fe,fa,05,01,02,2e,fe,fa,05,03,04,2e,fe,fa,05,05,08,0a,0d, *Geb. Datum
+fe,01,0a,0d,0c,                         * 8 Aufnahme Nummer
+00,00,
+
+#formular6				* Begleitschein
+1B,4D                                   * Elite 12 cpi
+fe,01,0a,0d,0c,                         * 8 Aufnahme Nummer
+fe,04,20,fe,10,20,ef,0a,0d,             * 30+1+1+1+2=32 Name, Geschl.,Alter
+fe,0b,0a,0d,                            * 30 Strasse
+fe,0c,20,0a,0d,                         * 30 Wohnort
+fe,11,0a,0d,0c,                         * 42 KostentrÑger
+00,00,
+
+#formular7				* Verordnungsschein
+1B,4D,                                  * Elite 12 cpi
+1b,6a,51,                               *
+fe,04,20,fe,10,0a,0d,                   * 30+1+1=32 Name, Geschlecht
+fe,09,20,fe,0a,0a,0d,                   * 19+1+21=41 Beruf, Arbeitgeb.
+fe,fa,05,01,02,2e,fe,fa,05,03,04,2e,fe,fa,05,05,08,0a,0d,0c,  *Geb.Datum
+fe,0c,20,0a,0d,                         * 30 Wohnort
+fe,11,0a,0d,                            * 42 KostentrÑger
+fe,01,0a,0d,0c,                         * 8 Aufnahme Nummer
+00,00,
+
+#formular9
+1B,4D,                                  * Elite 12 cpi
+1b,6a,51,                               *
+fe,01,0a,0d
+fe,02,0a,0d
+fe,03,0a,0d
+fe,04,0a,0d
+fe,05,0a,0d
+fe,06,0a,0d
+fe,07,0a,0d
+fe,08,0a,0d
+fe,09,0a,0d
+fe,0a,0a,0d
+fe,0b,0a,0d
+fe,0c,0a,0d
+fe,0d,0a,0d
+fe,0e,0a,0d
+fe,0f,0a,0d
+fe,10,0a,0d
+fe,11,0a,0d
+fe,12,0a,0d
+fe,13,0a,0d
+0c,00,00,
+
+#etiketten_mit_anzahl                   *Anzahl- Abfrage =true
+1,
+00,
+
+#etikett1
+1B,4D                                   *Elite 12 cpi
+1b,6a,38                                *
+0a,0d
+00,00
+
+#etikett2
+1B,4D,1b,6a                             *Elite 12 cpi
+
+00,00
+
+#etikett3
+1B,4D                                   *Elite 12 cpi
+1b,6a,32                                *
+00,00
+
+*
+* Tabellen fÅr Wahl der Kostenstellen auf den Stationen
+#tabelle1_kost
+002,04A.
+003,04B.
+004,04C.
+005,04D.
+005,04D.
+005,04D.
+005,04D.
+005,04D.
+005,04D.
+
+
+#tabelle2_kost
+006,05A.
+007,05B.
+008,05C.
+009,05D.
+009,05D.
+009,05D.
+009,05D.
+009,05D.
+009,05D.
+                                                                                                                                                                                                                                                               
+#tabelle3_kost
+012,07A.
+013,07B.
+014,07C.
+015,07D.
+016,07E.
+017,07F.
+017,07F.
+017,07F.
+017,07F.
+                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                               
+#tabelle4_kost
+018,08A.
+019,08B.
+020,08C.
+021,08D.
+022,08E.
+023,08F.
+023,08F.
+023,08F.
+023,08F.
+                                                                                                                                                                                                                                                               
+
+#tabelle5_kost
+024,09A.
+025,09B.
+026,09C.
+027,09D.
+028,09E.
+029,09F.
+029,09F.
+029,09F.
+029,09F.
+
+*
+* kostenstellen und klinik laden
+*
+#kostenstellen_flag
+1,
+00,
+
+
+#patientennummer
+0,                      * Patientennamenbeginn (Offset vom 1.Z.Sp.1)
+00,                     * Kennung fÅr Ende 'patientenname'
+
+
+#klinikdaten
+Klinikum Bamberg              * 30 Stellen Klinikbezeichnung
+Bamb*                         * 4 Zeichen KlinikkÅrzel
+02J...........................* 9570 ISOTOPENTHERAPIE           1
+04A...........................* 9575 STRAHLENTHERAPIE 04A       2
+04B...........................* 9370 KINDERKLINIK 04B           3
+04C...........................* 9370 KINDERKLINIK 04C           4
+04D...........................* 9370 KINDERKLINIK 04D           5
+05A...........................* 9540 BELEGABTEILUNG 05A         6
+05B...........................* 9540 BELEGABTEILUNG 05B         7
+05C...........................* 9540 KINDERKLINIK 05C           8
+05D...........................* 9540 KINDERKLINIK 05D           9
+05J...........................* 9640 INTENSIV INTERNIST. 05J    10
+05O...........................* 9600 INTENSIV OPERATIV 05O      11
+07A...........................* 9390 INFEKTION 07A              12
+07B...........................* 9390 INFEKTION 07B              13
+07C...........................* 9500 UROLOGIE 07C               14
+07D...........................* 9500 UROLOGIE 07D               15
+07E...........................* 9500 UROLOGIE 07E               16
+07F...........................* 9500 UROLOGIE 07F               17
+08A...........................* 9410 ALLGEMEINCHIRURGIE 08A     18
+08B...........................* 9410 ALLGEMEINCHIRURGIE 08B     19
+08C...........................* 9410 ALLGEMEINCHIRURGIE 08C     20
+08D...........................* 9410 ALLGEMEINCHIRURGIE 08D     21
+08E...........................* 9410 ALLGEMEINCHIRURGIE 08E     22
+08F...........................* 9410 ALLGEMEINCHIRURGIE 08F     23
+09A...........................* 9420 UNFALLCHIRURGIE 09A        24
+09B...........................* 9420 UNFALLCHIRURGIE 09B        25
+09C...........................* 9420 UNFALLCHIRURGIE 09C        26
+09D...........................* 9420 UNFALLCHIRURGIE 09D        27
+09E...........................* 9420 UNFALLCHIRURGIE 09E        28
+09F...........................* 9420 UNFALLCHIRURGIE 09F        29
+10A...........................* 9330 MEDIZIN 10A                30
+10B...........................* 9330 MEDIZIN 10B                31
+10C...........................* 9330 MEDIZIN 10C                32
+10D...........................* 9330 MEDIZIN 10D                33
+10E...........................* 9330 MEDIZIN 10E                34
+10F...........................* 9330 MEDIZIN 10F                35
+11A...........................* 9360 MEDIZIN 11A                36
+11B...........................* 9360 MEDIZIN 11B                37
+11C...........................* 9360 MEDIZIN 11C                38
+11D...........................* 9360 MEDIZIN 11D                39
+11E...........................* 9360 MEDIZIN 11E                40
+11F...........................* 9360 MEDIZIN 11F                41
+12A...........................* 9340 MEDIZIN 12A                42
+12B...........................* 9340 MEDIZIN 12B                43
+12C...........................* 9340 MEDIZIN 12C                44
+12D...........................* 9530 GYNEAKOLOGIE 12D           45
+12E...........................* 9530 GYNEAKOLOGIE 12E           46
+12F...........................* 9530 GYNEAKOLOGIE 12F           47
+13A...........................* 9531 GEBURTSHILFE 13A           48
+13B...........................* 9531 GEBURTSHILFE 13B           49
+13C...........................* 9531 GEBURTSHILFE 13C           50
+13D...........................* 9531 GEBURTSHILFE 13D           51
+13E...........................* 9531 GEBURTSHILFE 13E           52
+13F...........................* 9531 GEBURTSHILFE 13F           53
+NOT...........................* 9630 NOTFALLAUFNAHME            54
+NOT...........................*      NOTFALLAUFNAHME            55
+KRE...........................* 9259 KREISSZIMMER               56
+KRE...........................*      KREISSZIMMER               57
+VER...........................* 9010 VERWALTUNG                 58
+&                             * Kennung fÅr Ende der Kostenstellen
+%                             * Kennung fÅr Ende Formulardownload
+%
+
+

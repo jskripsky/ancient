@@ -1,0 +1,8 @@
+#include "Gadgets\TransGrp.Use"
+#include "Field\StdFlds.Use"
+#include "Field\NumFlds.Use"
+#include "Field\DateFlds.Use"
+
+#define Uses_TCollection
+#define Uses_TGroup
+

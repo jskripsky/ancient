@@ -1,0 +1,23 @@
+
+ zTest
+
+ Start         Length     Name                   Class
+ 0001:00000000 00000398CH CODE32                 CODE 32-bit
+ 0001:0000398C 000000030H _MSGSEG32              CODE 32-bit
+ 0002:00000000 000000490H DATA32                 DATA 32-bit
+ 0002:00000490 000000000H CTOR_DTOR1             DATA 32-bit
+ 0002:00000490 000000000H CTOR_DTOR2             DATA 32-bit
+ 0002:00000490 000000000H CTOR_DTOR3             DATA 32-bit
+ 0002:00000490 000000730H CONST32                CONST 32-bit
+ 0002:00000BC0 00000000CH EDC1                   EDC_CLASS 32-bit
+ 0002:00000BCC 000000174H EDC2                   EDC_CLASS 32-bit
+ 0002:00000D40 000000004H EDC3                   EDC_CLASS 32-bit
+ 0002:00000D44 000000000H BSS32                  BSS 32-bit
+ 0002:00000D44 0000000E0H c_common               BSS 32-bit
+ 0002:00000E30 000008000H STACK32                STACK 32-bit
+
+ Origin   Group
+ 0000:0   FLAT
+ 0002:0   DGROUP
+
+Program entry point at 0001:000002D8

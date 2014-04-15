@@ -1,0 +1,91 @@
+(Comp.sys.handhelds)
+Item: 1481 by grue at batserver.cs.uq.oz.au
+Author: Paul Dale
+  Subj: Reversi for the HP48SX (Machine code version)
+  Date: Thu Dec 20 1990 07:53 
+
+        A new improved version of my old reversi program!  The main features
+of this version of the proram are:
+
+* Features a true machine code move generator (including ALL searching and
+        position evalulation).
+
+* And a machine code move checker.
+
+These improvements mean that the program runs much faster than
+before and it responds to invalid moves much faster as well (especially
+when the invalid move is a pass).
+
+The user interface remains basically unchanged.  The biggest variation in
+this department is the renumber of the rows of the board to conform to
+normal reversi ordering (row 1 is now at the top!!).
+
+The game is started by pressing the PLAY softkey.  The board will be drawn
+and the player asked if they desire to go first (this question should be
+answered Y or N).  To enter a move, you should first type the column number
+1 (left most) to 8 (right most) followed by the column number 1 (top) to
+8 (bottom).  Your move will be made if it is legal.
+
+The other commands available are:
+
+key | action
+----+-----------------------------------------------
+ P  | Pass move (only allowed if no moves are legal)
+ Q  | Quit game
+ O  | Turn calculator off
+ U  | Take back last move (once only)
+
+The input code will turn the calculator off if no key is pressed for a
+minute and pressing on will continue the game as if nothing had happened.
+
+If anybody finds problems with this program or can think of improvements
+I'd like to hear about them.  I don't want to hear from people who think
+that the display of moves is too slow; I made the making of moves slow on
+purpose (So that a player can see what effect a move really had while
+playing.  A move that just appears on the display is quite disconcerting
+to the player).
+
+This version of the program doesn't play as well as the previous version
+(which is a bit of a pity since the older version played a good novice
+game).  This is mainly due to the very primative evaluation function
+which is used (it simply counts the number of disks each side has and
+maximizes the difference).  I'm currently working on both improving the
+evaluation function and making the move generator search more than one
+play ahead.  Both of these modifications will improve the play (I hope).
+The updated move selector should only require the replacement of the
+MVGEN routine (neat huh?).
+
+
+The usual disclaimers apply.  (i.e. the stuff about using undocumented
+features of the machine and any damage caused isn't my problem or fault).
+I'm also not responsible for this program causing memory losts.  I'll just
+say that in my calculator they don't cause them, but yours may be different.
+
+The program is also copyright myself 1990, and it cannot be used for any
+commercial purpose without my permission.  Any NON-PROFIT usage is permitted
+without my prior approval.
+
+
+Enjoy...(full listing for HP48 is included at the end of this file).
+If enough interest is shown, I'll post the assembly source for the
+various routines.  (this source is commented quite well, but the comments
+haven't always kept up to date with the code [ it got modified quite a
+lot during its evolution] :-(
+
+
+                                                        Pauli
+seeya
+
+Paul Dale               | Internet/CSnet:           
+grue@batserver.cs.uq.oz.au
+Dept of Computer Science| Bitnet:      
+grue%batserver.cs.uq.oz.au@uunet.uu.net
+Uni of Qld              | JANET:          
+grue%batserver.cs.uq.oz.au@uk.ac.ukc
+Australia, 4072         | EAN:                         
+grue@batserver.cs.uq.oz
+                        | UUCP:          
+uunet!munnari!batserver.cs.uq.oz!grue
+f4e6g4Qh4++             | JUNET:                    
+grue@batserver.cs.uq.oz.au
+

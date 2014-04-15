@@ -1,0 +1,38 @@
+%%HP: T(3)A(D)F(.);
+\<<
+"Punkt um Origo rot.
+--------------------
+
+
+
+Eingabe: X Y \<)
+Ausgabe: X Y"
+DISPHELP
+
+   \-> X Y W
+   \<<
+      -16 FC?C
+      -17 FS?C
+      \-> CARTESIAN RADIANTS
+      \<<
+         X Y \->V2
+         -16 SF
+         
+         V\-> W +
+         \->V2
+         -16 CF V\->
+         SWAP "X" \->TAG
+         SWAP "Y" \->TAG
+         
+         IF CARTESIAN
+         THEN
+            -16 CF
+         END
+
+         IF RADIANTS
+         THEN
+            -17 SF
+         END
+      \>>
+   \>>
+\>>

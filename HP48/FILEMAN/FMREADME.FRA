@@ -1,0 +1,37 @@
+
+                      Le programme HP 48 File Manager
+
+                             James Donnelly
+
+                   Copyright (c) James Donnelly 1991
+
+                          Logiciel am‚ricain
+
+                     Armstrong Publishing Company
+                        3135 NW Ashwood Drive
+                       Corvallis, OR 97330 USA
+
+        L'acheteur de ce logiciel b‚n‚ficie d'une licence d'utilisation
+        personnelle, … usage non commercial. Il ne peut en aucun cas
+        copier, distribuer ou transf‚rer ce programme, pour quelque
+        raison que ce soit, sans l'autorisation ‚crite de l'auteur.
+        Les soci‚t‚s d‚sirant faire un usage commercial du produit,
+        peuvent demander … en acqu‚rir les droits correspondants.
+
+  IDENTIFICATION :
+
+        Cette disquette contient la version B.1 du programme
+        HP 48 File Manager.
+
+
+  REMARQUES :
+
+        La commande DIR de DOS 5.0 peut ˆtre personnalis‚e par
+        la variable d'environnement DIRCMD.  Or, cela risque de cr‚er
+        un conflit lors de l'utilisation de Kermit, dans la mesure
+        o— le gestionnaire de fichiers File Manager ne peut
+        fonctionner correctement puisque l'information habituelle
+        de r‚pertoire renvoy‚e au HP 48 par le PC n'est plus dans
+        le format qu'il attend.  Pour rem‚dier … cet inconv‚nient,
+        il vous suffit de ne pas utiliser DIRCMD lorsque vous
+        ex‚cutez le programme File Manager.
